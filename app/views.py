@@ -15,3 +15,7 @@ def index(request):
 	return render(request,'index.html',{})
 def services(request):
 	return render(request,'services.html',{})
+def adminindex(request):
+	return render(request,'adminpages/index.html',{})
+def adminpages404withoutmenus(request):
+	return render(request,'adminpages/pages-404-withoutmenus.html',{})

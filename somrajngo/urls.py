@@ -26,4 +26,6 @@ urlpatterns = [
     path('contact/',contact),
     path('index/',index),
     path('services/',services),
+    path('adminindex/',adminindex),
+    path('adminpages404withoutmenus/',adminpages404withoutmenus),
 ]
