@@ -19,3 +19,5 @@ def adminindex(request):
 	return render(request,'adminpages/index.html',{})
 def adminpages404withoutmenus(request):
 	return render(request,'adminpages/pages-404-withoutmenus.html',{})
+def adminpages500(request):
+	return render(request,'adminpages/pages-500.html',{})
