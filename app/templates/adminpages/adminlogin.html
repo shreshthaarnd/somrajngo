@@ -5,16 +5,12 @@
 
 		<!-- Basic -->
 		<meta charset="UTF-8">
-
-		
 		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
+		<title>NGO | Admin Login</title>
 		<!-- Web Fonts  -->
-		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<!-- Vendor CSS -->
 		<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.css' %}" />
+		<link rel="stylesheet" href="{% static 'assets/vendor/font-awesome/css/font-awesome.css' %}" />
 		<link rel="stylesheet" href="{% static 'assets/vendor/magnific-popup/magnific-popup.css' %}" />
 		<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-datepicker/css/datepicker3.css' %}" />
 
@@ -38,31 +34,43 @@
 	</head>
 	<body>
 		<!-- start: page -->
-			<section class="body-error error-outside">
-				<div class="center-error">
+		<section class="body-sign">
+			<div class="center-sign">
+				<a href="/" class="logo pull-left">
+					<img src="{% static 'assets/images/logo.png' %}" height="54" alt="Porto Admin" />
+				</a>
 
-					<div class="error-header">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-8">
-										<a href="/" class="logo">
-											<img src="{% static 'assets/images/logo.png' %}" height="54" alt="Porto Admin" />
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				<div class="panel panel-sign">
+					<div class="panel-title-sign mt-xl text-right">
+						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Admin Login</h2>
 					</div>
-					<div class="row">
-						<div class="col-md-8">
-							<div class="main-error mb-xlg">
-								<h2 class="error-code text-dark text-center text-semibold m-none">404 <i class="fa fa-file"></i></h2>
-								<p class="error-explanation text-center">We're sorry, but the page you were looking for doesn't exist.</p>
+					<div class="panel-body">
+						<form action="/adminpanel/" method="POST">
+							<label style="font-size:20px;color:red;font-weight:bold;">{{ msg|safe }}</label>
+							<div class="form-group mb-lg">
+								<label>Admin ID</label>
+								<input name="adminid" type="email" class="form-control input-lg" />
 							</div>
-						</div>
+
+							<div class="form-group mb-lg">
+								<label>Admin Password</label>
+								<input name="pass" type="password" class="form-control input-lg" />
+							</div>
+
+							<div class="row">
+								<button type="submit" style="width:100%;" class="btn btn-primary hidden-xs">Login</button>
+							</div>
+
+							<span class="mt-lg mb-lg line-thru text-center text-uppercase">
+								<span><a href="">Forgot Password</a></span>
+							</span>
+						</form>
+					</div>
 				</div>
-			</section>
+
+				<p class="text-center text-muted mt-md mb-md">Website Designed & Developed by<br><a style="font-weight:bold;" href="https://www.srd.mobi"><img style="width:30px;margin-right:5px;" src="{% static 'SRD.png' %}">SRD (Shreshtha Research & Development)</a>.</p>
+			</div>
+		</section>
 		<!-- end: page -->
 
 		<!-- Vendor -->
