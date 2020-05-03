@@ -29,4 +29,12 @@ urlpatterns = [
     path('adminindex/',adminindex),
     path('adminpages404withoutmenus/',adminpages404withoutmenus),
     path('adminpages500/',adminpages500),
+    path('adminformsadvanced/',adminformsadvanced),
+    path('adminformsbasic/',adminformsbasic),
+    path('adminformscodeeditor/',adminformscodeeditor),
+    path('adminformslayouts/',adminformslayouts),
+    path('adminformsvalidation/',adminformsvalidation),
+    path('adminformswizard/',adminformswizard),
+    path('adminlayoutsboxed/',adminlayoutsboxed),
+    path('adminlayoutsboxed/',adminlayoutsboxed),
 ]

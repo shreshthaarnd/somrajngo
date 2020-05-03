@@ -21,3 +21,17 @@ def adminpages404withoutmenus(request):
 	return render(request,'adminpages/pages-404-withoutmenus.html',{})
 def adminpages500(request):
 	return render(request,'adminpages/pages-500.html',{})
+def adminformsadvanced(request):
+	return render(request,'adminpages/forms-advanced.html',{})
+def adminformsbasic(request):
+	return render(request,'adminpages/forms-basic.html',{})
+def adminformscodeeditor(request):
+	return render(request,'adminpages/forms-code-editor.html',{})
+def adminformslayouts(request):
+	return render(request,'adminpages/forms-layouts.html',{})
+def adminformsvalidation(request):
+	return render(request,'adminpages/forms-validation.html',{})
+def adminformswizard(request):
+	return render(request,'adminpages/forms-wizard.html',{})
+def adminlayoutsboxed(request):
+	return render(request,'adminpages/layouts-boxed.html',{})
