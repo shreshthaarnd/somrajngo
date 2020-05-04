@@ -89,5 +89,6 @@ def adminnewslist(request):
 	return render(request,'adminpages/newslist.html',{})
 def adminvideonewslist(request):
 	return render(request,'adminpages/videonewslist.html',{})
-	
+def registration(request):
+	return render(request,'registration.html',{})	
 
