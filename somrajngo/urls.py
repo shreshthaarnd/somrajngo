@@ -1,18 +1,3 @@
-"""somrajngo URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from app.views import *
@@ -27,6 +12,8 @@ urlpatterns = [
     path('index/',index),
     path('services/',services),
     path('adminindex/',adminindex),
+    path('userlogin/',userlogin),
+
     path('adminpages404withoutmenus/',adminpages404withoutmenus),
     path('adminpages500/',adminpages500),
     path('adminformsadvanced/',adminformsadvanced),
@@ -37,4 +24,16 @@ urlpatterns = [
     path('adminformswizard/',adminformswizard),
     path('adminlayoutsboxed/',adminlayoutsboxed),
     path('adminlayoutsboxed/',adminlayoutsboxed),
+
+
+    path('error404/',adminpages404withoutmenus),
+    path('adminlogin/',adminlogin),
+    path('adminpanel/',adminpanel),
+    path('adminlogout/',adminlogout),
+    path('adminhome/',adminhome),
+    path('postnews/',postnews),
+    path('adminvideonewspost/',adminvideonewspost),
+    path('adminnewslist/',adminnewslist),
+    path('adminvideonewslist/',adminvideonewslist),
+
 ]

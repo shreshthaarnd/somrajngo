@@ -6,6 +6,7 @@
 		<!-- Basic -->
 		<meta charset="UTF-8">
 
+		<title>NGO | Video News Post</title>
 		
 		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -15,11 +16,6 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<!-- Vendor CSS -->
 		<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.css' %}" />
-
-		<link rel="stylesheet" href="{% static 'assets/vendor/font-awesome/css/font-awesome.css' %}" />
-		<link rel="stylesheet" href="{% static 'assets/vendor/magnific-popup/magnific-popup.css' %}" />
-		<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-datepicker/css/datepicker3.css' %}" />
-
 		<link rel="stylesheet" href="{% static 'assets/vendor/magnific-popup/magnific-popup.css' %}" />
 		<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-datepicker/css/datepicker3.css' %}" />
 
@@ -27,7 +23,6 @@
 		<link rel="stylesheet" href="{% static 'assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css' %}" />
 		<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css' %}" />
 		<link rel="stylesheet" href="{% static 'assets/vendor/morris/morris.css' %}" />
-
 
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="{% static 'assets/stylesheets/theme.css' %}" />
@@ -43,33 +38,179 @@
 
 	</head>
 	<body>
-		<!-- start: page -->
-			<section class="body-error error-outside">
-				<div class="center-error">
+		<section class="body">
 
-					<div class="error-header">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-8">
-										<a href="/" class="logo">
-											<img src="{% static 'assets/images/logo.png' %}" height="54" alt="Porto Admin" />
+			<!-- start: header -->
+			<header class="header">
+				<div class="logo-container">
+					<a href="" class="logo">
+						<img src="{% static 'assets/images/logo.png' %}" height="35">
+					</a>
+					<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+						<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+					</div>
+				</div>
+			
+				<!-- start: search & user box -->
+				<div class="header-right">
+
+					<span class="separator"></span>
+			
+					<div id="userbox" class="userbox">
+						<a href="#" data-toggle="dropdown">
+							<figure class="profile-picture">
+								<img src="{% static 'assets/images/!logged-user.jpg' %}" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+							</figure>
+							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
+								<span class="name">Hi! Admin</span>
+								<span class="role">Logout Here</span>
+							</div>
+			
+							<i class="fa custom-caret"></i>
+						</a>
+			
+						<div class="dropdown-menu">
+							<ul class="list-unstyled">
+								<li class="divider"></li>
+								<li>
+									<a role="menuitem" tabindex="-1" href="/adminlogout/"><i class="fa fa-power-off"></i> Logout</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- end: search & user box -->
+			</header>
+			<!-- end: header -->
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<aside id="sidebar-left" class="sidebar-left">
+				
+					<div class="sidebar-header">
+						<div class="sidebar-title">
+							Navigation
+						</div>
+						<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+							<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+						</div>
+					</div>
+				
+					<div class="nano">
+						<div class="nano-content">
+							<nav id="menu" class="nav-main" role="navigation">
+								<ul class="nav nav-main">
+									<li class="nav-active">
+										<a href="index.html">
+											<i class="fa fa-home" aria-hidden="true"></i>
+											<span>Dashboard</span>
 										</a>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-newspaper-o" aria-hidden="true"></i>
+											<span>News Section</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/postnews/">Video Post News</a>
+											</li>
+											<li>
+												<a href="/postvideonews/">Video Post News </a>
+											</li>
+											<li>
+												<a href="/newslist/">News List</a>
+											</li>
+											<li>
+												<a href="/videonewslist/">Video News List</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</nav>
+
+						</div>
+				
+					</div>
+				
+				</aside>
+				<!-- end: sidebar -->
+
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2>Video Post News</h2>
+					
+						<div class="right-wrapper pull-right">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="/adminhome/">
+										<i class="fa fa-home"></i>
+									</a>
+								</li>
+							</ol>
+						</div>
+					</header>
+
+					<!-- start: page -->
+						<div class="row">
+							<div class="col-lg-12">
+								<section class="panel">
+									<header class="panel-heading">
+						
+										<h2 class="panel-title">Video Post News</h2>
+
+									</header>
+									<div class="panel-body">
+										
+										<form class="form-horizontal form-bordered" method="get">
+
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="inputDefault">News Title</label>
+												<div class="col-md-6">
+													<input type="text" name="title" class="form-control" id="inputDefault">
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="textareaDefault">News Body</label>
+												<div class="col-md-6">
+													<textarea class="form-control" rows="3" name="body" id="textareaDefault"></textarea>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-md-3 control-label">News Video</label>
+												<div class="col-md-6">
+													<div class="fileupload fileupload-new" data-provides="fileupload">
+														<div class="input-append">
+															<span class="btn btn-default btn-file">
+																<span class="fileupload-new">Select file</span>
+																<input type="file" />
+															</span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<button type="button" class="mb-xs mt-xs mr-xs btn btn-primary btn-block">Block level button</button>
+
+										</div>
 									</div>
-								</div>
+								</form>
+
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-8">
-							<div class="main-error mb-xlg">
-								<h2 class="error-code text-dark text-center text-semibold m-none">404 <i class="fa fa-file"></i></h2>
-								<p class="error-explanation text-center">We're sorry, but the page you were looking for doesn't exist.</p>
-							</div>
-						</div>
-				</div>
-			</section>
-		<!-- end: page -->
+				</section>
+			</div>
+		</div>
+						
+						
+					<!-- end: page -->
+	</section>
+</div>
+
+			
+</section>
 
 		<!-- Vendor -->
 		<script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script>
@@ -79,8 +220,6 @@
 		<script src="{% static 'assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
 		<script src="{% static 'assets/vendor/magnific-popup/magnific-popup.js' %}"></script>
 		<script src="{% static 'assets/vendor/jquery-placeholder/jquery.placeholder.js' %}"></script>
-
-
 		
 		<!-- Specific Page Vendor -->
 		<script src="{% static 'assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js' %}"></script>
@@ -108,7 +247,6 @@
 		<script src="{% static 'assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js' %}"></script>
 		<script src="{% static 'assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js' %}"></script>
 		<script src="{% static 'assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js' %}"></script>
-
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="{% static 'assets/javascripts/theme.js' %}"></script>
@@ -120,11 +258,8 @@
 		<script src="{% static 'assets/javascripts/theme.init.js' %}"></script>
 
 
-
-
 		<!-- Examples -->
 		<script src="{% static 'assets/javascripts/dashboard/examples.dashboard.js' %}"></script>
-
 
 	</body>
 </html>
