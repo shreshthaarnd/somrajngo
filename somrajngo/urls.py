@@ -5,7 +5,7 @@ from app.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('about/',about),
-    path('blog/',blog),
+    path('news/',blog),
     path('blogsingle/',blogsingle),
     path('causes/',causes),
     path('contact/',contact),
