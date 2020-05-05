@@ -9,7 +9,17 @@ def blog(request):
 	obj=NewsData.objects.all()
 	return render(request,'blog.html',{'data':reversed(list(obj))})
 def blogsingle(request):
-	return render(request,'blog-single.html',{})
+	dic={}
+	obj=NewsData.objects.filter(News_ID=request.GET.get('nid'))
+	for x in obj:
+		dic={
+			'title':x.News_Title,
+			'date':x.News_Date,
+			'body':x.News_Body,
+			'type':x.News_Media_Type,
+			'media':x.News_Media.url
+		}
+	return render(request,'blog-single.html',dic)
 def causes(request):
 	return render(request,'causes.html',{})
 def contact(request):
@@ -20,12 +30,84 @@ def services(request):
 	return render(request,'services.html',{})
 def userlogin(request):
 	return render(request,'userlogin.html',{})
+def registration(request):
+	return render(request,'registration.html',{})
+def campaigns(request):
+	return render(request,'campaigns.html',{})
+@csrf_exempt
+def userdashboard(request):
+	if request.method=="POST":
+		e=request.POST.get('email')
+		p=request.POST.get('pass')
+		if UserData.objects.filter(User_Email=e,User_Password=p,User_Status='Active').exists():
+			obj=UserData.objects.filter(User_Email=e)
+			for x in obj:
+				request.session['user_email'] = x.User_ID
+				break
+			return render(request,'userdashboard.html',{})
+		else:
+			return render(request,'userlogin.html',{'msg':'Incorrect Email or Password'})
+	else:
+		return redirect('/error404/')
+def userprofile(request):
+	return render(request,'userprofile.html',{})
+
+@csrf_exempt
+def saveuser(request):
+	if request.method=='POST':
+		fname=request.POST.get('fname')
+		lname=request.POST.get('lname')
+		gender=request.POST.get('gender')
+		email=request.POST.get('email')
+		phone=request.POST.get('phone')
+		address=request.POST.get('address')
+		city=request.POST.get('city')
+		state=request.POST.get('state')
+		age=request.POST.get('age')
+		adhaar=request.FILES['adhaar']
+		u="U00"
+		x=1
+		uid=u+str(x)
+		while UserData.objects.filter(User_ID=uid).exists():
+			x=x+1
+			uid=u+str(x)
+		x=int(x)
+		otp=uuid.uuid5(uuid.NAMESPACE_DNS, email+uid)
+		password=str(otp)
+		password=password.upper()[0:8]
+		obj=UserData(
+			User_ID=uid,
+			User_Fname=fname,
+			User_Lname=lname,
+			User_Gender=gender,
+			User_Email=email,
+			User_Phone=phone,
+			User_Address=address,
+			User_City=city,
+			User_State=state,
+			User_Age=age,
+			User_Password=password,
+			User_Adhaar=adhaar,
+			)
+		obj.save()
+		msg='''Hi '''+fname+'''!
+We have recieved your application and we currently reviewing your details, till then your account is deactivated.
+
+Please wait for our confirmation mail.
+
+Thanks & Regards,
+Team Our Demand'''
+		sub='Our Demand - Application Under Process'
+		email=EmailMessage(sub,msg,to=[email])
+		email.send()
+		txt='You have successfully resgistered and we have recieved your application. Please wait for a confirmation mail while we are reviewing your application.'
+		return render(request,'registration.html',{'msg':txt})
+
 #AdminPannel Code
 def adminindex(request):
 	return render(request,'adminpages/index.html',{})
 def adminpages404withoutmenus(request):
 	return render(request,'adminpages/pages-404-withoutmenus.html',{})
-
 def adminpages500(request):
 	return render(request,'adminpages/pages-500.html',{})
 def adminformsadvanced(request):
@@ -62,7 +144,7 @@ def adminpanel(request):
 def adminhome(request):
 	try:
 		if request.session['admin_id'] == 'admin@ngo.com':
-			return render(request,'adminpages/postnews.html',{})
+			return render(request,'adminpages/index.html',{})
 		else:
 			return redirect('/error404/')
 	except:
@@ -97,14 +179,13 @@ def postnews(request):
 		return redirect('/error404/')
 @csrf_exempt
 def savenews(request):
-#	try:
-#		if request.session['admin_id'] == 'admin@ngo.com':
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
 			if request.method=='POST':
 				title=request.POST.get('title')
 				body=request.POST.get('body')
 				media=request.FILES['media']
 				mtype=request.POST.get('mediatype')
-				print(mtype)
 				n="N00"
 				x=1
 				nid=n+str(x)
@@ -120,9 +201,84 @@ def savenews(request):
 					News_Media=media
 				)
 				obj.save()
-				return render(request,'adminpages/postnews.html',{'msg':'News Posted Successfully'})
-#		
-#		else:
-#			return redirect('/error404/')
-#	except:
-#		return redirect('/error404/')
+				return render(request,'adminpages/postnews.html',{'msg':'News Posted Successfully'})		
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+def activeuser(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			obj=UserData.objects.filter(User_Status='Active')
+			return render(request,'adminpages/activeuser.html',{'data':reversed(list(obj))})
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def deactiveuser(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			obj=UserData.objects.filter(User_Status='Deactive')
+			return render(request,'adminpages/deactiveuser.html',{'data':reversed(list(obj))})
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def makeuseractive(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			uid=request.GET.get('uid')
+			obj=UserData.objects.filter(User_ID=uid)
+			obj.update(User_Status='Active')
+			fname=''
+			pas=''
+			mail=''
+			for x in obj:
+				fname=x.User_Fname
+				pas=x.User_Password
+				mail=x.User_Email
+			msg='''Hi '''+fname+'''!
+Your account has been activated,
+
+Email : '''+mail+'''
+Password : '''+pas+'''
+
+Thanks & Regards,
+Team Our Demand'''
+			sub='Our Demand - Account Activated'
+			email=EmailMessage(sub,msg,to=[mail])
+			email.send()
+			obj=UserData.objects.filter(User_Status='Deactive')
+			return render(request,'adminpages/deactiveuser.html',{'data':reversed(list(obj))})
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def makeuserdeactive(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			uid=request.GET.get('uid')
+			obj=UserData.objects.filter(User_ID=uid)
+			obj.update(User_Status='Deactive')
+			fname=''
+			mail=''
+			for x in obj:
+				fname=x.User_Fname
+				mail=x.User_Email
+			msg='''Hi '''+fname+'''!
+Your account has been deactivated due to some reasons. Please contact to our admin for activating your account.
+
+Thanks & Regards,
+Team Our Demand'''
+			sub='Our Demand - Account Dectivated'
+			email=EmailMessage(sub,msg,to=[mail])
+			email.send()
+			obj=UserData.objects.filter(User_Status='Active')
+			return render(request,'adminpages/activeuser.html',{'data':reversed(list(obj))})
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')

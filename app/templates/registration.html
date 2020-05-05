@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Our Demand</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+
+    
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'w3.css' %}">
+  </head>
+  <body>
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container-fluid px-lg-5">
+	      <a class="navbar-brand" href="index.html">Our Demand</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	        	<li class="nav-item"><a href="/index/" class="nav-link">Home</a></li>
+	        	<li class="nav-item"><a href="/about/" class="nav-link">About us</a></li>
+	        	<li class="nav-item"><a href="/news/" class="nav-link">News</a></li>
+	        	<li class="nav-item"><a href="/campaigns/" class="nav-link">Campaigns</a></li>
+	        	<li class="nav-item"><a href="/contact/" class="nav-link">Contact</a></li>
+	          <li class="nav-item active"><a href="/login/" class="nav-link">Login</a></li>
+            <li class="nav-item"><a href="/signup/" class="nav-link">Signup</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    
+    <section style="height:300px;background-color:blue;padding-top:100px;"class="hero-wrap hero-wrap-2"  data-stellar-background-ratio="0.5">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate pb-5 text-center">
+            <h2 class="mb-3 bread">SignUp Here</h2>
+                      </div>
+        </div>
+      </div>
+    </section>
+
+   		
+		<section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+      <div class="container-fluid px-0">
+        <div class="row no-gutters block-9">
+          <div class="col-md-6 order-md-last d-flex">
+            <form class="bg-light p-5 contact-form" action="/saveuser/" method="POST" enctype="multipart/form-data">
+              <div class="form-group">
+                <label style="font-size:20px;font-weight:bold;">{{ msg|safe }}</label>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="fname" placeholder="First Name" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="lname" placeholder="Last Name" required>
+              </div>
+              <div class="form-group">
+                <select class="form-control" name="gender">
+                  <option selected disabled required>Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <input type="email" class="form-control" name="email" placeholder="Email" required>
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control" name="phone" placeholder="Phone Number" required>
+              </div>
+              <div class="form-group">
+                <textarea type="text" class="form-control" name="address" placeholder="Address" required></textarea>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="city" placeholder="City" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="state" placeholder="State" required>
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control" name="age" placeholder="Age" required>
+              </div>
+              
+              <div class="form-group">
+                <label>Uplaod Adhaar ID</label>
+                <input type="file" name="adhaar" class="form-control" required>
+              </div>
+              
+              <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary py-3 px-5" style="width:100%;font-size:20px;">
+              </div>
+
+            </form>
+            
+          
+          </div>
+
+          <div class="col-md-6 d-flex">
+          	<img src="{% static 'images/52963828_303.jpg' %}" style="width:100%;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-section img" style="padding-bottom:20px;background-image: url({% static 'images/footer.jpg' %});">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Our Demand</h2>
+              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Information</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Donation</a></li>
+                <li><a href="#" class="py-2 d-block">Privacy</a></li>
+                <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="/index/" class="py-2 d-block">Home</a></li>
+                <li><a href="/about/" class="py-2 d-block">Who we are ?</a></li>
+                <li><a href="/news/" class="py-2 d-block">News</a></li>
+                <li><a href="/campaigns/" class="py-2 d-block">Campaigns</a></li>
+                <li><a href="/contact/" class="py-2 d-block">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Have a Questions?</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">Address Here</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">Contacts Here</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">Emails Here</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p>Website Developed & Designed By<br><a style="font-weight:bold;"href="https://www.srd.mobi"><img style="width:40px;margin-right:10px;"src="{% static 'images/SRD(Shreshtha Research&Development.png' %}">SRD - Shreshtha Research & Development</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'js/aos.js' %}"></script>
+  <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+  <script src="{% static 'js/scrollax.min.js' %}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="{% static 'js/google-map.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+    
+  </body>
+</html>
