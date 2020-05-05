@@ -8,6 +8,7 @@ class NewsData(models.Model):
 	News_ID=models.CharField(max_length=100)
 	News_Title=models.CharField(max_length=100)
 	News_Body=models.CharField(max_length=2000)
-	News_Image=models.ImageField(upload_to="newsimages/")
+	News_Media_Type=models.CharField(max_length=100)
+	News_Media=models.FileField(upload_to="newsmedia/")
 	class Meta:
 		db_table="NewsData"

@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from app.views import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,19 +14,7 @@ urlpatterns = [
     path('index/',index),
     path('services/',services),
     path('adminindex/',adminindex),
-    path('userlogin/',userlogin),
-
-    path('adminpages404withoutmenus/',adminpages404withoutmenus),
-    path('adminpages500/',adminpages500),
-    path('adminformsadvanced/',adminformsadvanced),
-    path('adminformsbasic/',adminformsbasic),
-    path('adminformscodeeditor/',adminformscodeeditor),
-    path('adminformslayouts/',adminformslayouts),
-    path('adminformsvalidation/',adminformsvalidation),
-    path('adminformswizard/',adminformswizard),
-    path('adminlayoutsboxed/',adminlayoutsboxed),
-    path('adminlayoutsboxed/',adminlayoutsboxed),
-
+    path('login/',userlogin),
 
     path('error404/',adminpages404withoutmenus),
     path('adminlogin/',adminlogin),
@@ -32,8 +22,11 @@ urlpatterns = [
     path('adminlogout/',adminlogout),
     path('adminhome/',adminhome),
     path('postnews/',postnews),
-    path('adminvideonewspost/',adminvideonewspost),
-    path('adminnewslist/',adminnewslist),
-    path('adminvideonewslist/',adminvideonewslist),
+    path('savenews/',savenews),
+    path('newslist/',adminnewslist),
 
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)
