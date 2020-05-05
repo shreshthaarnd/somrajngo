@@ -91,4 +91,9 @@ def adminvideonewslist(request):
 	return render(request,'adminpages/videonewslist.html',{})
 def registration(request):
 	return render(request,'registration.html',{})	
-
+def campaigns(request):
+	return render(request,'campaigns.html',{})
+def userdashboard(request):
+	return render(request,'userdashboard.html',{})
+def userprofile(request):
+	return render(request,'userprofile.html',{})

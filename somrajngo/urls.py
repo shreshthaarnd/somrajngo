@@ -14,6 +14,9 @@ urlpatterns = [
     path('adminindex/',adminindex),
     path('userlogin/',userlogin),
     path('registration/',registration),
+    path('campaigns/',campaigns),
+    path('userdashboard/',userdashboard),
+    path('userprofile/',userprofile),
 
     path('adminpages404withoutmenus/',adminpages404withoutmenus),
     path('adminpages500/',adminpages500),
