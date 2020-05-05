@@ -44,6 +44,7 @@ def userdashboard(request):
 			for x in obj:
 				request.session['user_email'] = x.User_ID
 				break
+			dic=GetUserDashboard(e)
 			return render(request,'userdashboard.html',{})
 		else:
 			return render(request,'userlogin.html',{'msg':'Incorrect Email or Password'})
