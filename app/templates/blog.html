@@ -42,6 +42,7 @@
 	        	<li class="nav-item"><a href="/about/" class="nav-link">About us</a></li>
 	        	<li class="nav-item"><a href="/news/" class="nav-link">News</a></li>
 	        	<li class="nav-item"><a href="/campaigns/" class="nav-link">Campaigns</a></li>
+            <li class="nav-item"><a href="/books/" class="nav-link">Books</a></li>
 	        	<li class="nav-item active"><a href="/contact/" class="nav-link">Contact</a></li>
 	          <li class="nav-item"><a href="/login/" class="nav-link">Login</a></li>
             <li class="nav-item"><a href="/signup/" class="nav-link">Signup</a></li>
@@ -69,90 +70,44 @@
           <div class="col-lg-8 ftco-animate">
 						<div class="row">
 							
+              {% for x in data %}
+              {% if x.News_Media_Type == 'Image' %}
               <div class="col-md-12 d-flex ftco-animate">
 		            <div class="blog-entry align-self-stretch d-md-flex">
-		              <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
+		              <a href="blog-single.html" class="block-20" style="background-image: url({{ x.News_Media.url|safe }});">
 		              </a>
 		              <div class="text d-block pl-md-4">
 		              	<div class="meta mb-3">
-		                  <div><a href="#">Date Here</a></div>
-		                  <div><a href="#">Admin</a></div>
-		                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+		                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Date|safe }}</a></div>
+		                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">Admin</a></div>
+		                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
 		                </div>
-		                <h3 class="heading"><a href="#">Title Here</a></h3>
-		                <p>News Body Here</p>
-		                <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
+		                <h3 class="heading"><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Title|safe }}</a></h3>
+		                <p>{{ x.News_Body|safe }}</p>
+		                <p><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="btn btn-primary py-2 px-3">Read more</a></p>
 		              </div>
 		            </div>
 		          </div>
-
+              {% else %}
               <div class="col-md-12 d-flex ftco-animate">
                 <div class="blog-entry align-self-stretch d-md-flex">
-                  <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
-                  </a>
+                  <video width="320" height="240" class="block-20" controls>
+                    <source src="{{ x.News_Media.url|safe }}" type="video/mp4">
+                  </video>
                   <div class="text d-block pl-md-4">
                     <div class="meta mb-3">
-                      <div><a href="#">Date Here</a></div>
-                      <div><a href="#">Admin</a></div>
-                      <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                      <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Date|safe }}</a></div>
+                      <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">Admin</a></div>
+                      <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
                     </div>
-                    <h3 class="heading"><a href="#">Title Here</a></h3>
-                    <p>News Body Here</p>
-                    <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
+                    <h3 class="heading"><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Title|safe }}</a></h3>
+                    <p>{{ x.News_Body|safe }}</p>
+                    <p><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="btn btn-primary py-2 px-3">Read more</a></p>
                   </div>
                 </div>
               </div>
-
-              <div class="col-md-12 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch d-md-flex">
-                  <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
-                  </a>
-                  <div class="text d-block pl-md-4">
-                    <div class="meta mb-3">
-                      <div><a href="#">Date Here</a></div>
-                      <div><a href="#">Admin</a></div>
-                      <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">Title Here</a></h3>
-                    <p>News Body Here</p>
-                    <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch d-md-flex">
-                  <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
-                  </a>
-                  <div class="text d-block pl-md-4">
-                    <div class="meta mb-3">
-                      <div><a href="#">Date Here</a></div>
-                      <div><a href="#">Admin</a></div>
-                      <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">Title Here</a></h3>
-                    <p>News Body Here</p>
-                    <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch d-md-flex">
-                  <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
-                  </a>
-                  <div class="text d-block pl-md-4">
-                    <div class="meta mb-3">
-                      <div><a href="#">Date Here</a></div>
-                      <div><a href="#">Admin</a></div>
-                      <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">Title Here</a></h3>
-                    <p>News Body Here</p>
-                    <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
-                  </div>
-                </div>
-              </div>
+              {% endif %}
+              {% endfor %}
 
 						</div>
 						<div class="row mt-5">

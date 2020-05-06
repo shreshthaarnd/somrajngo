@@ -43,6 +43,7 @@
 	        	<li class="nav-item"><a href="/about/" class="nav-link">About us</a></li>
 	        	<li class="nav-item"><a href="/news/" class="nav-link">News</a></li>
 	        	<li class="nav-item"><a href="/campaigns/" class="nav-link">Campaigns</a></li>
+            <li class="nav-item"><a href="/books/" class="nav-link">Books</a></li>
 	        	<li class="nav-item"><a href="/contact/" class="nav-link">Contact</a></li>
 	          <li class="nav-item active"><a href="/login/" class="nav-link">Login</a></li>
             <li class="nav-item"><a href="/signup/" class="nav-link">Signup</a></li>
@@ -56,7 +57,7 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
-            <h2 class="mb-3 bread">User Signup</h2>
+            <h2 class="mb-3 bread">SignUp Here</h2>
                       </div>
         </div>
       </div>
@@ -67,46 +68,52 @@
       <div class="container-fluid px-0">
         <div class="row no-gutters block-9">
           <div class="col-md-6 order-md-last d-flex">
-            <form action="#" class="bg-light p-5 contact-form">
+            <form class="bg-light p-5 contact-form" action="/saveuser/" method="POST" enctype="multipart/form-data">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="First Name">
+                <label style="font-size:20px;font-weight:bold;">{{ msg|safe }}</label>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Last Name">
+                <input type="text" class="form-control" name="fname" placeholder="First Name" required>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Gender">
+                <input type="text" class="form-control" name="lname" placeholder="Last Name" required>
+              </div>
+              <div class="form-group">
+                <select class="form-control" name="gender">
+                  <option selected disabled required>Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
               </div>
               
               <div class="form-group">
-                <input type="Email" class="form-control" placeholder="Email">
+                <input type="email" class="form-control" name="email" placeholder="Email" required>
               </div>
               <div class="form-group">
-                <input type="number" class="form-control" placeholder="Phone Number">
+                <input type="number" class="form-control" name="phone" placeholder="Phone Number" required>
               </div>
               <div class="form-group">
-                <textarea type="text" class="form-control" placeholder="Address"></textarea>
+                <textarea type="text" class="form-control" name="address" placeholder="Address" required></textarea>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="City">
+                <input type="text" class="form-control" name="city" placeholder="City" required>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="State">
+                <input type="text" class="form-control" name="state" placeholder="State" required>
               </div>
               <div class="form-group">
-                <input type="number" class="form-control" placeholder="Age">
+                <input type="number" class="form-control" name="age" placeholder="Age" required>
               </div>
               
               <div class="form-group">
                 <label>Uplaod Adhaar ID</label>
-                <input type="file" class="form-control">
+                <input type="file" name="adhaar" class="form-control" required>
               </div>
               
-              
-              
-                    <div class="form-group">
+              <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary py-3 px-5" style="width:100%;font-size:20px;">
               </div>
+
             </form>
             
           

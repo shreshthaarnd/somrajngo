@@ -101,7 +101,7 @@
 							<nav id="menu" class="nav-main" role="navigation">
 								<ul class="nav nav-main">
 									<li class="nav-active">
-										<a href="index.html">
+										<a href="/adminhome/">
 											<i class="fa fa-home" aria-hidden="true"></i>
 											<span>Dashboard</span>
 										</a>
@@ -116,13 +116,35 @@
 												<a href="/postnews/">Post News</a>
 											</li>
 											<li>
-												<a href="/postvideonews/">Post News Video</a>
-											</li>
-											<li>
 												<a href="/newslist/">News List</a>
 											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-user" aria-hidden="true"></i>
+											<span>Users Section</span>
+										</a>
+										<ul class="nav nav-children">
 											<li>
-												<a href="/videonewslist/">Video News List</a>
+												<a href="/activeuser/">Active Users</a>
+											</li>
+											<li>
+												<a href="/nonactiveuser/">Non Active Users</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-book" aria-hidden="true"></i>
+											<span>Book Section</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/addbooks/">Add Book</a>
+											</li>
+											<li>
+												<a href="/booklist/">Book List</a>
 											</li>
 										</ul>
 									</li>
@@ -157,41 +179,55 @@
 								<section class="panel">
 									<header class="panel-heading">
 						
-										<h2 class="panel-title">Post News</h2>
+										<h2 class="panel-title">{{ msg|safe }}</h2>
 
 									</header>
 									<div class="panel-body">
 										
-										<form class="form-horizontal form-bordered" method="get">
-
+										<form class="form-horizontal form-bordered" method="POST" action="/savenews/" enctype="multipart/form-data">
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="inputDefault">News Title</label>
 												<div class="col-md-6">
-													<input type="text" name="title" class="form-control" id="inputDefault">
+													<input type="text" name="title" class="form-control" id="inputDefault" required>
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="textareaDefault">News Body</label>
 												<div class="col-md-6">
-													<textarea class="form-control" rows="3" name="body" id="textareaDefault"></textarea>
+													<textarea class="form-control" rows="3" name="body" id="textareaDefault" required></textarea>
 												</div>
 											</div>
 
 											<div class="form-group">
-												<label class="col-md-3 control-label">News Image</label>
+												<label class="col-md-3 control-label" for="inputSuccess">News Media Type</label>
+												<div class="col-md-6">
+													<select class="form-control input-lg mb-md" name="mediatype">
+														<option selected disabled required>Select Media Type</option>
+														<option value="Image">Image</option>
+														<option value="Video">Video</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-md-3 control-label">News Media</label>
 												<div class="col-md-6">
 													<div class="fileupload fileupload-new" data-provides="fileupload">
 														<div class="input-append">
 															<span class="btn btn-default btn-file">
 																<span class="fileupload-new">Select file</span>
-																<input type="file" />
+																<input type="file" name="media" required>
 															</span>
 														</div>
 													</div>
 												</div>
 											</div>
-											<button type="button" class="mb-xs mt-xs mr-xs btn btn-primary btn-block">Block level button</button>
+											<div class="form-group">
+												<div class="col-md-6" style="width:100%">
+													<input type="submit" value="POST" class="mb-xs mt-xs mr-xs btn btn-primary btn-block">
+												</div>
+											</div>
 
 										</div>
 									</div>

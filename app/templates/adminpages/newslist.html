@@ -101,7 +101,7 @@
 							<nav id="menu" class="nav-main" role="navigation">
 								<ul class="nav nav-main">
 									<li class="nav-active">
-										<a href="index.html">
+										<a href="/adminhome/">
 											<i class="fa fa-home" aria-hidden="true"></i>
 											<span>Dashboard</span>
 										</a>
@@ -113,16 +113,38 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="/postnews/">Video Post News</a>
-											</li>
-											<li>
-												<a href="/postvideonews/">Video Post News </a>
+												<a href="/postnews/">Post News</a>
 											</li>
 											<li>
 												<a href="/newslist/">News List</a>
 											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-user" aria-hidden="true"></i>
+											<span>Users Section</span>
+										</a>
+										<ul class="nav nav-children">
 											<li>
-												<a href="/videonewslist/">Video News List</a>
+												<a href="/activeuser/">Active Users</a>
+											</li>
+											<li>
+												<a href="/nonactiveuser/">Non Active Users</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-book" aria-hidden="true"></i>
+											<span>Book Section</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/addbooks/">Add Book</a>
+											</li>
+											<li>
+												<a href="/booklist/">Book List</a>
 											</li>
 										</ul>
 									</li>
@@ -162,6 +184,7 @@
 									</header>
 									<div class="panel-body">
 										<div class="table-responsive">
+											<div style="overflow-x:auto;overflow-y:auto;">
 											<table class="table table-hover mb-none">
 												<thead>
 													<tr>
@@ -169,24 +192,40 @@
 														<th>News Date</th>
 														<th>News Title</th>
 														<th>News Body</th>
-														<th>News Image</th>
+														<th>News Media Type</th>
+														<th>News Media</th>
 														<th>Delete</th>
 													</tr>
 												</thead>
 												<tbody>
+													{% for x in obj %}
 													<tr>
-														<td>ET54</td>
-														<td>23/04/2020</td>
-														<td>Cooking</td>
-														<td>dfhyrbf</td>
-														<td><img src="{% static 'images/73d4b0dc54bbf461e671dd7f8ee19f28.jpg' %}" style="width:100px;"></td>
-														<td><button class="mb-xs mt-xs mr-xs btn btn-danger">Delete</button></td>
-													</tr>
-																									</tbody>
-											</table>
-										</div>
-									</div>								</form>
+														<td>{{ x.News_ID|safe }}</td>
+														<td>{{ x.News_Date|safe }}</td>
+														<td>{{ x.News_Title|safe }}</td>
+														<td>{{ x.News_Body|safe }}</td>
+														<td>{{ x.News_Media_Type|safe }}</td>
 
+														{% if x.News_Media_Type == 'Image' %}
+														<td>
+															<img src="{{ x.News_Media.url|safe }}" style="width:200px;">
+														</td>
+														{% else %}
+														<td>
+															<video height="150" width="200" controls>
+																<source src="{{ x.News_Media.url|safe }}" type="video/mp4">
+															</video>
+														</td>
+														{% endif %}
+														<td>
+															<a class="mb-xs mt-xs mr-xs btn btn-danger" href="/deletenews/?News_ID={{ x.News_ID|safe }}">Delete</a>
+														</td>
+													</tr>
+													{% endfor %}
+												</table>
+												</div>
+										</div>
+									</div>
 							</div>
 						</div>
 					</div>

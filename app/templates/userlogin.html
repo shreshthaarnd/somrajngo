@@ -43,6 +43,7 @@
 	        	<li class="nav-item"><a href="/about/" class="nav-link">About us</a></li>
 	        	<li class="nav-item"><a href="/news/" class="nav-link">News</a></li>
 	        	<li class="nav-item"><a href="/campaigns/" class="nav-link">Campaigns</a></li>
+            <li class="nav-item"><a href="/books/" class="nav-link">Books</a></li>
 	        	<li class="nav-item"><a href="/contact/" class="nav-link">Contact</a></li>
 	          <li class="nav-item active"><a href="/login/" class="nav-link">Login</a></li>
             <li class="nav-item"><a href="/signup/" class="nav-link">Signup</a></li>
@@ -56,7 +57,7 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
-            <h2 class="mb-3 bread">User Login</h2>
+            <h2 class="mb-3 bread">Login Here</h2>
                       </div>
         </div>
       </div>
@@ -67,12 +68,15 @@
       <div class="container-fluid px-0">
         <div class="row no-gutters block-9">
           <div class="col-md-6 order-md-last d-flex">
-            <form action="#" class="bg-light p-5 contact-form">
+            <form class="bg-light p-5 contact-form" action="/userdashboard/" method="POST">
               <div class="form-group">
-                <input type="email" class="form-control" placeholder="Email ID">
+                <label style="font-size:20px;font-weight:bold;">{{ msg|safe }}</label>
               </div>
               <div class="form-group">
-                <input type="Password" class="form-control" placeholder="Password">
+                <input type="email" name="email" class="form-control" placeholder="Email ID">
+              </div>
+              <div class="form-group">
+                <input type="password" name="pass" class="form-control" placeholder="Password">
                 <div style="margin-top:10px;"class="w3-right-align">
                   <p><a href="">Forgot Password?</a></p>
                 </div>
