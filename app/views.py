@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import *
 from django.core.mail import EmailMessage
 from app.models import *
+from app.myutil import *
 
 def about(request):
 	return render(request,'about.html',{})
@@ -42,20 +43,37 @@ def userdashboard(request):
 		if UserData.objects.filter(User_Email=e,User_Password=p,User_Status='Active').exists():
 			obj=UserData.objects.filter(User_Email=e)
 			for x in obj:
-				request.session['user_email'] = x.User_ID
+				request.session['user_id'] = x.User_ID
 				break
-			dic=GetUserDashboard(e)
-			return render(request,'userdashboard.html',{})
+			dic=GetUserDashboard(request.session['user_id'])
+			return render(request,'userdashboard.html',dic)
 		else:
 			return render(request,'userlogin.html',{'msg':'Incorrect Email or Password'})
 	else:
 		return redirect('/error404/')
 def userprofile(request):
-	return render(request,'userprofile.html',{})
-
+	dic=GetUserDashboard(request.session['user_id'])
+	return render(request,'userprofile.html',dic)
+@csrf_exempt
+def saveuserprofilepicture(request):
+	if request.method=='POST':
+		obj=UserProfilePicture.objects.filter(User_ID=request.session['user_id']).delete()
+		obj=UserProfilePicture(
+			User_ID=request.session['user_id'],
+			User_Image=request.FILES['image']
+			)
+		obj.save()
+	dic=GetUserDashboard(request.session['user_id'])
+	return render(request,'userprofile.html',dic)
+@csrf_exempt
+def usercampaigns(request):
+	dic=GetUserDashboard(request.session['user_id'])
+	return render(request,'userdashboard.html',dic)
+	
 @csrf_exempt
 def saveuser(request):
 	if request.method=='POST':
+		txt=''
 		fname=request.POST.get('fname')
 		lname=request.POST.get('lname')
 		gender=request.POST.get('gender')
@@ -90,18 +108,21 @@ def saveuser(request):
 			User_Password=password,
 			User_Adhaar=adhaar,
 			)
-		obj.save()
-		msg='''Hi '''+fname+'''!
+		if UserData.objects.filter(User_Email=e).exists():
+			txt='User Already Exists'
+		else:
+			obj.save()
+			msg='''Hi '''+fname+'''!
 We have recieved your application and we currently reviewing your details, till then your account is deactivated.
 
 Please wait for our confirmation mail.
 
 Thanks & Regards,
 Team Our Demand'''
-		sub='Our Demand - Application Under Process'
-		email=EmailMessage(sub,msg,to=[email])
-		email.send()
-		txt='You have successfully resgistered and we have recieved your application. Please wait for a confirmation mail while we are reviewing your application.'
+			sub='Our Demand - Application Under Process'
+			email=EmailMessage(sub,msg,to=[email])
+			email.send()
+			txt='You have successfully resgistered and we have recieved your application. Please wait for a confirmation mail while we are reviewing your application.'
 		return render(request,'registration.html',{'msg':txt})
 
 #AdminPannel Code

@@ -30,3 +30,9 @@ class UserData(models.Model):
 	User_Adhaar=models.FileField(upload_to="useradhaar/")
 	class Meta:
 		db_table="UserData"
+
+class UserProfilePicture(models.Model):
+	User_ID=models.CharField(max_length=100)
+	User_Image=models.FileField(upload_to="userprofilepictures/")
+	class Meta:
+		db_table="UserProfilePicture"

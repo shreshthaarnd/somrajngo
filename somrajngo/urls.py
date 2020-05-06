@@ -21,6 +21,8 @@ urlpatterns = [
     path('userdashboard/',userdashboard),
     path('userprofile/',userprofile),
     path('saveuser/',saveuser),
+    path('saveprofilepicture/',saveuserprofilepicture),
+    path('usercampaigns/',usercampaigns),
 
     path('adminpages404withoutmenus/',adminpages404withoutmenus),
     path('adminpages500/',adminpages500),

@@ -2,7 +2,7 @@
 {% load static %}
 <html lang="en">
   <head>
-    <title>Aspiration - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Our Demand | Hi! {{ Fname|safe }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -55,16 +55,15 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
-            <h2 class="mb-3 bread">Hi, User Name</h2>
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">User Name <i class="ion-ios-arrow-forward"></i></a></span> <span>Your Campaign <i class="ion-ios-arrow-forward"></i></span></p>
+            <h2 class="mb-3 bread">Hi, {{ Fname|safe }}</h2>
           </div>
         </div>
       </div>
     </section>
-<div style="width:100%;"class="w3-bar">
-  <a style="width:25%;"class="w3-bar-item w3-button w3-orange">My Campaigns</a>
-  <a style="width:25%;"class="w3-bar-item w3-button w3-blue">My Books</a>
-  <a href="/userprofile/" style="width:25%;"class="w3-bar-item w3-button w3-red">My Profile</a>
+<div style="width:100%;" class="w3-bar">
+  <a href="/usercampaigns/" style="width:25%;" class="w3-bar-item w3-button w3-orange">My Campaigns</a>
+  <a href="" style="width:25%;" class="w3-bar-item w3-button w3-blue">My Books</a>
+  <a href="/userprofile/" style="width:25%;" class="w3-bar-item w3-button w3-red">My Profile</a>
   <a style="width:25%;"class="w3-bar-item w3-button w3-green">Logout</a>
 </div>
    	<section class="ftco-section">
@@ -187,11 +186,24 @@
           </div> <!-- .col-md-8 -->
           <div class="col-lg-4 sidebar ftco-animate">
             <div class="sidebar-box">
-              <form action="#" class="search-form">
-                <div class="form-group">
-                  <span class="icon ion-ios-search"></span>
-                  <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
-                </div>
+              <h1 style="font-size:25px;padding:20px;border-radius:5px;" class="w3-green text-center">Post Campaign</h1>
+              <form class="w3-container">
+                
+                <input style="margin-bottom:10px;margin-top:10px;" class="w3-input w3-border" type="text" placeholder="Campaign Title">
+
+                <input style="margin-bottom:10px;" placeholder="About Campaign" class="w3-input w3-border" type="text">
+
+                <label>Need Donation?</label><br>
+                <input class="w3-radio" style="margin-bottom:10px;" type="radio" name="donation" value="yes" checked>
+                <label>Yes</label>
+
+                <input class="w3-radio" style="margin-bottom:10px;" type="radio" name="donation" value="no">
+                <label>No</label><br>
+
+                <label>Upload Campaign Image</label>
+                <input style="margin-bottom:10px;" placeholder="About Campaign" class="w3-input w3-border" type="file">
+
+                <button class="w3-button w3-green w3-hover-black" style="width:100%;">Post</button>
               </form>
             </div>
             <div class="sidebar-box ftco-animate">
