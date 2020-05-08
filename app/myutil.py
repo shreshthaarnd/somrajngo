@@ -20,3 +20,12 @@ def GetUserDashboard(uid):
 	for x in obj:
 		dic.update({'image':x.User_Image.url})
 	return dic
+
+def checksession(request):
+	try:
+		if UserData.objects.filter(User_ID=request.session['user_id']).exists():
+			return True
+		else:
+			return False
+	except:
+		return False

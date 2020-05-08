@@ -23,6 +23,16 @@ urlpatterns = [
     path('saveuser/',saveuser),
     path('saveprofilepicture/',saveuserprofilepicture),
     path('usercampaigns/',usercampaigns),
+    path('books/',books),
+    path('changedetails/',changeuserdetails),
+    path('changepassword/',changepassword),
+    path('error/',error),
+    path('myaccount/',myaccount),
+    path('logout/',logout),
+    path('bookcategorypage/',bookcategorypage),
+    path('userbooks/',userbooks),
+    path('saveuserbooks/',saveuserbooks),
+    path('removeuserbook/',removeuserbook),
 
     path('adminpages404withoutmenus/',adminpages404withoutmenus),
     path('adminpages500/',adminpages500),
@@ -48,6 +58,13 @@ urlpatterns = [
     path('nonactiveuser/',deactiveuser),
     path('makeuseractive/',makeuseractive),
     path('makeuserdeactive/',makeuserdeactive),
+    path('addbooks/',adminaddbook),
+    path('savebook/',savebook),
+    path('addbookcategroy/',adminaddbookcategory),
+    path('savebookcategroy/',savebookcategory),
+    path('booklist/',adminbooklist),
+    path('downloadbookpdf/',downloadbookpdf),
+    path('deletebook/',deletebook),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

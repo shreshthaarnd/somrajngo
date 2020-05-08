@@ -6,7 +6,7 @@
 		<!-- Basic -->
 		<meta charset="UTF-8">
 
-		<title>NGO |  Active Users List</title>
+		<title>NGO |  Book List</title>
 		
 		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -160,7 +160,7 @@
 
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2> Active Users List</h2>
+						<h2> Book list</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -179,7 +179,7 @@
 								<section class="panel">
 									<header class="panel-heading">
 						
-										<h2 class="panel-title">Active Users List</h2>
+										<h2 class="panel-title">Book list</h2>
 
 									</header>
 									<div class="panel-body">
@@ -188,52 +188,41 @@
 											<table class="table table-hover mb-none">
 												<thead>
 													<tr>
-														<th>Registration Date</th>
-														<th>ID</th>
-														<th>Name</th>
-														<th>Gender</th>
-														<th>Email</th>
-														<th>Phone</th>
-														<th>Address</th>
-														<th>City</th>
-														<th>State</th>
-														<th>Age</th>
-														<th>Adhaar</th>
-														<th></th>
+														<th>Upload ID</th>
+														<th>Book Name</th>
+														<th>Book Category</th>
+														<th>Book Author</th>
+														<th>About Book</th>
+														<th>Book Cover Image</th>
+														<th>Book PDF</th>
+														<th>Delete</th>
 													</tr>
 												</thead>
 												<tbody>
 													{% for x in data %}
 													<tr>
-														<td>{{ x.User_Date|safe }}</td>
-														<td>{{ x.User_ID|safe }}</td>
-														<td>{{ x.User_Fname|safe }} {{ x.User_Lname|safe }}</td>
-														<td>{{ x.User_Gender|safe }}</td>
-														<td>{{ x.User_Email|safe }}</td>
-														<td>{{ x.User_Phone|safe }}</td>
-														<td>{{ x.User_Address|safe }}</td>
-														<td>{{ x.User_City|safe }}</td>
-														<td>{{ x.User_State|safe }}</td>
-														<td>{{ x.User_Age|safe }}</td>
-
+														<td>{{ x.Book_ID|safe }}</td>
+														<td>{{ x.Book_Name|safe }}</td>
+														<td>{{ x.Book_Category|safe }}</td>
+														<td>{{ x.Book_Author|safe }}</td>
+														<td>{{ x.Book_About|safe }}</td>
+														<td><img style="width:100px;"src="{{ x.Book_Cover.url|safe }}"></td>
 														<td>
-															<img src="{{ x.User_Adhaar.url|safe }}" style="width:100px;">
+															<a href="/downloadbookpdf/?bid={{ x.Book_ID|safe }}" class="mb-xs mt-xs mr-xs btn btn-success">Download</a>
 														</td>
 														<td>
-															<a class="mb-xs mt-xs mr-xs btn btn-danger" href="/makeuserdeactive/?uid={{ x.User_ID|safe }}">Deactive</a>
+															<a class="mb-xs mt-xs mr-xs btn btn-danger" href="/deletebook/?bid={{ x.Book_ID|safe }}">Delete</a>
 														</td>
 													</tr>
 													{% endfor %}
+													
 												</table>
-												</div>
+											</div>
 										</div>
 									</div>
+								</section>
 							</div>
 						</div>
-					</div>
-				</section>
-			</div>
-		</div>
 						
 						
 					<!-- end: page -->

@@ -43,9 +43,14 @@
             <li class="nav-item"><a href="/about/" class="nav-link">About us</a></li>
             <li class="nav-item"><a href="/news/" class="nav-link">News</a></li>
             <li class="nav-item"><a href="/campaigns/" class="nav-link">Campaigns</a></li>
+            <li class="nav-item"><a href="/books/" class="nav-link">Books</a></li>
             <li class="nav-item active"><a href="/contact/" class="nav-link">Contact</a></li>
+            {% if session == value %}
+            <li class="nav-item"><a href="/myaccount/" class="nav-link">My Account</a></li>
+            {% else %}
             <li class="nav-item"><a href="/login/" class="nav-link">Login</a></li>
             <li class="nav-item"><a href="/signup/" class="nav-link">Signup</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -62,9 +67,9 @@
     </section>
 <div style="width:100%;" class="w3-bar">
   <a href="/usercampaigns/" style="width:25%;" class="w3-bar-item w3-button w3-orange">My Campaigns</a>
-  <a href="" style="width:25%;" class="w3-bar-item w3-button w3-blue">My Books</a>
+  <a href="/userbooks/" style="width:25%;" class="w3-bar-item w3-button w3-blue">My Books</a>
   <a href="/userprofile/" style="width:25%;" class="w3-bar-item w3-button w3-red">My Profile</a>
-  <a style="width:25%;"class="w3-bar-item w3-button w3-green">Logout</a>
+  <a href="/logout/" style="width:25%;"class="w3-bar-item w3-button w3-green">Logout</a>
 </div>
    	<section class="ftco-section">
       <div class="container">

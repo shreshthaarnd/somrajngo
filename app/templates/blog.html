@@ -42,9 +42,14 @@
 	        	<li class="nav-item"><a href="/about/" class="nav-link">About us</a></li>
 	        	<li class="nav-item"><a href="/news/" class="nav-link">News</a></li>
 	        	<li class="nav-item"><a href="/campaigns/" class="nav-link">Campaigns</a></li>
+            <li class="nav-item"><a href="/books/" class="nav-link">Books</a></li>
 	        	<li class="nav-item active"><a href="/contact/" class="nav-link">Contact</a></li>
-	          <li class="nav-item"><a href="/login/" class="nav-link">Login</a></li>
+	          {% if session == value %}
+            <li class="nav-item"><a href="/myaccount/" class="nav-link">My Account</a></li>
+            {% else %}
+            <li class="nav-item"><a href="/login/" class="nav-link">Login</a></li>
             <li class="nav-item"><a href="/signup/" class="nav-link">Signup</a></li>
+            {% endif %}
 	        </ul>
 	      </div>
 	    </div>
@@ -128,55 +133,20 @@
           <div class="col-lg-4 sidebar ftco-animate">
             
             <div class="sidebar-box ftco-animate">
-              <h3 class="heading-2">Trending News</h3>
+              <h3 class="heading-2">Recent News</h3>
               
+              {% for x in rdata %}
               <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
                 <div class="text">
-                  <h3 class="heading-1"><a href="#">Title Here</a></h3>
+                  <h3 class="heading-1"><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Title|safe }}</a></h3>
                   <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Date Here</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                    <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}"><span class="icon-calendar"></span> {{ x.News_Date|safe }}</a></div>
+                    <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}"><span class="icon-person"></span> Admin</a></div>
+                    <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}"><span class="icon-chat"></span> 19</a></div>
                   </div>
                 </div>
               </div>
-
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
-                <div class="text">
-                  <h3 class="heading-1"><a href="#">Title Here</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Date Here</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
-                <div class="text">
-                  <h3 class="heading-1"><a href="#">Title Here</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Date Here</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
-                <div class="text">
-                  <h3 class="heading-1"><a href="#">Title Here</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Date Here</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
               
             </div>
 

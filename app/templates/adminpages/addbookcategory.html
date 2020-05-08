@@ -6,7 +6,7 @@
 		<!-- Basic -->
 		<meta charset="UTF-8">
 
-		<title>NGO |  Active Users List</title>
+		<title>NGO | Add Book Category</title>
 		
 		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -144,6 +144,9 @@
 												<a href="/addbooks/">Add Book</a>
 											</li>
 											<li>
+												<a href="/addbookcategroy/">Add Book Category</a>
+											</li>
+											<li>
 												<a href="/booklist/">Book List</a>
 											</li>
 										</ul>
@@ -155,12 +158,11 @@
 				
 					</div>
 				
-				</aside>
-				<!-- end: sidebar -->
+				</aside>				<!-- end: sidebar -->
 
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2> Active Users List</h2>
+						<h2>Add Book Category</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -179,61 +181,59 @@
 								<section class="panel">
 									<header class="panel-heading">
 						
-										<h2 class="panel-title">Active Users List</h2>
+										<h2 class="panel-title">{{ msg|safe }}</h2>
 
 									</header>
 									<div class="panel-body">
-										<div class="table-responsive">
-											<div style="overflow-x:auto;overflow-y:auto;">
-											<table class="table table-hover mb-none">
-												<thead>
-													<tr>
-														<th>Registration Date</th>
-														<th>ID</th>
-														<th>Name</th>
-														<th>Gender</th>
-														<th>Email</th>
-														<th>Phone</th>
-														<th>Address</th>
-														<th>City</th>
-														<th>State</th>
-														<th>Age</th>
-														<th>Adhaar</th>
-														<th></th>
-													</tr>
-												</thead>
-												<tbody>
-													{% for x in data %}
-													<tr>
-														<td>{{ x.User_Date|safe }}</td>
-														<td>{{ x.User_ID|safe }}</td>
-														<td>{{ x.User_Fname|safe }} {{ x.User_Lname|safe }}</td>
-														<td>{{ x.User_Gender|safe }}</td>
-														<td>{{ x.User_Email|safe }}</td>
-														<td>{{ x.User_Phone|safe }}</td>
-														<td>{{ x.User_Address|safe }}</td>
-														<td>{{ x.User_City|safe }}</td>
-														<td>{{ x.User_State|safe }}</td>
-														<td>{{ x.User_Age|safe }}</td>
-
-														<td>
-															<img src="{{ x.User_Adhaar.url|safe }}" style="width:100px;">
-														</td>
-														<td>
-															<a class="mb-xs mt-xs mr-xs btn btn-danger" href="/makeuserdeactive/?uid={{ x.User_ID|safe }}">Deactive</a>
-														</td>
-													</tr>
-													{% endfor %}
-												</table>
+										
+										<form class="form-horizontal form-bordered" method="POST" action="/savebookcategroy/" enctype="multipart/form-data">
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="inputDefault">Book Category Name</label>
+												<div class="col-md-6">
+													<input type="text" name="name" class="form-control" id="inputDefault" required>
 												</div>
-										</div>
-									</div>
-							</div>
-						</div>
+											</div>
+
+											<div class="form-group">
+												<div class="col-md-6" style="width:100%">
+													<input type="submit" value="Upload" class="mb-xs mt-xs mr-xs btn btn-primary btn-block">
+												</div>
+											</div>
+								</form>
 					</div>
 				</section>
 			</div>
 		</div>
+
+		<section class="panel">
+					<header class="panel-heading">
+						<h2 class="panel-title">Categories List</h2>
+					</header>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<div style="overflow-x:auto;overflow-y:auto;">
+									<table class="table table-hover mb-none">
+										<thead>
+											<tr>
+												<th>Book Category ID</th>
+												<th>Book Category Name</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for x in data %}
+											<tr>
+												<td>{{ x.Category_ID|safe }}</td>
+												<td>{{ x.Category_Name|safe }}</td>
+											</tr>
+											{% endfor %}
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 						
 						
 					<!-- end: page -->
