@@ -32,6 +32,7 @@ urlpatterns = [
     path('adminformsvalidation/',adminformsvalidation),
     path('adminformswizard/',adminformswizard),
     path('adminlayoutsboxed/',adminlayoutsboxed),
+
     path('adminlayoutsboxed/',adminlayoutsboxed),
 
     path('error404/',adminpages404withoutmenus),
@@ -49,6 +50,9 @@ urlpatterns = [
     path('makeuserdeactive/',makeuserdeactive),
     path('addbooks/',adminaddbook),
     path('booklist/',adminbooklist),
+    path('admincampaigns/',admincampaigns),
+    path('recentcampaigns/',adminrecentcampaigns),
+    path('activecampaigns/',adminactivecampaigns),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

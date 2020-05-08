@@ -129,6 +129,7 @@ def adminlayoutsboxed(request):
 def adminlogin(request):
 	return render(request,'adminpages/adminlogin.html',{})
 
+
 @csrf_exempt
 def adminpanel(request):
 	if request.method=='POST':
@@ -289,3 +290,9 @@ def adminbooklist(request):
 	return render(request,'adminpages/booklist.html',{})
 def books(request):
 	return render(request,'books.html',{})
+def admincampaigns(request):
+	return render(request,'adminpages/campaigns.html',{})
+def adminrecentcampaigns(request):
+	return render(request,'adminpages/recentcampaigns.html',{})
+def adminactivecampaigns(request):
+	return render(request,'adminpages/activecampaign.html',{})
