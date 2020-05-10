@@ -150,24 +150,35 @@ def campaigns(request):
 	lt=[]
 	obj=CampaignData.objects.all()
 	for x in obj:
-		d={
-			'camid':x.Campaign_ID,
-			'date':x.Campaign_Date,
-			'title':x.Campaign_Title,
-			'about':x.Campaign_About[0:65]+'....',
-			'donation':x.Campaign_Donation.upper(),
-			'cover':x.Campaign_Images,
-			'acnumber':x.Campaign_Account_Number,
-			'acname':x.Campaign_Account_Name,
-			'acifsc':x.Campaign_Account_IFSC,
-			'acbank':x.Campaign_Account_Bank
-		}
-		obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
-		for y in obj1:
-			d.update({'image':y.Campaign_Images})
-			break
-		lt.append(d)
-	dic.update({'camdata':lt})
+		if x.Campaign_Title != 'NA':
+			d={
+				'camid':x.Campaign_ID,
+				'date':x.Campaign_Date,
+				'title':x.Campaign_Title,
+				'about':x.Campaign_About[0:65]+'....',
+				'donation':x.Campaign_Donation.upper(),
+				'cover':x.Campaign_Images,
+				'acnumber':x.Campaign_Account_Number,
+				'acname':x.Campaign_Account_Name,
+				'acifsc':x.Campaign_Account_IFSC,
+				'acbank':x.Campaign_Account_Bank
+			}
+			obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+			for y in obj1:
+				d.update({'image':y.Campaign_Images})
+				break
+			lt.append(d)
+	data=[]
+	page = request.GET.get('page')
+	paginator = Paginator(list(reversed(lt)), 5)
+	try:
+		data = paginator.page(page)
+	except PageNotAnInteger:
+		data = paginator.page(1)
+	except EmptyPage:
+		data = paginator.page(paginator.num_pages)
+	dic={'data':data}
+	dic.update({'data':data})
 	return render(request,'campaigns.html',dic)
 def books(request):
 	lt=[]
