@@ -223,38 +223,37 @@
 											<table class="table table-hover mb-none">
 												<thead>
 													<tr>
-														<th>Campaign ID</th>
-														<th>Campaign Title</th>
-														<th>About Campaign</th>
+														<th>ID</th>
+														<th>Date</th>
+														<th>Title</th>
+														<th>Need Donation?</th>
 														<th>User Name</th>
 														<th>User Email</th>
 														<th>User Phone</th>
 														<th>Campaign Image</th>
-														<th>Campaign Video</th>
 														<th>Active</th>
 														<th>Remove</th>
 													</tr>
 												</thead>
 												<tbody>
-								
+													{% for x in data %}
 													<tr>
-														<td>HYUT56</td>
-														<td>Aishi</td>
-														<td>Jindgi</td>
-														<td>Shubhi</td>
-														<td>gh34@gmail.com</td>
-														<td>7896054587</td>
-														<td><img style="width:100%;"src="{% static 'images/causes-5.jpg' %}"></td>
+														<td>{{ x.camid|safe }}</td>
+														<td>{{ x.date|safe }}</td>
+														<td>{{ x.title|safe }}</td>
+														<td>{{ x.donation|safe }}</td>
+														<td>{{ x.uname|safe }}</td>
+														<td>{{ x.uemail|safe }}</td>
+														<td>{{ x.uphone|safe }}</td>
+														<td>{{ x.images|safe }} Images</td>
 														<td>
-															<video height="150" width="200" controls>
-																<source src="{% static 'mhkjy.mp4' %}" type="video/mp4">
-															</video>
+															<a href="/activatecampaign/?camid={{ x.camid|safe }}" class="mb-xs mt-xs mr-xs btn btn-primary">Active</a>
 														</td>
-														<td><a href="" class="mb-xs mt-xs mr-xs btn btn-danger">Active</a>
-														</td>
-														<td><a href="" class="mb-xs mt-xs mr-xs btn btn-danger">Remove</a>
+														<td>
+															<a href="/deletecampaignpermanently/?camid={{ x.camid|safe }}" class="mb-xs mt-xs mr-xs btn btn-danger" style="border-radius:50px;"><i class="fa fa-trash"></i></a>
 														</td>
 													</tr>
+													{% endfor %}
 													
 												</table>
 												</div>

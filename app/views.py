@@ -148,7 +148,7 @@ def campaigns(request):
 	dic={'session':checksession(request),'value':True}
 	d={}
 	lt=[]
-	obj=CampaignData.objects.all()
+	obj=CampaignData.objects.filter(Campaign_Status='Active')
 	for x in obj:
 		if x.Campaign_Title != 'NA':
 			d={
@@ -805,13 +805,249 @@ def downloadbookpdf(request):
 	response['Content-Disposition'] = 'attachment; filename=%s' % file_name 
 	return response
 def admincampaigns(request):
-	return render(request,'adminpages/campaigns.html',{})
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			d={}
+			lt=[]
+			img=[]
+			obj=CampaignData.objects.filter(Campaign_Status='Deactive')
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					d={
+						'camid':x.Campaign_ID,
+						'date':x.Campaign_Date,
+						'title':x.Campaign_Title,
+						'about':x.Campaign_About[0:65]+'....',
+						'donation':x.Campaign_Donation.upper(),
+						'cover':x.Campaign_Images,
+						'acnumber':x.Campaign_Account_Number,
+						'acname':x.Campaign_Account_Name,
+						'acifsc':x.Campaign_Account_IFSC,
+						'acbank':x.Campaign_Account_Bank
+					}
+					obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+					for y in obj1:
+						img.append(y.Campaign_Images.url)
+					d.update({'images':img})
+					obj2=UserData.objects.filter(User_ID=x.User_ID)
+					for z in obj2:
+						d.update({'uname':z.User_Fname+' '+z.User_Lname,
+								'uemail':z.User_Email,
+								'uphone':z.User_Phone,
+								'uaddress':z.User_Address+' '+z.User_City+' '+'('+z.User_State+')'})
+					lt.append(d)
+			dic={'data':reversed(lt)}
+			print(lt)
+			return render(request,'adminpages/campaigns.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
 def adminrecentcampaigns(request):
-	return render(request,'adminpages/recentcampaigns.html',{})
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			d={}
+			lt=[]
+			img=[]
+			obj=CampaignData.objects.filter(Campaign_Status='Deactive')
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					d={
+						'camid':x.Campaign_ID,
+						'date':x.Campaign_Date,
+						'title':x.Campaign_Title,
+						'about':x.Campaign_About,
+						'donation':x.Campaign_Donation.upper(),
+						'cover':x.Campaign_Images,
+						'acnumber':x.Campaign_Account_Number,
+						'acname':x.Campaign_Account_Name,
+						'acifsc':x.Campaign_Account_IFSC,
+						'acbank':x.Campaign_Account_Bank
+					}
+					obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+					for y in obj1:
+						img.append(y.Campaign_Images.url)
+					d.update({'images':img})
+					obj2=UserData.objects.filter(User_ID=x.User_ID)
+					for z in obj2:
+						d.update({'uname':z.User_Fname+' '+z.User_Lname,
+								'uemail':z.User_Email,
+								'uphone':z.User_Phone,
+								'uaddress':z.User_Address+' '+z.User_City+' '+'('+z.User_State+')'})
+					lt.append(d)
+			dic={'data':reversed(lt)}
+			return render(request,'adminpages/recentcampaigns.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+def adminapprovecampaign(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			obj=CampaignData.objects.filter(Campaign_ID=request.GET.get('camid'))
+			obj.update(Campaign_Status='Active')
+			e=''
+			fname=''
+			ctitle=''
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					ctitle=x.Campaign_Title
+					obj1=UserData.objects.filter(User_ID=x.User_ID)
+					for y in obj1:
+						fname=y.User_Fname
+						e=y.User_Email
+			msg='''Hi '''+fname+'''!
+Your campaign '''+ctitle+''' has been activated.
+
+Thanks & Regards,
+Team Aaeena'''
+			sub='Aaeena - '+ctitle+' campaign has been activated'
+			email=EmailMessage(sub,msg,to=[e])
+			email.send()
+			return redirect('/recentcampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def adminrejectcampaign(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			obj=CampaignData.objects.filter(Campaign_ID=request.GET.get('camid'))
+			obj.update(Campaign_Status='Rejected')
+			e=''
+			fname=''
+			ctitle=''
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					ctitle=x.Campaign_Title
+					obj1=UserData.objects.filter(User_ID=x.User_ID)
+					for y in obj1:
+						fname=y.User_Fname
+						e=y.User_Email
+			msg='''Hi '''+fname+'''!
+Your campaign '''+ctitle+''' has been rejected by Admin.
+
+Thanks & Regards,
+Team Aaeena'''
+			sub='Aaeena - '+ctitle+' campaign rejected'
+			email=EmailMessage(sub,msg,to=[e])
+			email.send()
+			return redirect('/recentcampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
 def adminactivecampaigns(request):
-	return render(request,'adminpages/activecampaign.html',{})
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			d={}
+			lt=[]
+			img=[]
+			obj=CampaignData.objects.filter(Campaign_Status='Active')
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					d={
+						'camid':x.Campaign_ID,
+						'date':x.Campaign_Date,
+						'title':x.Campaign_Title,
+						'about':x.Campaign_About,
+						'donation':x.Campaign_Donation.upper(),
+						'cover':x.Campaign_Images,
+						'acnumber':x.Campaign_Account_Number,
+						'acname':x.Campaign_Account_Name,
+						'acifsc':x.Campaign_Account_IFSC,
+						'acbank':x.Campaign_Account_Bank
+					}
+					obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+					for y in obj1:
+						img.append(y.Campaign_Images.url)
+					d.update({'images':len(img)})
+					obj2=UserData.objects.filter(User_ID=x.User_ID)
+					for z in obj2:
+						d.update({'uname':z.User_Fname+' '+z.User_Lname,
+								'uemail':z.User_Email,
+								'uphone':z.User_Phone})
+					lt.append(d)
+			dic={'data':reversed(lt)}
+			return render(request,'adminpages/activecampaign.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
 def admindeactivecampaigns(request):
-	return render(request,'adminpages/deactivecampaign.html',{})
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			d={}
+			lt=[]
+			img=[]
+			obj=CampaignData.objects.filter(Campaign_Status='Deactived')
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					d={
+						'camid':x.Campaign_ID,
+						'date':x.Campaign_Date,
+						'title':x.Campaign_Title,
+						'about':x.Campaign_About,
+						'donation':x.Campaign_Donation.upper(),
+						'cover':x.Campaign_Images,
+						'acnumber':x.Campaign_Account_Number,
+						'acname':x.Campaign_Account_Name,
+						'acifsc':x.Campaign_Account_IFSC,
+						'acbank':x.Campaign_Account_Bank
+					}
+					obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+					for y in obj1:
+						img.append(y.Campaign_Images.url)
+					d.update({'images':len(img)})
+					obj2=UserData.objects.filter(User_ID=x.User_ID)
+					for z in obj2:
+						d.update({'uname':z.User_Fname+' '+z.User_Lname,
+								'uemail':z.User_Email,
+								'uphone':z.User_Phone})
+					lt.append(d)
+			dic={'data':reversed(lt)}
+			return render(request,'adminpages/deactivecampaign.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def deactivatecampaign(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			camid=request.GET.get('camid')
+			obj=CampaignData.objects.filter(Campaign_ID=camid)
+			obj.update(Campaign_Status='Deactived')
+			return redirect('/activecampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def activatecampaign(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			camid=request.GET.get('camid')
+			obj=CampaignData.objects.filter(Campaign_ID=camid)
+			obj.update(Campaign_Status='Active')
+			return redirect('/deactivecampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def deletecampaignpermanently(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			camid=request.GET.get('camid')
+			obj=CampaignData.objects.filter(Campaign_ID=camid).delete()
+			return redirect('/activecampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
 def donation(request):
 	return render(request,'donation.html',{})
 def admindonations(request):

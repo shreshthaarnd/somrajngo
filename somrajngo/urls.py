@@ -63,6 +63,11 @@ urlpatterns = [
     path('deactivecampaigns/',admindeactivecampaigns),
     path('downloadbookpdf/',downloadbookpdf),
     path('deletebook/',deletebook),
+    path('adminapprovecampaign/',adminapprovecampaign),
+    path('adminrejectcampaign/',adminrejectcampaign),
+    path('deactivatecampaign/',deactivatecampaign),
+    path('activatecampaign/',activatecampaign),
+    path('deletecampaignpermanently/',deletecampaignpermanently),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

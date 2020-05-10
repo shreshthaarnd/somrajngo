@@ -81,6 +81,7 @@ class CampaignData(models.Model):
 	Campaign_Account_Name=models.CharField(max_length=50, default='NA')
 	Campaign_Account_IFSC=models.CharField(max_length=50, default='NA')
 	Campaign_Account_Bank=models.CharField(max_length=50, default='NA')
+	Campaign_Status=models.CharField(max_length=50, default='Deactive')
 	Campaign_Images=models.FileField(upload_to="campaignimages/")
 	class Meta:
 		db_table="CampaignData"
