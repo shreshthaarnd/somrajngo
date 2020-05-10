@@ -1,0 +1,362 @@
+<!doctype html>
+{% load static %}
+<html class="fixed">
+	<head>
+
+		<!-- Basic -->
+		<meta charset="UTF-8">
+
+		<title>Recent Campaigns</title>
+		<meta name="keywords" content="HTML5 Admin Template" />
+		<meta name="description" content="Porto Admin - Responsive HTML5 Template">
+		<meta name="author" content="okler.net">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Web Fonts  -->
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.css' %}" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static 'assets/vendor/magnific-popup/magnific-popup.css' %}" />
+		<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-datepicker/css/datepicker3.css' %}" />
+
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="{% static 'assets/vendor/owl-carousel/owl.carousel.css' %}" />
+		<link rel="stylesheet" href="{% static 'assets/vendor/owl-carousel/owl.theme.css' %}" />
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="{% static 'assets/stylesheets/theme.css' %}" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="{% static 'assets/stylesheets/skins/default.css' %}" />
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="{% static 'assets/stylesheets/theme-custom.css' %}">
+
+		<!-- Head Libs -->
+		<script src="{% static 'assets/vendor/modernizr/modernizr.js' %}"></script>
+
+	</head>
+	<body>
+		<section class="body">
+
+			<!-- start: header -->
+			<header class="header">
+				<div class="logo-container">
+					<a href="" class="logo">
+						<img src="{% static 'assets/images/logo.png' %}" height="35">
+					</a>
+					<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+						<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+					</div>
+				</div>
+			
+				<!-- start: search & user box -->
+				<div class="header-right">
+
+					<span class="separator"></span>
+			
+					<div id="userbox" class="userbox">
+						<a href="#" data-toggle="dropdown">
+							<figure class="profile-picture">
+								<img src="{% static 'assets/images/!logged-user.jpg' %}" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+							</figure>
+							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
+								<span class="name">Hi! Admin</span>
+								<span class="role">Logout Here</span>
+							</div>
+			
+							<i class="fa custom-caret"></i>
+						</a>
+			
+						<div class="dropdown-menu">
+							<ul class="list-unstyled">
+								<li class="divider"></li>
+								<li>
+									<a role="menuitem" tabindex="-1" href="/adminlogout/"><i class="fa fa-power-off"></i> Logout</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- end: search & user box -->
+			</header>
+			<!-- end: header -->
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<aside id="sidebar-left" class="sidebar-left">
+				
+					<div class="sidebar-header">
+						<div class="sidebar-title">
+							Navigation
+						</div>
+						<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+							<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+						</div>
+					</div>
+				
+					<div class="nano">
+						<div class="nano-content">
+							<nav id="menu" class="nav-main" role="navigation">
+								<ul class="nav nav-main">
+									<li class="nav-active">
+										<a href="/adminhome/">
+											<i class="fa fa-home" aria-hidden="true"></i>
+											<span>Dashboard</span>
+										</a>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-newspaper-o" aria-hidden="true"></i>
+											<span>News Section</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/postnews/">Post News</a>
+											</li>
+											<li>
+												<a href="/newslist/">News List</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-user" aria-hidden="true"></i>
+											<span>Users Section</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/activeuser/">Active Users</a>
+											</li>
+											<li>
+												<a href="/nonactiveuser/">Non Active Users</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-book" aria-hidden="true"></i>
+											<span>Book Section</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/addbooks/">Add Book</a>
+											</li>
+											<li>
+												<a href="/addbookcategroy/">Add Book Category</a>
+											</li>
+											<li>
+												<a href="/booklist/">Book List</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-bullhorn" aria-hidden="true"></i>
+											<span>Campaign Section</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/recentcampaigns/">Recent Campaign</a>
+											</li>
+											<li>
+												<a href="/activecampaigns/">Active Campaigns</a>
+											</li>
+											<li>
+												<a href="/deactivecampaigns/">Deactive Campaigns</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-money" aria-hidden="true"></i>
+											<span>Donations</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/recentdonation/">Recent Donation</a>
+											</li>
+											<li>
+												<a href="/receiveddonation/">Received Donation</a>
+											</li>
+											
+										</ul>
+									</li>
+								</ul>
+							</nav>
+
+						</div>
+				
+					</div>
+				
+				</aside>
+				<!-- end: sidebar -->
+
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2>Recent Campaigns</h2>
+					
+						<div class="right-wrapper pull-right">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="fa fa-home"></i>
+									</a>
+								</li>
+							</ol>
+					
+							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+						</div>
+					</header>
+
+					<!-- start: page -->
+					
+
+					
+					
+						
+						
+							<section class="panel">
+								<header class="panel-heading">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+										<a href="#" class="fa fa-times"></a>
+									</div>
+
+									<h2 class="panel-title">Recent Campaigns</h2>
+								</header>
+								<div class="panel-body">
+									<div class="owl-carousel" data-plugin-carousel data-plugin-options='{ "items": 1,  "navigation": true, "pagination": false }'>
+										<div class="item">
+											<h1 style="font-size:25px;font-weight:bold;margin-bottom:20px;"class="text-center">Campaign Title</h1>
+											<div class="row-mt-lg pt-lg">
+												<div style="width:50%;"class="col-md-3">
+													<img style="height:212px;width:100%;"alt="" class="img-responsive" src="{% static 'assets/images/projects/project-2.jpg' %}">
+												</div>
+											
+												<div style="width:50%;"class="col-md-3">
+													<video controls style="width:100%;">
+														<source src="{% static 'edfgt.mp4' %}" type="video/mp4">
+													</video>
+												</div>
+												
+											</div>
+										<div class="row mt-lg pt-lg">
+											<div style="width:50%;"class="col-md-3">
+												<table  style="margin:20px;"class="table table-hover mb-none">
+												
+												<tbody>
+												
+													<tr style="font-size:20px;">
+														
+														<td style="font-weight:bold;">
+															<i class="fa fa-user">
+															</i> Shalini
+														</td>
+
+														
+													</tr>
+													<tr style="font-size:20px;">
+														
+														<td style="font-weight:bold;">
+															<i class="fa fa-at">
+															</i> Sha34@gmail.com
+														</td>
+
+														
+													</tr>
+													<tr style="font-size:20px;">
+														
+														<td style="font-weight:bold;">
+															<i class="fa fa-mobile">
+															</i> 4587609348
+														</td>	
+													</tr>
+													<tr style="font-size:20px;">
+														
+														<td style="font-weight:bold;">
+															<i class="fa fa-map-marker">
+															</i> Saswati Nagar Agra
+														</td>
+
+														
+													</tr>
+
+													
+												</table>
+											</div>
+											<div style="width:50%;"class="col-md-3">
+												<table  style="margin:20px;"class="table table-hover mb-none">
+												
+												<tbody>
+													<tr style="font-size:20px;">
+														<td style="font-weight:bold;">
+															 About Campaign
+														</td>
+													</tr>
+													<tr style="font-size:20px;">
+														<td>
+															 Twinkle Twinkle little star how are wonder what you are up above the world so hign like a daimond in the sky 
+														</td>	
+													</tr>
+													<tr style="font-size:20px;">
+														<td>
+															<i class="fa fa-calendar"></i>
+															 02/05/2020
+														</td>	
+													</tr>
+
+
+													
+												</table>
+											</div>
+										</div>
+											<div class="row mt-lg pt-lg">
+												<div style="width:50%;"class="col-md-3">
+													<button style="width:100%;"type="button" class="mb-xs mt-xs mr-xs btn btn-danger"><i class="fa fa-ban"></i> Reject</button>
+												</div>
+												<div style="width:50%;"class="col-md-3">
+													<button style="width:100%;"type="button" class="mb-xs mt-xs mr-xs btn btn-primary"><i class="fa fa-thumbs-up"></i> Approve</button>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+							</section>
+						
+
+					<!-- end: page -->
+				</section>
+			</div>
+
+			
+		</section>
+
+		<!-- Vendor -->
+		<script src="{% static 'assets/vendor/jquery/jquery.js' %}"></script>
+		<script src="{% static 'assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js' %}"></script>
+		<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.js' %}"></script>
+		<script src="{% static 'assets/vendor/nanoscroller/nanoscroller.js' %}"></script>
+		<script src="{% static 'assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+		<script src="{% static 'assets/vendor/magnific-popup/magnific-popup.js' %}"></script>
+		<script src="{% static 'assets/vendor/jquery-placeholder/jquery.placeholder.js' %}"></script>
+		
+		<!-- Specific Page Vendor -->
+		<script src="{% static 'assets/vendor/owl-carousel/owl.carousel.js' %}"></script>
+		
+		<!-- Theme Base, Components and Settings -->
+		<script src="{% static 'assets/javascripts/theme.js' %}"></script>
+		
+		<!-- Theme Custom -->
+		<script src="{% static 'assets/javascripts/theme.custom.js' %}"></script>
+		
+		<!-- Theme Initialization Files -->
+		<script src="{% static 'assets/javascripts/theme.init.js' %}"></script>
+
+	</body>
+</html>

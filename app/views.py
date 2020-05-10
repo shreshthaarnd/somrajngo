@@ -516,6 +516,7 @@ def adminlayoutsboxed(request):
 def adminlogin(request):
 	return render(request,'adminpages/adminlogin.html',{})
 
+
 @csrf_exempt
 def adminpanel(request):
 	if request.method=='POST':
@@ -803,3 +804,15 @@ def downloadbookpdf(request):
 	response['Content-Length'] = os.stat(file_path).st_size
 	response['Content-Disposition'] = 'attachment; filename=%s' % file_name 
 	return response
+def admincampaigns(request):
+	return render(request,'adminpages/campaigns.html',{})
+def adminrecentcampaigns(request):
+	return render(request,'adminpages/recentcampaigns.html',{})
+def adminactivecampaigns(request):
+	return render(request,'adminpages/activecampaign.html',{})
+def admindeactivecampaigns(request):
+	return render(request,'adminpages/deactivecampaign.html',{})
+def donation(request):
+	return render(request,'donation.html',{})
+def admindonations(request):
+	return render(request,'adminpages/donation.html',{})
