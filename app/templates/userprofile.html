@@ -2,7 +2,7 @@
 {% load static %}
 <html lang="en">
   <head>
-    <title>Aspiration - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Aaeena | Hi! {{ Fname|safe }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -33,7 +33,7 @@
   <body>
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
       <div class="container-fluid px-lg-5">
-        <a class="navbar-brand" href="index.html">Our Demand</a>
+        <a class="navbar-brand" href="index.html">Aaeena</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu"></span> Menu
         </button>
@@ -46,8 +46,12 @@
             <li class="nav-item"><a href="/campaigns/" class="nav-link">Campaigns</a></li>
             <li class="nav-item"><a href="/books/" class="nav-link">Books</a></li>
             <li class="nav-item active"><a href="/contact/" class="nav-link">Contact</a></li>
+            {% if session == value %}
+            <li class="nav-item"><a href="/myaccount/" class="nav-link">My Account</a></li>
+            {% else %}
             <li class="nav-item"><a href="/login/" class="nav-link">Login</a></li>
             <li class="nav-item"><a href="/signup/" class="nav-link">Signup</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -57,63 +61,66 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
-            <h2 class="mb-3 bread">Hi, User Name</h2>
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">User Name <i class="ion-ios-arrow-forward"></i></a></span> <span>Your Campaign <i class="ion-ios-arrow-forward"></i></span></p>
+            <h2 class="mb-3 bread">Hi, {{ Fname|safe }}</h2>
           </div>
         </div>
       </div>
     </section>
 <div style="width:100%;"class="w3-bar">
-  <button style="width:25%;"class="w3-bar-item w3-button w3-orange w3-hover-black">My Campaigns</button>
-  <button style="width:25%;"class="w3-bar-item w3-button w3-teal w3-hover-black">My Collection</button>
-  <button style="width:25%;"class="w3-bar-item w3-button w3-red w3-hover-black">My Profile</button>
-  <button style="width:25%;"class="w3-bar-item w3-button w3-green w3-hover-black">Logout</button>
+  <a href="/usercampaigns/" style="width:25%;" class="w3-bar-item w3-button w3-orange">My Campaigns</a>
+  <a href="/userbooks/" style="width:25%;" class="w3-bar-item w3-button w3-blue">My Books</a>
+  <a href="/userprofile/" style="width:25%;" class="w3-bar-item w3-button w3-red">My Profile</a>
+  <a href="/logout/" style="width:25%;"class="w3-bar-item w3-button w3-green">Logout</a>
 </div>
    	<section class="ftco-section">
       <div class="container">
         <div class="w3-card-4" style="padding:25px;">
           <div class="row">
             <div class="column">
-              
-              <img style="width:300px;margin-left:20px;"src="{% static 'images/list-img-06.png' %}">
+              {% if image %}
+              <div style="width:300px;height:300px;background-image:url({{ image|safe }});background-size:100% auto;border-radius:1000px;margin-left:20px;">
+              </div>
+              {% else %}
+                <img style="width:300px;margin-left:20px;"src="{% static 'images/list-img-06.png' %}">
+              {% endif %}
             </div>
             <div class="column">
-                <table style="font-size:25px;margin-left:50px;"class="w3-table">
+                <table style="font-size:15px;margin-left:50px;"class="w3-table">
                   <tr>
                     <td>
                       <i class="fa fa-user"></i>
                     </td>
-                    <td>Shubhi</td>
+                    <td>{{ Fname|safe }} {{ Lname|safe }}</td>
                   </tr> 
                   <tr>
                     <td>
                       <i class="fa fa-at"></i>
                     </td>
-                    <td>Shu234@gmail.com</td>
+                    <td>{{ Email|safe }}</td>
                   </tr>
                   <tr>
                     <td>
                       <i class="fa fa-genderless"></i>
                     </td>
-                    <td>male</td>
+                    <td>{{ Gender|safe }}</td>
                   </tr>
                   <tr>
                     <td>
                       <i class="fa fa-mobile"></i>
                     </td>
-                    <td>3498953929</td>
+                    <td>{{ Phone|safe }}</td>
                   </tr>
                   <tr>
                     <td>
                       <i class="fa fa-map-marker"></i>
                     </td>
-                    <td>ahudi road agra</td>
+                    <td>{{ Address|safe }},<br>{{ City|safe }} ({{ State|safe }})</td>
                   </tr>
                   
                 </table>  
               </div>
               <div class="column">
-                <table style="font-size:25px;margin-left:50px;"class="w3-table">
+                <table style="font-size:20px;margin-left:50px;"class="w3-table">
                   <tr>
                     <td>
                       <i class="fa fa-id-card-o"></i> Your Adhaar
@@ -122,17 +129,18 @@
                   </tr>
                   <tr>
                     <td>
-                      <img style="width:300px;border-radius:10px;border-style:solid;boder-color:black;border-width:5px;"src="{% static 'images/bfdb3796f2848739ade77e73e905068e.jpg' %}">
+                      <img style="width:350px;border-radius:10px;border-style:solid;boder-color:black;border-width:5px;"src="{{ Adhaar.url|safe }}">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:100%;font-size:15px;" class="w3-bar">
+                        <a style="width:48.5%;" onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-red w3-hover-black">Change Profile Detail</a>
+                        <a style="width:48.5%;" onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-green w3-hover-black">Change Password</a>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <a style="width:100%;" onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-red w3-hover-black">Change Profile Detail</a>
-                    </td>
-                  </tr> 
-                  <tr>
-                    <td>
-                      <a style="width:100%;" onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-green w3-hover-black">Change Password</a>
+                      <a style="width:100%;font-size:15px;" onclick="document.getElementById('id03').style.display='block'" class="w3-button w3-orange w3-hover-black">Change Profile Picture</a>
                     </td>
                   </tr>
                 </table>
@@ -144,25 +152,14 @@
                         
 
                           
-                          <form style="padding-top:20px;padding-bottom:20px;"class="w3-container">
+                          <form style="padding-top:20px;padding-bottom:20px;" class="w3-container" action="/changedetails/" method="POST">
 
-                            <label> Name</label>
-                            <input class="w3-input" type="text">
-                            <label>Gender</label>
-                            <input class="w3-input" type="text">
+                            <input name="phone" class="w3-input" value="{{ Phone|safe }}" type="number">
+                            <input name="address" class="w3-input" value="{{ Address|safe }}" type="text">
+                            <input name="city" class="w3-input" value="{{ City|safe }}" type="text">
+                            <input name="state" class="w3-input" value="{{ State|safe }}" type="text">
 
-
-                            <label> Email</label>
-                            <input class="w3-input" type="email">
-                            <label>Address</label>
-                            <textarea class="w3-input" type="text"></textarea>
-                            <label>Phone</label>
-                            <input class="w3-input" type="number">
-
-                            <input class="w3-button w3-green w3-hover-black" value="Save" type="submit">
-
-
-
+                            <input class="w3-button w3-green w3-hover-black" style="margin-top:10px;width:100%;" value="Save" type="submit">
 
                           </form>
 
@@ -172,21 +169,18 @@
                   <div id="id02" class="w3-modal">
                     <div class="w3-modal-content w3-animate-zoom">
                       <div class="w3-container">
-                        <span onclick="document.getElementById('id01').style.display='none'"
+                        <span onclick="document.getElementById('id02').style.display='none'"
                         class="w3-button w3-display-topright">&times;</span>
                         
 
                           
-                          <form style="padding-top:20px;padding-bottom:20px;"class="w3-container">
+                          <form style="padding-top:20px;padding-bottom:20px;"class="w3-container" action="/changepassword/" method="POST">
 
-                            <label> Old Password</label>
-                            <input class="w3-input" type="text">
-                            <label>New Password</label>
-                            <input class="w3-input" type="text">
-
-
-
-                            <input class="w3-button w3-green w3-hover-black" value="Save" type="submit">
+                            <label>Old Password</label>
+                            <input class="w3-input" name="oldpass" type="password">
+                            <label style="margin-top:10px;">New Password</label>
+                            <input class="w3-input" name="newpass" type="password">
+                            <input style="margin-top:10px;width:100%;" class="w3-button w3-green w3-hover-black" value="Save" type="submit">
 
 
 
@@ -196,6 +190,30 @@
                       </div>
                     </div>
                   </div>
+
+                  <div id="id03" class="w3-modal">
+                    <div class="w3-modal-content w3-animate-zoom">
+                      <div class="w3-container">
+                        <span onclick="document.getElementById('id03').style.display='none'"
+                        class="w3-button w3-display-topright">&times;</span>
+                        
+
+                          
+                          <form style="padding-top:20px;padding-bottom:20px;"class="w3-container" action="/saveprofilepicture/" method="POST" enctype="multipart/form-data">
+
+                            <label>Upload Profile</label>
+                            <input name="image" class="w3-input" type="file">
+                            <input style="margin-top:10px;width:100%;" class="w3-button w3-green w3-hover-black" value="Save" type="submit">
+
+
+
+
+                          </form>
+
+                      </div>
+                    </div>
+                  </div>
+
               </div>
           </div>
         </div>
@@ -203,18 +221,20 @@
     </section> <!-- .section -->
 
     <footer class="ftco-footer ftco-section img" style="padding-bottom:20px;background-image: url({% static 'images/footer.jpg' %});">
-    	<div class="overlay"></div>
+      <div class="overlay"></div>
       <div class="container">
         <div class="row mb-5">
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">Aspiration</h2>
+              <h2 class="ftco-heading-2">Aaeena</h2>
               <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+              <a style="width:100%;"class="w3-button w3-white w3-hover-black"href="/donation/">Donate Now</a>
               <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                 <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                 <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
                 <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
               </ul>
+              
             </div>
           </div>
           <div class="col-md">
@@ -231,37 +251,35 @@
              <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Links</h2>
               <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">Home</a></li>
-                <li><a href="#" class="py-2 d-block">Who we are</a></li>
-                <li><a href="#" class="py-2 d-block">Causes</a></li>
-                <li><a href="#" class="py-2 d-block">Blog</a></li>
-                <li><a href="#" class="py-2 d-block">Contact</a></li>
+                <li><a href="/index/" class="py-2 d-block">Home</a></li>
+                <li><a href="/about/" class="py-2 d-block">Who we are ?</a></li>
+                <li><a href="/news/" class="py-2 d-block">News</a></li>
+                <li><a href="/campaigns/" class="py-2 d-block">Campaigns</a></li>
+                <li><a href="/contact/" class="py-2 d-block">Contact</a></li>
               </ul>
             </div>
           </div>
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">Have a Questions?</h2>
-            	<div class="block-23 mb-3">
-	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
-	              </ul>
-	            </div>
+              <h2 class="ftco-heading-2">Have a Questions?</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">Address Here</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">Contacts Here</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">Emails Here</span></a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12 text-center">
 
-            <p>Website Developed & Designed By<br><a style="font-weight:bold;"href="https://www.srd.mobi"><img style="width:40px;margin-right:10px;"src="{% static 'images/SRD(Shreshtha Research&Development.png' %}">SRD - Shreshtha Research & Development</a>
-            </p>
+            <p>Website Developed & Designed By<br><a style="font-weight:bold;"href="https://www.srd.mobi"><img style="width:40px;margin-right:10px;"src="{% static 'images/SRD(Shreshtha Research&Development.png' %}">SRD - Shreshtha Research & Development</a></p>
           </div>
         </div>
       </div>
-    </footer>
-    
+    </footer>    
   
 
   <!-- loader -->

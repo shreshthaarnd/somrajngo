@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Aaeena</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+
+    
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'w3.css' %}">
+  </head>
+  <body>
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container-fluid px-lg-5">
+	      <a class="navbar-brand" href="index.html">Aaeena</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	        	<li class="nav-item"><a href="/index/" class="nav-link">Home</a></li>
+	        	<li class="nav-item"><a href="/about/" class="nav-link">About us</a></li>
+	        	<li class="nav-item"><a href="/News/" class="nav-link">News</a></li>
+	        	<li class="nav-item active"><a href="/campaigns/" class="nav-link">Campaigns</a></li>
+            <li class="nav-item"><a href="/books/" class="nav-link">Books</a></li>
+	        	<li class="nav-item"><a href="/contact/" class="nav-link">Contact</a></li>
+	          <li class="nav-item"><a href="/login/" class="nav-link">Login</a></li>
+            <li class="nav-item"><a href="/signup/" class="nav-link">Signup</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    
+    <section class="hero-wrap hero-wrap-2 " style="background-color:blue;padding-top:100px;" data-stellar-background-ratio="0.5">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate pb-5 text-center">
+            <h2 class="mb-3 bread">Hi, {{ Fname|safe }}</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="width:100%;"class="w3-bar">
+      <a href="/usercampaigns/" style="width:25%;" class="w3-bar-item w3-button w3-orange">My Campaigns</a>
+      <a href="/userbooks/" style="width:25%;" class="w3-bar-item w3-button w3-blue">My Books</a>
+      <a href="/userprofile/" style="width:25%;" class="w3-bar-item w3-button w3-red">My Profile</a>
+      <a href="/logout/" style="width:25%;"class="w3-bar-item w3-button w3-green">Logout</a>
+    </div>
+
+   	<section class="ftco-section ftco-causes">
+    	<div class="container">
+        <div class="row">
+
+        	{% for x in bdata %}
+          <div class="col-md-4">
+        		<div class="causes causes-2 text-center ftco-animate">
+        			<div class="img" style="background-image: url({{ x.bcover|safe }});"></div>
+        			<h2>{{ x.bname|safe }}</h2>
+        			<p>{{ x.babout|safe }}</p>
+        			<a href="/removeuserbook/?bid={{ x.bid|safe }}" class="w3-button w3-red w3-hover-black"><i class='fa fa-trash'></i> Remove</a>
+              <a href="/downloadbookpdf/?bid={{ x.bid|safe }}" class="w3-button w3-green w3-hover-black"><i class='fa fa-download'></i> Download</a>
+        		</div>
+        	</div>
+          {% endfor %}
+        	
+        </div>
+      </section>
+
+      <footer class="ftco-footer ftco-section img" style="padding-bottom:20px;background-image: url({% static 'images/footer.jpg' %});">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Aaeena</h2>
+              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+              <a style="width:100%;"class="w3-button w3-white w3-hover-black"href="/donation/">Donate Now</a>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+              
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Information</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Donation</a></li>
+                <li><a href="#" class="py-2 d-block">Privacy</a></li>
+                <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="/index/" class="py-2 d-block">Home</a></li>
+                <li><a href="/about/" class="py-2 d-block">Who we are ?</a></li>
+                <li><a href="/news/" class="py-2 d-block">News</a></li>
+                <li><a href="/campaigns/" class="py-2 d-block">Campaigns</a></li>
+                <li><a href="/contact/" class="py-2 d-block">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Have a Questions?</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">Address Here</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">Contacts Here</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">Emails Here</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p>Website Developed & Designed By<br><a style="font-weight:bold;"href="https://www.srd.mobi"><img style="width:40px;margin-right:10px;"src="{% static 'images/SRD(Shreshtha Research&Development.png' %}">SRD - Shreshtha Research & Development</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'js/aos.js' %}"></script>
+  <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+  <script src="{% static 'js/scrollax.min.js' %}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="{% static 'js/google-map.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+    
+  </body>
+</html>

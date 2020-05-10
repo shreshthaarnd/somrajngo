@@ -21,7 +21,19 @@ urlpatterns = [
     path('userdashboard/',userdashboard),
     path('userprofile/',userprofile),
     path('saveuser/',saveuser),
+    path('saveprofilepicture/',saveuserprofilepicture),
+    path('usercampaigns/',usercampaigns),
     path('books/',books),
+    path('changedetails/',changeuserdetails),
+    path('changepassword/',changepassword),
+    path('error/',error),
+    path('myaccount/',myaccount),
+    path('logout/',logout),
+    path('bookcategorypage/',bookcategorypage),
+    path('userbooks/',userbooks),
+    path('saveuserbooks/',saveuserbooks),
+    path('removeuserbook/',removeuserbook),
+    path('donation/',donation),
 
     path('adminpages404withoutmenus/',adminpages404withoutmenus),
     path('adminpages500/',adminpages500),
@@ -49,10 +61,20 @@ urlpatterns = [
     path('makeuseractive/',makeuseractive),
     path('makeuserdeactive/',makeuserdeactive),
     path('addbooks/',adminaddbook),
+    path('savebook/',savebook),
+    path('addbookcategroy/',adminaddbookcategory),
+    path('savebookcategroy/',savebookcategory),
     path('booklist/',adminbooklist),
+    path('admindonations/',admindonations),
+
     path('admincampaigns/',admincampaigns),
     path('recentcampaigns/',adminrecentcampaigns),
     path('activecampaigns/',adminactivecampaigns),
+    path('deactivecampaigns/',admindeactivecampaigns),
+
+    path('downloadbookpdf/',downloadbookpdf),
+    path('deletebook/',deletebook),
+
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

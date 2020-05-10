@@ -2,12 +2,23 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import *
 from django.core.mail import EmailMessage
 from app.models import *
+from app.myutil import *
+from django.contrib.auth import logout
+from wsgiref.util import FileWrapper
+from django.http import HttpResponse, HttpResponseRedirect
+import mimetypes
+import os
 
 def about(request):
-	return render(request,'about.html',{})
+	dic={'session':checksession(request),'value':True}
+	return render(request,'about.html',dic)
 def blog(request):
+	dic={'session':checksession(request),'value':True}
 	obj=NewsData.objects.all()
-	return render(request,'blog.html',{'data':reversed(list(obj))})
+	lobj=list(reversed(list(obj)))
+	dic.update({'data':reversed(obj),
+				'rdata':lobj[0:5]})
+	return render(request,'blog.html',dic)
 def blogsingle(request):
 	dic={}
 	obj=NewsData.objects.filter(News_ID=request.GET.get('nid'))
@@ -19,21 +30,81 @@ def blogsingle(request):
 			'type':x.News_Media_Type,
 			'media':x.News_Media.url
 		}
+	dic.update({'session':checksession(request),'value':True})
 	return render(request,'blog-single.html',dic)
 def causes(request):
 	return render(request,'causes.html',{})
 def contact(request):
-	return render(request,'contact.html',{})
+	dic={'session':checksession(request),'value':True}
+	return render(request,'contact.html',dic)
 def index(request):
-	return render(request,'index.html',{})
+	dic={'session':checksession(request),'value':True}
+	return render(request,'index.html',dic)
 def services(request):
-	return render(request,'services.html',{})
+	dic={'session':checksession(request),'value':True}
+	return render(request,'services.html',dic)
 def userlogin(request):
-	return render(request,'userlogin.html',{})
+	dic={'session':checksession(request),'value':True}
+	return render(request,'userlogin.html',dic)
 def registration(request):
-	return render(request,'registration.html',{})
+	dic={'session':checksession(request),'value':True}
+	return render(request,'registration.html',dic)
 def campaigns(request):
-	return render(request,'campaigns.html',{})
+	dic={'session':checksession(request),'value':True}
+	return render(request,'campaigns.html',dic)
+
+#Users Section
+def myaccount(request):
+	dic=GetUserDashboard(request.session['user_id'])
+	dic.update({'session':checksession(request),'value':True})
+	return render(request,'userdashboard.html',dic)
+
+def saveuserbooks(request):
+	try:
+		bid=request.GET.get('bid')
+		uid=request.session['user_id']
+		obj=UserBooks(
+			Book_ID=bid,
+			User_ID=uid
+			)
+		obj.save()
+		return redirect('/userbooks/')
+	except:
+		return redirect('/userlogin/')
+
+def myaccount(request):
+	dic=GetUserDashboard(request.session['user_id'])
+	dic.update({'session':checksession(request),'value':True})
+	return render(request,'userdashboard.html', dic)
+
+def removeuserbook(request):
+	dic=GetUserDashboard(request.session['user_id'])
+	dic.update({'session':checksession(request),'value':True})
+	bid=request.GET.get('bid')
+	obj=UserBooks.objects.filter(Book_ID=bid).delete()
+	return redirect('/userbooks/')
+
+def userbooks(request):
+	dic=GetUserDashboard(request.session['user_id'])
+	dic.update({'session':checksession(request),'value':True})
+	lt=[]
+	d={}
+	obj=UserBooks.objects.filter(User_ID=request.session['user_id'])
+	for x in obj:
+		obj2=BookData.objects.filter(Book_ID=x.Book_ID)
+		for y in obj2:
+			d={
+			'bid':y.Book_ID,
+			'bname':y.Book_Name,
+			'bcategory':y.Book_Category,
+			'bauthor':y.Book_Author,
+			'babout':y.Book_About[0:100],
+			'bcover':y.Book_Cover.url
+			}
+			lt.append(d)
+	dic.update({'bdata':lt})
+	return render(request,'userbooks.html',dic)
+
 @csrf_exempt
 def userdashboard(request):
 	if request.method=="POST":
@@ -42,20 +113,89 @@ def userdashboard(request):
 		if UserData.objects.filter(User_Email=e,User_Password=p,User_Status='Active').exists():
 			obj=UserData.objects.filter(User_Email=e)
 			for x in obj:
-				request.session['user_email'] = x.User_ID
+				request.session['user_id'] = x.User_ID
 				break
-			dic=GetUserDashboard(e)
-			return render(request,'userdashboard.html',{})
+			dic=GetUserDashboard(request.session['user_id'])
+			dic.update({'session':checksession(request),'value':True})
+			return render(request,'userdashboard.html',dic)
 		else:
 			return render(request,'userlogin.html',{'msg':'Incorrect Email or Password'})
 	else:
 		return redirect('/error404/')
 def userprofile(request):
-	return render(request,'userprofile.html',{})
+	dic=GetUserDashboard(request.session['user_id'])
+	dic.update({'session':checksession(request),'value':True})
+	return render(request,'userprofile.html',dic)
+@csrf_exempt
+def saveuserprofilepicture(request):
+	if request.method=='POST':
+		obj=UserProfilePicture.objects.filter(User_ID=request.session['user_id']).delete()
+		obj=UserProfilePicture(
+			User_ID=request.session['user_id'],
+			User_Image=request.FILES['image']
+			)
+		obj.save()
+	dic=GetUserDashboard(request.session['user_id'])
+	dic.update({'session':checksession(request),'value':True})
+	return render(request,'userprofile.html',dic)
+@csrf_exempt
+def usercampaigns(request):
+	dic=GetUserDashboard(request.session['user_id'])
+	dic.update({'session':checksession(request),'value':True})
+	return render(request,'userdashboard.html',dic)
 
+@csrf_exempt
+def changeuserdetails(request):
+	if request.method=="POST":
+		p=request.POST.get('phone')
+		a=request.POST.get('address')
+		c=request.POST.get('city')
+		s=request.POST.get('state')
+		obj=UserData.objects.filter(User_ID=request.session['user_id'])
+		obj.update(
+			User_Phone=p,
+			User_Address=a,
+			User_City=c,
+			User_State=s
+			)
+		dic=GetUserDashboard(request.session['user_id'])
+		dic.update({'session':checksession(request),'value':True})
+		return render(request,'userprofile.html',dic)
+	else:
+		return redirect('/error404/')
+def error(request):
+	return render(request,'error.html')
+
+def logout(request):
+	try:
+		del request.session['user_id']
+		request.session.flush()
+		return redirect('/index/')
+	except:
+		return redirect('/index/')
+
+@csrf_exempt
+def changepassword(request):
+	if request.method=='POST':
+		op=request.POST.get('oldpass')
+		np=request.POST.get('newpass')
+		uid=request.session['user_id']
+		obj=UserData.objects.filter(User_ID=uid)
+		obj.update(User_Password='1')
+		if UserData.objects.filter(User_ID=uid,User_Password=op).exists():
+			obj=UserData.objects.filter(User_ID=uid,User_Password=op)
+			obj.update(User_Password=np)
+			dic=GetUserDashboard(request.session['user_id'])
+			dic.update({'session':checksession(request),'value':True})
+			return render(request,'userprofile.html',dic)
+		else:
+			return render(request,'error.html',{'msg':'Incorrect Password'})
+	else:
+		return redirect('/error404/')
 @csrf_exempt
 def saveuser(request):
 	if request.method=='POST':
+		txt=''
 		fname=request.POST.get('fname')
 		lname=request.POST.get('lname')
 		gender=request.POST.get('gender')
@@ -90,18 +230,21 @@ def saveuser(request):
 			User_Password=password,
 			User_Adhaar=adhaar,
 			)
-		obj.save()
-		msg='''Hi '''+fname+'''!
+		if UserData.objects.filter(User_Email=e).exists():
+			txt='User Already Exists'
+		else:
+			obj.save()
+			msg='''Hi '''+fname+'''!
 We have recieved your application and we currently reviewing your details, till then your account is deactivated.
 
 Please wait for our confirmation mail.
 
 Thanks & Regards,
 Team Our Demand'''
-		sub='Our Demand - Application Under Process'
-		email=EmailMessage(sub,msg,to=[email])
-		email.send()
-		txt='You have successfully resgistered and we have recieved your application. Please wait for a confirmation mail while we are reviewing your application.'
+			sub='Our Demand - Application Under Process'
+			email=EmailMessage(sub,msg,to=[email])
+			email.send()
+			txt='You have successfully resgistered and we have recieved your application. Please wait for a confirmation mail while we are reviewing your application.'
 		return render(request,'registration.html',{'msg':txt})
 
 #AdminPannel Code
@@ -285,14 +428,162 @@ Team Our Demand'''
 	except:
 		return redirect('/error404/')
 def adminaddbook(request):
-	return render(request,'adminpages/addbook.html',{})
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			dic={'cate':BookCategoryData.objects.all(),
+				'msg':'Add Books'}
+			return render(request,'adminpages/addbook.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+@csrf_exempt
+def savebook(request):
+	#try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			if request.method=="POST":
+				obj=BookData.objects.all().delete()
+				name=request.POST.get('bname')
+				author=request.POST.get('bauthor')
+				about=request.POST.get('babout')
+				category=request.POST.get('bcategory')
+				image=request.FILES['bimage']
+				pdf=request.FILES['bpdf']
+				print(category)
+				n="B00"
+				x=1
+				nid=n+str(x)
+				while BookData.objects.filter(Book_ID=nid).exists():
+					x=x+1
+					nid=n+str(x)
+				x=int(x)
+				obj=BookData(
+					Book_ID=nid,
+					Book_Name=name,
+					Book_Category=category,
+					Book_Author=author,
+					Book_About=about,
+					Book_Cover=image,
+					Book_PDF=pdf
+					)
+				if BookData.objects.filter(Book_Name=name).exists():
+					dic={'cate':BookCategoryData.objects.all(),
+						'msg':'Book Already Exists'}
+					return render(request,'adminpages/addbook.html',dic)
+				else:
+					obj.save()
+					dic={'cate':BookCategoryData.objects.all(),
+						'msg':'Book Saved Successfully'}
+					return render(request,'adminpages/addbook.html',dic)
+			else:
+				return redirect('/error404/')
+		else:
+			return redirect('/error404/')
+	#except:
+	#	return redirect('/error404/')
+
+def adminaddbookcategory(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			dic={'msg':'Add Books Category',
+				'data':BookCategoryData.objects.all()}
+			return render(request,'adminpages/addbookcategory.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+@csrf_exempt
+def savebookcategory(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			if request.method=="POST":
+				c=request.POST.get('name')
+				n="BC00"
+				x=1
+				nid=n+str(x)
+				while BookCategoryData.objects.filter(Category_ID=nid).exists():
+					x=x+1
+					nid=n+str(x)
+				x=int(x)
+				obj=BookCategoryData(
+					Category_ID=nid,
+					Category_Name=c
+					)
+				if BookCategoryData.objects.filter(Category_Name=c).exists():
+					dic={'msg':'Already Exists',
+						'data':BookCategoryData.objects.all()}
+					return render(request,'adminpages/addbookcategory.html',dic)
+				else:
+					obj.save()
+					dic={'msg':'Saved Successfully',
+						'data':BookCategoryData.objects.all()}
+					return render(request,'adminpages/addbookcategory.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
 def adminbooklist(request):
-	return render(request,'adminpages/booklist.html',{})
-def books(request):
-	return render(request,'books.html',{})
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			dic={'data':reversed(list(BookData.objects.all()))}
+			return render(request,'adminpages/booklist.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def deletebook(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			obj=BookData.objects.filter(Book_ID=request.GET.get('bid'))
+			obj.delete()
+			dic={'data':reversed(list(BookData.objects.all()))}
+			return render(request,'adminpages/booklist.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+
+def downloadbookpdf(request):
+	obj=BookData.objects.filter(Book_ID=request.GET.get('bid'))
+	file_path=''
+	for x in obj:
+		file_name = x.Book_PDF.name
+	file_path = settings.MEDIA_ROOT +'/'+ file_name
+	file_wrapper = FileWrapper(open(file_path,'rb'))
+	file_mimetype = mimetypes.guess_type(file_path)
+	response = HttpResponse(file_wrapper, content_type=file_mimetype )
+	response['X-Sendfile'] = file_path
+	response['Content-Length'] = os.stat(file_path).st_size
+	response['Content-Disposition'] = 'attachment; filename=%s' % file_name 
+	return response
 def admincampaigns(request):
 	return render(request,'adminpages/campaigns.html',{})
 def adminrecentcampaigns(request):
 	return render(request,'adminpages/recentcampaigns.html',{})
 def adminactivecampaigns(request):
 	return render(request,'adminpages/activecampaign.html',{})
+def books(request):
+	obj=BookData.objects.all()
+	dic={'session':checksession(request),
+		'value':True,
+		'data':reversed(list(obj)),
+		'cate':BookCategoryData.objects.all()}
+	return render(request,'books.html',dic)
+
+def bookcategorypage(request):
+	obj=BookData.objects.filter(Book_Category=request.GET.get('category'))
+	dic={'session':checksession(request),
+		'value':True,
+		'data':reversed(list(obj)),
+		'cate':BookCategoryData.objects.all()}
+	return render(request,'books.html',dic)
+def admindeactivecampaigns(request):
+	return render(request,'adminpages/deactivecampaign.html',{})
+def donation(request):
+	return render(request,'donation.html',{})
+def admindonations(request):
+	return render(request,'adminpages/donation.html',{})

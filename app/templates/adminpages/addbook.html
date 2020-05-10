@@ -144,8 +144,43 @@
 												<a href="/addbooks/">Add Book</a>
 											</li>
 											<li>
+												<a href="/addbookcategroy/">Add Book Category</a>
+											</li>
+											<li>
 												<a href="/booklist/">Book List</a>
 											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-bullhorn" aria-hidden="true"></i>
+											<span>Campaign Section</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/recentcampaigns/">Recent Campaign</a>
+											</li>
+											<li>
+												<a href="/activecampaigns/">Active Campaigns</a>
+											</li>
+											<li>
+												<a href="/deactivecampaigns/">Deactive Campaigns</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-money" aria-hidden="true"></i>
+											<span>Donations</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/recentdonation/">Recent Donation</a>
+											</li>
+											<li>
+												<a href="/receiveddonation/">Received Donation</a>
+											</li>
+											
 										</ul>
 									</li>
 								</ul>
@@ -183,25 +218,25 @@
 									</header>
 									<div class="panel-body">
 										
-										<form class="form-horizontal form-bordered" method="POST" action="/savenews/" enctype="multipart/form-data">
+										<form class="form-horizontal form-bordered" method="POST" action="/savebook/" enctype="multipart/form-data">
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="inputDefault">Book Name</label>
 												<div class="col-md-6">
-													<input type="text" name="title" class="form-control" id="inputDefault" required>
+													<input type="text" name="bname" class="form-control" id="inputDefault" required>
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="textareaDefault">Book Author</label>
 												<div class="col-md-6">
-													<input type="text" name="title" class="form-control" id="inputDefault" required>
+													<input type="text" name="bauthor" class="form-control" id="inputDefault" required>
 
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="textareaDefault">About Book</label>
 												<div class="col-md-6">
-													<textarea type="text" name="title" class="form-control" id="inputDefault" required></textarea>
+													<textarea type="text" name="babout" class="form-control" id="inputDefault" required></textarea>
 
 												</div>
 											</div>
@@ -210,9 +245,11 @@
 											<div class="form-group">
 												<label class="col-md-3 control-label" for="inputSuccess">Book Category</label>
 												<div class="col-md-6">
-													<select class="form-control input-lg mb-md" name="mediatype">
+													<select class="form-control input-lg mb-md" name="bcategory">
 														<option selected disabled required>Select Category</option>
-														
+														{% for x in cate %}
+														<option value="{{ x.Category_Name|safe }}">{{ x.Category_Name|safe }}</option>
+														{% endfor %}
 													</select>
 												</div>
 											</div>
@@ -224,7 +261,7 @@
 														<div class="input-append">
 															<span class="btn btn-default btn-file">
 																<span class="fileupload-new">Select file</span>
-																<input type="file" name="media" required>
+																<input type="file" name="bimage" required>
 															</span>
 														</div>
 													</div>
@@ -237,7 +274,7 @@
 														<div class="input-append">
 															<span class="btn btn-default btn-file">
 																<span class="fileupload-new">Select file</span>
-																<input type="file" name="media" required>
+																<input type="file" name="bpdf" required>
 															</span>
 														</div>
 													</div>

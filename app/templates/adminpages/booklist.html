@@ -144,8 +144,43 @@
 												<a href="/addbooks/">Add Book</a>
 											</li>
 											<li>
+												<a href="/addbookcategroy/">Add Book Category</a>
+											</li>
+											<li>
 												<a href="/booklist/">Book List</a>
 											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-bullhorn" aria-hidden="true"></i>
+											<span>Campaign Section</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/recentcampaigns/">Recent Campaign</a>
+											</li>
+											<li>
+												<a href="/activecampaigns/">Active Campaigns</a>
+											</li>
+											<li>
+												<a href="/deactivecampaigns/">Deactive Campaigns</a>
+											</li>
+										</ul>
+									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-money" aria-hidden="true"></i>
+											<span>Donations</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/recentdonation/">Recent Donation</a>
+											</li>
+											<li>
+												<a href="/receiveddonation/">Received Donation</a>
+											</li>
+											
 										</ul>
 									</li>
 								</ul>
@@ -188,7 +223,6 @@
 											<table class="table table-hover mb-none">
 												<thead>
 													<tr>
-														<th>Upload Date</th>
 														<th>Upload ID</th>
 														<th>Book Name</th>
 														<th>Book Category</th>
@@ -200,34 +234,30 @@
 													</tr>
 												</thead>
 												<tbody>
-								
+													{% for x in data %}
 													<tr>
-														<td>02/03/2020</td>
-														<td>HTY678</td>
-														<td>Jindgi</td>
-														<td>TYU67</td>
-														<td>GHTY</td>
-														<td>GTFETTb</td>
-														<td><img style="width:100%;"src="{% static 'images/causes-5.jpg' %}"></td>
-														<td><a href="" class="mb-xs mt-xs mr-xs btn btn-danger">Download</a>
-														</td>
-														
-														
+														<td>{{ x.Book_ID|safe }}</td>
+														<td>{{ x.Book_Name|safe }}</td>
+														<td>{{ x.Book_Category|safe }}</td>
+														<td>{{ x.Book_Author|safe }}</td>
+														<td>{{ x.Book_About|safe }}</td>
+														<td><img style="width:100px;"src="{{ x.Book_Cover.url|safe }}"></td>
 														<td>
-															<a class="mb-xs mt-xs mr-xs btn btn-danger" href="/deletenews/?News_ID={{ x.News_ID|safe }}">Delete</a>
+															<a href="/downloadbookpdf/?bid={{ x.Book_ID|safe }}" class="mb-xs mt-xs mr-xs btn btn-success">Download</a>
+														</td>
+														<td>
+															<a class="mb-xs mt-xs mr-xs btn btn-danger" href="/deletebook/?bid={{ x.Book_ID|safe }}">Delete</a>
 														</td>
 													</tr>
+													{% endfor %}
 													
 												</table>
-												</div>
+											</div>
 										</div>
 									</div>
+								</section>
 							</div>
 						</div>
-					</div>
-				</section>
-			</div>
-		</div>
 						
 						
 					<!-- end: page -->

@@ -30,3 +30,33 @@ class UserData(models.Model):
 	User_Adhaar=models.FileField(upload_to="useradhaar/")
 	class Meta:
 		db_table="UserData"
+
+class UserProfilePicture(models.Model):
+	User_ID=models.CharField(max_length=100)
+	User_Image=models.FileField(upload_to="userprofilepictures/")
+	class Meta:
+		db_table="UserProfilePicture"
+
+class UserBooks(models.Model):
+	User_ID=models.CharField(max_length=100)
+	Book_ID=models.CharField(max_length=100)
+	class Meta:
+		db_table="UserBooks"
+
+class BookCategoryData(models.Model):
+	Category_ID=models.CharField(max_length=100)
+	Category_Name=models.CharField(max_length=100)
+	class Meta:
+		db_table="BookCategoryData"
+
+class BookData(models.Model):
+	Book_ID=models.CharField(max_length=100)
+	Book_Name=models.CharField(max_length=100)
+	Book_Category=models.CharField(max_length=100)
+	Book_Author=models.CharField(max_length=100)
+	Book_About=models.CharField(max_length=1000)
+	Book_Cover=models.ImageField(upload_to="bookcover/")
+	Book_PDF=models.FileField(upload_to="bookpdf/")
+	Download=models.CharField(max_length=100,default='0')
+	class Meta:
+		db_table="BookData"
