@@ -33,6 +33,9 @@ urlpatterns = [
     path('userbooks/',userbooks),
     path('saveuserbooks/',saveuserbooks),
     path('removeuserbook/',removeuserbook),
+    path('postcomment/',postcomment),
+    path('saveusercampaign/',saveusercampaign),
+    path('openusercampaign/',openusercampaign),
 
     path('adminpages404withoutmenus/',adminpages404withoutmenus),
     path('adminpages500/',adminpages500),

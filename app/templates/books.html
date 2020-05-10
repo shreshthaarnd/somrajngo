@@ -106,15 +106,31 @@
 						<div class="row mt-5">
 		          <div class="col">
 		            <div class="block-27">
-		              <ul>
-		                <li><a href="#">&lt;</a></li>
-		                <li class="active"><span>1</span></li>
-		                <li><a href="#">2</a></li>
-		                <li><a href="#">3</a></li>
-		                <li><a href="#">4</a></li>
-		                <li><a href="#">5</a></li>
-		                <li><a href="#">&gt;</a></li>
-		              </ul>
+		              {% if data.has_other_pages %}
+                      <ul>
+
+                      {% if data.has_previous %}
+                      <li><a href="/books/?page={{ data.previous_page_number }}">&lt;</a></li>
+                      {% else %}
+                      <li><span>&lt;</span></li>
+                      {% endif %}
+                      
+                      {% for i in data.paginator.page_range %}
+                      {% if data.number == i %}
+                      <li><a class="active" style="background-color:blue;color:white;">{{ i }}</a></li>
+                      {% else %}
+                      <li><a href="/books/?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                      {% endfor %}
+                      
+                      {% if data.has_next %}
+                      <li><a href="/books/?page={{ data.next_page_number }}">&gt;</a></li>
+                      {% else %}
+                      <li><span>&gt;</span></li>
+                      {% endif %}
+                      
+                      </ul>
+                    {% endif %}
 		            </div>
 		          </div>
 		        </div>

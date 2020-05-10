@@ -60,3 +60,27 @@ class BookData(models.Model):
 	Download=models.CharField(max_length=100,default='0')
 	class Meta:
 		db_table="BookData"
+
+class NewsCommentData(models.Model):
+	Comment_ID=models.CharField(max_length=100)
+	Comment_Date=models.DateField(("Date"), default=datetime.date.today)
+	News_ID=models.CharField(max_length=100)
+	User_ID=models.CharField(max_length=100)
+	Comment=models.CharField(max_length=1000)
+	class Meta:
+		db_table="NewsCommentData"
+
+class CampaignData(models.Model):
+	Campaign_ID=models.CharField(max_length=100)
+	User_ID=models.CharField(max_length=100)
+	Campaign_Date=models.DateField(("Date"), default=datetime.date.today)
+	Campaign_Title=models.CharField(max_length=1000, default='NA')
+	Campaign_About=models.CharField(max_length=2000, default='NA')
+	Campaign_Donation=models.CharField(max_length=50, default='NA')
+	Campaign_Account_Number=models.CharField(max_length=50, default='NA')
+	Campaign_Account_Name=models.CharField(max_length=50, default='NA')
+	Campaign_Account_IFSC=models.CharField(max_length=50, default='NA')
+	Campaign_Account_Bank=models.CharField(max_length=50, default='NA')
+	Campaign_Images=models.FileField(upload_to="campaignimages/")
+	class Meta:
+		db_table="CampaignData"
