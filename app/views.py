@@ -8,6 +8,26 @@ from wsgiref.util import FileWrapper
 from django.http import HttpResponse, HttpResponseRedirect
 import mimetypes
 import os
+from django.core.paginator import *
+
+#Utils
+def Comments(nid):
+	dic={}
+	lt=[]
+	obj=NewsCommentData.objects.filter(News_ID=nid)
+	for x in obj:
+		dic={
+			'comment':x.Comment,
+			'cdata':x.Comment_Date
+		}
+		obj1=UserData.objects.filter(User_ID=x.User_ID)
+		for y in obj1:
+			dic.update({'uname':y.User_Fname+' '+y.User_Lname})
+			obj2=UserProfilePicture.objects.filter(User_ID=y.User_ID)
+			for z in obj2:
+				dic.update({'uimage':z.User_Image.url})
+		lt.append(dic)
+	return lt
 
 def about(request):
 	dic={'session':checksession(request),'value':True}
@@ -15,9 +35,34 @@ def about(request):
 def blog(request):
 	dic={'session':checksession(request),'value':True}
 	obj=NewsData.objects.all()
-	lobj=list(reversed(list(obj)))
-	dic.update({'data':reversed(obj),
-				'rdata':lobj[0:5]})
+	lt=[]
+	for x in obj:
+		d={
+		'News_Date':x.News_Date,
+		'News_ID':x.News_ID,
+		'News_Title':x.News_Title,
+		'News_Body':x.News_Body[0:120],
+		'News_Media_Type':x.News_Media_Type,
+		'News_Media':x.News_Media
+		}
+		obj1=NewsCommentData.objects.filter(News_ID=x.News_ID)
+		d.update({'commentcount':len(obj1)})
+		lt.append(d)
+	ltt=lt[0:5]
+	lt=reversed(lt)
+	ltt=reversed(ltt)
+	data=[]
+	page = request.GET.get('page')
+	paginator = Paginator(list(lt), 5)
+	try:
+		data = paginator.page(page)
+	except PageNotAnInteger:
+		data = paginator.page(1)
+	except EmptyPage:
+		data = paginator.page(paginator.num_pages)
+	dic={'data':data}
+	dic.update({'data':data,
+				'rdata':ltt})
 	return render(request,'blog.html',dic)
 def blogsingle(request):
 	dic={}
@@ -28,10 +73,60 @@ def blogsingle(request):
 			'date':x.News_Date,
 			'body':x.News_Body,
 			'type':x.News_Media_Type,
-			'media':x.News_Media.url
+			'media':x.News_Media.url,
+			'nid':x.News_ID
 		}
 	dic.update({'session':checksession(request),'value':True})
+	dic.update({'comments':Comments(request.GET.get('nid')),
+		'commentcount':len(Comments(request.GET.get('nid')))})
 	return render(request,'blog-single.html',dic)
+
+@csrf_exempt
+def postcomment(request):
+	if request.method=='POST':
+		uid=request.session['user_id']
+		nid=request.POST.get('nid')
+		cmt=request.POST.get('comment')
+		c="CO00"
+		x=1
+		cid=c+str(x)
+		while NewsCommentData.objects.filter(Comment_ID=uid).exists():
+			x=x+1
+			uid=u+str(x)
+		x=int(x)
+		obj=NewsCommentData(
+			Comment_ID=uid,
+			News_ID=nid,
+			User_ID=uid,
+			Comment=cmt
+			)
+		obj.save()
+		dic={}
+		obj=NewsData.objects.filter(News_ID=request.GET.get('nid'))
+		for x in obj:
+			dic={
+				'title':x.News_Title,
+				'date':x.News_Date,
+				'body':x.News_Body,
+				'type':x.News_Media_Type,
+				'media':x.News_Media.url
+			}
+		dic.update({'session':checksession(request),'value':True})
+		dic.update({'comments':Comments(nid),'commentcount':len(Comments(nid))})
+		obj=NewsData.objects.filter(News_ID=nid)
+		for x in obj:
+			dic.update({
+						'title':x.News_Title,
+						'date':x.News_Date,
+						'body':x.News_Body,
+						'type':x.News_Media_Type,
+						'media':x.News_Media.url,
+						'nid':x.News_ID
+					})
+		return render(request,'blog-single.html',dic)
+	else:
+		return render(request,'error.html',{'msg':'Page Not Found'})
+
 def causes(request):
 	return render(request,'causes.html',{})
 def contact(request):
@@ -51,9 +146,116 @@ def registration(request):
 	return render(request,'registration.html',dic)
 def campaigns(request):
 	dic={'session':checksession(request),'value':True}
+	d={}
+	lt=[]
+	obj=CampaignData.objects.filter(Campaign_Status='Active')
+	for x in obj:
+		if x.Campaign_Title != 'NA':
+			d={
+				'camid':x.Campaign_ID,
+				'date':x.Campaign_Date,
+				'title':x.Campaign_Title,
+				'about':x.Campaign_About[0:65]+'....',
+				'donation':x.Campaign_Donation.upper(),
+				'cover':x.Campaign_Images,
+				'acnumber':x.Campaign_Account_Number,
+				'acname':x.Campaign_Account_Name,
+				'acifsc':x.Campaign_Account_IFSC,
+				'acbank':x.Campaign_Account_Bank
+			}
+			obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+			for y in obj1:
+				d.update({'image':y.Campaign_Images})
+				break
+			lt.append(d)
+	data=[]
+	page = request.GET.get('page')
+	paginator = Paginator(list(reversed(lt)), 5)
+	try:
+		data = paginator.page(page)
+	except PageNotAnInteger:
+		data = paginator.page(1)
+	except EmptyPage:
+		data = paginator.page(paginator.num_pages)
+	dic={'data':data}
+	dic.update({'data':data})
 	return render(request,'campaigns.html',dic)
+def books(request):
+	lt=[]
+	d={}
+	obj=BookData.objects.all()
+	for x in obj:
+		d={
+		'Book_ID':x.Book_ID,
+		'Book_Name':x.Book_Name,
+		'Book_Category':x.Book_Category,
+		'Book_Author':x.Book_Author,
+		'Book_About':x.Book_About[0:120],
+		'Book_Cover':x.Book_Cover
+		}
+		lt.append(d)
+	data=[]
+	page = request.GET.get('page')
+	paginator = Paginator(list(reversed(lt)), 5)
+	try:
+		data = paginator.page(page)
+	except PageNotAnInteger:
+		data = paginator.page(1)
+	except EmptyPage:
+		data = paginator.page(paginator.num_pages)
+	dic={'session':checksession(request),
+		'value':True,
+		'data':data,
+		'cate':BookCategoryData.objects.all()}
+	return render(request,'books.html',dic)
+
+def bookcategorypage(request):
+	obj=BookData.objects.filter(Book_Category=request.GET.get('category'))
+	dic={'session':checksession(request),
+		'value':True,
+		'data':reversed(list(obj)),
+		'cate':BookCategoryData.objects.all()}
+	return render(request,'books.html',dic)
 
 #Users Section
+@csrf_exempt
+def saveusercampaign(request):
+	if request.method=='POST':
+		title=request.POST.get('title')
+		about=request.POST.get('about')
+		donation=request.POST.get('donation')
+		images=request.FILES.getlist('images')
+		lastimage=request.FILES['images']
+		u="CA00"
+		x=1
+		uid=u+str(x)
+		while CampaignData.objects.filter(Campaign_ID=uid).exists():
+			x=x+1
+			uid=u+str(x)
+		x=int(x)
+		obj=CampaignData(
+			Campaign_ID=uid,
+			User_ID=request.session['user_id'],
+			Campaign_Title=title,
+			Campaign_About=about,
+			Campaign_Donation=donation,
+			Campaign_Images=lastimage
+			)
+		obj.save()
+		count=0
+		l=len(images)
+		for x in images:
+			if count == (l-1):
+				break
+			else:
+				obj=CampaignData(
+					Campaign_ID=uid,
+					Campaign_Images=x
+				)
+				obj.save()
+				count=count+1
+		return redirect('/usercampaigns/')
+
 def myaccount(request):
 	dic=GetUserDashboard(request.session['user_id'])
 	dic.update({'session':checksession(request),'value':True})
@@ -73,9 +275,7 @@ def saveuserbooks(request):
 		return redirect('/userlogin/')
 
 def myaccount(request):
-	dic=GetUserDashboard(request.session['user_id'])
-	dic.update({'session':checksession(request),'value':True})
-	return render(request,'userdashboard.html', dic)
+	return redirect('/usercampaigns/')
 
 def removeuserbook(request):
 	dic=GetUserDashboard(request.session['user_id'])
@@ -117,7 +317,7 @@ def userdashboard(request):
 				break
 			dic=GetUserDashboard(request.session['user_id'])
 			dic.update({'session':checksession(request),'value':True})
-			return render(request,'userdashboard.html',dic)
+			return redirect('/usercampaigns/')
 		else:
 			return render(request,'userlogin.html',{'msg':'Incorrect Email or Password'})
 	else:
@@ -142,7 +342,51 @@ def saveuserprofilepicture(request):
 def usercampaigns(request):
 	dic=GetUserDashboard(request.session['user_id'])
 	dic.update({'session':checksession(request),'value':True})
+	d={}
+	lt=[]
+	images=[]
+	obj=CampaignData.objects.filter(User_ID=request.session['user_id'],Campaign_Status='Active')
+	for x in obj:
+		d={
+			'camid':x.Campaign_ID,
+			'date':x.Campaign_Date,
+			'title':x.Campaign_Title,
+			'about':x.Campaign_About[0:100]+'....',
+			'donation':x.Campaign_Donation.upper(),
+			'cover':x.Campaign_Images,
+			'acnumber':x.Campaign_Account_Number,
+			'acname':x.Campaign_Account_Name,
+			'acifsc':x.Campaign_Account_IFSC,
+			'acbank':x.Campaign_Account_Bank
+		}
+		obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+		for y in obj1:
+			images.append(y.Campaign_Images)
+		d.update({'images':images})
+		lt.append(d)
+	dic.update({'camdata':lt,})
 	return render(request,'userdashboard.html',dic)
+
+def openusercampaign(request):
+	dic=GetUserDashboard(request.session['user_id'])
+	cid=request.GET.get('cid')
+	lt=[]
+	obj=CampaignData.objects.filter(Campaign_ID=cid)
+	for x in obj:
+		dic.update({'title':x.Campaign_Title,
+					'about':x.Campaign_About,
+					'donation':x.Campaign_Donation.upper(),
+					'acnumber':x.Campaign_Account_Number,
+					'acname':x.Campaign_Account_Name,
+					'acifsc':x.Campaign_Account_IFSC,
+					'acbank':x.Campaign_Account_Bank})
+		obj1=CampaignData.objects.filter(Campaign_ID=cid)
+		for y in obj1:
+			lt.append(y.Campaign_Images.url)
+		dic.update({'images':lt})
+		break
+	dic.update({'session':checksession(request),'value':True})
+	return render(request,'usercampaigndetail.html',dic)
 
 @csrf_exempt
 def changeuserdetails(request):
@@ -561,31 +805,255 @@ def downloadbookpdf(request):
 	response['Content-Disposition'] = 'attachment; filename=%s' % file_name 
 	return response
 def admincampaigns(request):
-	return render(request,'adminpages/campaigns.html',{})
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			d={}
+			lt=[]
+			img=[]
+			obj=CampaignData.objects.filter(Campaign_Status='Deactive')
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					d={
+						'camid':x.Campaign_ID,
+						'date':x.Campaign_Date,
+						'title':x.Campaign_Title,
+						'about':x.Campaign_About[0:65]+'....',
+						'donation':x.Campaign_Donation.upper(),
+						'cover':x.Campaign_Images,
+						'acnumber':x.Campaign_Account_Number,
+						'acname':x.Campaign_Account_Name,
+						'acifsc':x.Campaign_Account_IFSC,
+						'acbank':x.Campaign_Account_Bank
+					}
+					obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+					for y in obj1:
+						img.append(y.Campaign_Images.url)
+					d.update({'images':img})
+					obj2=UserData.objects.filter(User_ID=x.User_ID)
+					for z in obj2:
+						d.update({'uname':z.User_Fname+' '+z.User_Lname,
+								'uemail':z.User_Email,
+								'uphone':z.User_Phone,
+								'uaddress':z.User_Address+' '+z.User_City+' '+'('+z.User_State+')'})
+					lt.append(d)
+			dic={'data':reversed(lt)}
+			print(lt)
+			return render(request,'adminpages/campaigns.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
 def adminrecentcampaigns(request):
-	return render(request,'adminpages/recentcampaigns.html',{})
-def adminactivecampaigns(request):
-	return render(request,'adminpages/activecampaign.html',{})
-def books(request):
-	obj=BookData.objects.all()
-	dic={'session':checksession(request),
-		'value':True,
-		'data':reversed(list(obj)),
-		'cate':BookCategoryData.objects.all()}
-	return render(request,'books.html',dic)
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			d={}
+			lt=[]
+			img=[]
+			obj=CampaignData.objects.filter(Campaign_Status='Deactive')
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					d={
+						'camid':x.Campaign_ID,
+						'date':x.Campaign_Date,
+						'title':x.Campaign_Title,
+						'about':x.Campaign_About,
+						'donation':x.Campaign_Donation.upper(),
+						'cover':x.Campaign_Images,
+						'acnumber':x.Campaign_Account_Number,
+						'acname':x.Campaign_Account_Name,
+						'acifsc':x.Campaign_Account_IFSC,
+						'acbank':x.Campaign_Account_Bank
+					}
+					obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+					for y in obj1:
+						img.append(y.Campaign_Images.url)
+					d.update({'images':img})
+					obj2=UserData.objects.filter(User_ID=x.User_ID)
+					for z in obj2:
+						d.update({'uname':z.User_Fname+' '+z.User_Lname,
+								'uemail':z.User_Email,
+								'uphone':z.User_Phone,
+								'uaddress':z.User_Address+' '+z.User_City+' '+'('+z.User_State+')'})
+					lt.append(d)
+			dic={'data':reversed(lt)}
+			return render(request,'adminpages/recentcampaigns.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+def adminapprovecampaign(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			obj=CampaignData.objects.filter(Campaign_ID=request.GET.get('camid'))
+			obj.update(Campaign_Status='Active')
+			e=''
+			fname=''
+			ctitle=''
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					ctitle=x.Campaign_Title
+					obj1=UserData.objects.filter(User_ID=x.User_ID)
+					for y in obj1:
+						fname=y.User_Fname
+						e=y.User_Email
+			msg='''Hi '''+fname+'''!
+Your campaign '''+ctitle+''' has been activated.
 
-def bookcategorypage(request):
-	obj=BookData.objects.filter(Book_Category=request.GET.get('category'))
-	dic={'session':checksession(request),
-		'value':True,
-		'data':reversed(list(obj)),
-		'cate':BookCategoryData.objects.all()}
-	return render(request,'books.html',dic)
+Thanks & Regards,
+Team Aaeena'''
+			sub='Aaeena - '+ctitle+' campaign has been activated'
+			email=EmailMessage(sub,msg,to=[e])
+			email.send()
+			return redirect('/recentcampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def adminrejectcampaign(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			obj=CampaignData.objects.filter(Campaign_ID=request.GET.get('camid'))
+			obj.update(Campaign_Status='Rejected')
+			e=''
+			fname=''
+			ctitle=''
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					ctitle=x.Campaign_Title
+					obj1=UserData.objects.filter(User_ID=x.User_ID)
+					for y in obj1:
+						fname=y.User_Fname
+						e=y.User_Email
+			msg='''Hi '''+fname+'''!
+Your campaign '''+ctitle+''' has been rejected by Admin.
+
+Thanks & Regards,
+Team Aaeena'''
+			sub='Aaeena - '+ctitle+' campaign rejected'
+			email=EmailMessage(sub,msg,to=[e])
+			email.send()
+			return redirect('/recentcampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+def adminactivecampaigns(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			d={}
+			lt=[]
+			img=[]
+			obj=CampaignData.objects.filter(Campaign_Status='Active')
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					d={
+						'camid':x.Campaign_ID,
+						'date':x.Campaign_Date,
+						'title':x.Campaign_Title,
+						'about':x.Campaign_About,
+						'donation':x.Campaign_Donation.upper(),
+						'cover':x.Campaign_Images,
+						'acnumber':x.Campaign_Account_Number,
+						'acname':x.Campaign_Account_Name,
+						'acifsc':x.Campaign_Account_IFSC,
+						'acbank':x.Campaign_Account_Bank
+					}
+					obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+					for y in obj1:
+						img.append(y.Campaign_Images.url)
+					d.update({'images':len(img)})
+					obj2=UserData.objects.filter(User_ID=x.User_ID)
+					for z in obj2:
+						d.update({'uname':z.User_Fname+' '+z.User_Lname,
+								'uemail':z.User_Email,
+								'uphone':z.User_Phone})
+					lt.append(d)
+			dic={'data':reversed(lt)}
+			return render(request,'adminpages/activecampaign.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
 def admindeactivecampaigns(request):
-	return render(request,'adminpages/deactivecampaign.html',{})
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			d={}
+			lt=[]
+			img=[]
+			obj=CampaignData.objects.filter(Campaign_Status='Deactived')
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					d={
+						'camid':x.Campaign_ID,
+						'date':x.Campaign_Date,
+						'title':x.Campaign_Title,
+						'about':x.Campaign_About,
+						'donation':x.Campaign_Donation.upper(),
+						'cover':x.Campaign_Images,
+						'acnumber':x.Campaign_Account_Number,
+						'acname':x.Campaign_Account_Name,
+						'acifsc':x.Campaign_Account_IFSC,
+						'acbank':x.Campaign_Account_Bank
+					}
+					obj1=CampaignData.objects.filter(Campaign_ID=x.Campaign_ID)
+					for y in obj1:
+						img.append(y.Campaign_Images.url)
+					d.update({'images':len(img)})
+					obj2=UserData.objects.filter(User_ID=x.User_ID)
+					for z in obj2:
+						d.update({'uname':z.User_Fname+' '+z.User_Lname,
+								'uemail':z.User_Email,
+								'uphone':z.User_Phone})
+					lt.append(d)
+			dic={'data':reversed(lt)}
+			return render(request,'adminpages/deactivecampaign.html',dic)
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def deactivatecampaign(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			camid=request.GET.get('camid')
+			obj=CampaignData.objects.filter(Campaign_ID=camid)
+			obj.update(Campaign_Status='Deactived')
+			return redirect('/activecampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def activatecampaign(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			camid=request.GET.get('camid')
+			obj=CampaignData.objects.filter(Campaign_ID=camid)
+			obj.update(Campaign_Status='Active')
+			return redirect('/deactivecampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def deletecampaignpermanently(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			camid=request.GET.get('camid')
+			obj=CampaignData.objects.filter(Campaign_ID=camid).delete()
+			return redirect('/activecampaigns/')
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
 def donation(request):
 	return render(request,'donation.html',{})
 def admindonations(request):
 	return render(request,'adminpages/donation.html',{})
+
 def campaignssingle(request):
 	return render(request,'campaignssingle.html',{})
+
+

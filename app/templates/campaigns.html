@@ -75,104 +75,53 @@
           <div class="col-lg-8 ftco-animate">
 						<div class="row">
 							
+              {% for x in data %}
               <div class="col-md-12 d-flex ftco-animate">
 		            <div class="blog-entry align-self-stretch d-md-flex">
-		              <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
+		              <a href="blog-single.html" class="block-20" style="background-image: url({{ x.image.url|safe }});">
 		              </a>
 		              <div class="text d-block pl-md-4">
 		              	<div class="meta mb-3">
-		                  <div><a href="#">Date Here</a></div>
-		                  <div><a href="#">Admin</a></div>
-		                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+		                  <div><a href="#">{{ x.date|safe }}</a></div>
 		                </div>
-		                <h3 class="heading"><a href="#">Title Here</a></h3>
-		                <p>News Body Here</p>
+		                <h3 class="heading"><a href="#">{{ x.title|safe }}</a></h3>
+		                <p>{{ x.about|safe }}</p>
+                    <p style="font-size:18px;">Need Donation? : <span style="font-weight:bold;">{{ x.donation|safe }}</span></p>
 		                <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
 		              </div>
 		            </div>
 		          </div>
-
-              <div class="col-md-12 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch d-md-flex">
-                  <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
-                  </a>
-                  <div class="text d-block pl-md-4">
-                    <div class="meta mb-3">
-                      <div><a href="#">Date Here</a></div>
-                      <div><a href="#">Admin</a></div>
-                      <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">Title Here</a></h3>
-                    <p>News Body Here</p>
-                    <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch d-md-flex">
-                  <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
-                  </a>
-                  <div class="text d-block pl-md-4">
-                    <div class="meta mb-3">
-                      <div><a href="#">Date Here</a></div>
-                      <div><a href="#">Admin</a></div>
-                      <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">Title Here</a></h3>
-                    <p>News Body Here</p>
-                    <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch d-md-flex">
-                  <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
-                  </a>
-                  <div class="text d-block pl-md-4">
-                    <div class="meta mb-3">
-                      <div><a href="#">Date Here</a></div>
-                      <div><a href="#">Admin</a></div>
-                      <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">Title Here</a></h3>
-                    <p>News Body Here</p>
-                    <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch d-md-flex">
-                  <a href="blog-single.html" class="block-20" style="background-image: url({% static 'images/image_1.jpg' %});">
-                  </a>
-                  <div class="text d-block pl-md-4">
-                    <div class="meta mb-3">
-                      <div><a href="#">Date Here</a></div>
-                      <div><a href="#">Admin</a></div>
-                      <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                    </div>
-                    <h3 class="heading"><a href="#">Title Here</a></h3>
-                    <p>News Body Here</p>
-                    <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
 
 						</div>
 						<div class="row mt-5">
 		          <div class="col">
 		            <div class="block-27">
-		              <ul>
-		                <li><a href="#">&lt;</a></li>
-		                <li class="active"><span>1</span></li>
-		                <li><a href="#">2</a></li>
-		                <li><a href="#">3</a></li>
-		                <li><a href="#">4</a></li>
-		                <li><a href="#">5</a></li>
-		                <li><a href="#">&gt;</a></li>
-		              </ul>
+		              {% if data.has_other_pages %}
+                      <ul>
+
+                      {% if data.has_previous %}
+                      <li><a href="/campaigns/?page={{ data.previous_page_number }}">&lt;</a></li>
+                      {% else %}
+                      <li><span>&lt;</span></li>
+                      {% endif %}
+                      
+                      {% for i in data.paginator.page_range %}
+                      {% if data.number == i %}
+                      <li><a class="active" style="background-color:blue;color:white;">{{ i }}</a></li>
+                      {% else %}
+                      <li><a href="/campaigns/?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                      {% endfor %}
+                      
+                      {% if data.has_next %}
+                      <li><a href="/campaigns/?page={{ data.next_page_number }}">&gt;</a></li>
+                      {% else %}
+                      <li><span>&gt;</span></li>
+                      {% endif %}
+                      
+                      </ul>
+                    {% endif %}
 		            </div>
 		          </div>
 		        </div>
@@ -180,62 +129,10 @@
           <div class="col-lg-4 sidebar ftco-animate">
             
             <div class="sidebar-box ftco-animate">
-              <h3 class="heading-2">Trending News</h3>
-              
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
-                <div class="text">
-                  <h3 class="heading-1"><a href="#">Title Here</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Date Here</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
-                <div class="text">
-                  <h3 class="heading-1"><a href="#">Title Here</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Date Here</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
-                <div class="text">
-                  <h3 class="heading-1"><a href="#">Title Here</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Date Here</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
-                <div class="text">
-                  <h3 class="heading-1"><a href="#">Title Here</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Date Here</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-
-            <div class="sidebar-box ftco-animate">
               <h3 class="heading-2">Paragraph</h3>
               <p>Your Text Data Here</p>
             </div>
+            
           </div>
 
         </div>

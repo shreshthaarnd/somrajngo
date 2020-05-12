@@ -33,20 +33,11 @@ urlpatterns = [
     path('userbooks/',userbooks),
     path('saveuserbooks/',saveuserbooks),
     path('removeuserbook/',removeuserbook),
+    path('postcomment/',postcomment),
+    path('saveusercampaign/',saveusercampaign),
+    path('openusercampaign/',openusercampaign),
     path('donation/',donation),
     path('campaignssingle/',campaignssingle),
-
-    path('adminpages404withoutmenus/',adminpages404withoutmenus),
-    path('adminpages500/',adminpages500),
-    path('adminformsadvanced/',adminformsadvanced),
-    path('adminformsbasic/',adminformsbasic),
-    path('adminformscodeeditor/',adminformscodeeditor),
-    path('adminformslayouts/',adminformslayouts),
-    path('adminformsvalidation/',adminformsvalidation),
-    path('adminformswizard/',adminformswizard),
-    path('adminlayoutsboxed/',adminlayoutsboxed),
-
-    path('adminlayoutsboxed/',adminlayoutsboxed),
 
     path('error404/',adminpages404withoutmenus),
     path('adminhome/',adminhome),
@@ -67,15 +58,17 @@ urlpatterns = [
     path('savebookcategroy/',savebookcategory),
     path('booklist/',adminbooklist),
     path('admindonations/',admindonations),
-
     path('admincampaigns/',admincampaigns),
     path('recentcampaigns/',adminrecentcampaigns),
     path('activecampaigns/',adminactivecampaigns),
     path('deactivecampaigns/',admindeactivecampaigns),
-
     path('downloadbookpdf/',downloadbookpdf),
     path('deletebook/',deletebook),
-
+    path('adminapprovecampaign/',adminapprovecampaign),
+    path('adminrejectcampaign/',adminrejectcampaign),
+    path('deactivatecampaign/',deactivatecampaign),
+    path('activatecampaign/',activatecampaign),
+    path('deletecampaignpermanently/',deletecampaignpermanently),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

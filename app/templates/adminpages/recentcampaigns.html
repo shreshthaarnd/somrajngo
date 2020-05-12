@@ -231,17 +231,21 @@
 								</header>
 								<div class="panel-body">
 									<div class="owl-carousel" data-plugin-carousel data-plugin-options='{ "items": 1,  "navigation": true, "pagination": false }'>
+										
+										{% for x in data %}
 										<div class="item">
-											<h1 style="font-size:25px;font-weight:bold;margin-bottom:20px;"class="text-center">Campaign Title</h1>
-											<div class="row-mt-lg pt-lg">
-												<div style="width:50%;"class="col-md-3">
-													<img style="height:212px;width:100%;"alt="" class="img-responsive" src="{% static 'assets/images/projects/project-2.jpg' %}">
-												</div>
+											<h1 style="font-size:25px;font-weight:bold;margin-bottom:20px;"class="text-center">{{ x.title|safe }}</h1>
 											
-												<div style="width:50%;"class="col-md-3">
-													<video controls style="width:100%;">
-														<source src="{% static 'edfgt.mp4' %}" type="video/mp4">
-													</video>
+											<div class="row-mt-lg pt-lg">
+												
+												<div class="owl-carousel" data-plugin-carousel data-plugin-options='{ "autoPlay": 5000, "items": 1,  "navigation": false, "pagination": true }'>
+													
+													{% for y in x.images %}
+													<div class="width:100%;" class="item">
+														<img alt="" style="width:100%;height:400px;" class="img-responsive" src="{{ y|safe }}">
+													</div>
+													{% endfor %}
+
 												</div>
 												
 											</div>
@@ -255,7 +259,7 @@
 														
 														<td style="font-weight:bold;">
 															<i class="fa fa-user">
-															</i> Shalini
+															</i> {{ x.uname|safe }}
 														</td>
 
 														
@@ -264,7 +268,7 @@
 														
 														<td style="font-weight:bold;">
 															<i class="fa fa-at">
-															</i> Sha34@gmail.com
+															</i> {{ x.uemail|safe }}
 														</td>
 
 														
@@ -273,21 +277,34 @@
 														
 														<td style="font-weight:bold;">
 															<i class="fa fa-mobile">
-															</i> 4587609348
+															</i> {{ x.uphone|safe }}
 														</td>	
 													</tr>
 													<tr style="font-size:20px;">
 														
 														<td style="font-weight:bold;">
 															<i class="fa fa-map-marker">
-															</i> Saswati Nagar Agra
+															</i> {{ x.uaddress|safe }}
 														</td>
 
 														
 													</tr>
 
-													
+													<tr style="font-size:20px;">
+														
+														<td style="">
+															Need Donation?
+														</td>
+														<td style="font-weight:bold;">
+															{{ x.donation|safe }}
+														</td>
+
+														
+													</tr>
+												</tbody>
+
 												</table>
+												
 											</div>
 											<div style="width:50%;"class="col-md-3">
 												<table  style="margin:20px;"class="table table-hover mb-none">
@@ -300,13 +317,13 @@
 													</tr>
 													<tr style="font-size:20px;">
 														<td>
-															 Twinkle Twinkle little star how are wonder what you are up above the world so hign like a daimond in the sky 
+															 {{ x.about|safe }}
 														</td>	
 													</tr>
 													<tr style="font-size:20px;">
 														<td>
 															<i class="fa fa-calendar"></i>
-															 02/05/2020
+															 {{ x.date|safe }}
 														</td>	
 													</tr>
 
@@ -315,15 +332,77 @@
 												</table>
 											</div>
 										</div>
+												{% if x.donation == 'YES' %}
+												<section class="panel">
+													<header class="panel-heading">
+														<div class="panel-actions">
+															<a href="#" class="fa fa-caret-down"></a>
+															<a href="#" class="fa fa-times"></a>
+														</div>
+
+														<h2 class="panel-title">Bank Details</h2>
+													</header>
+													<table  style="margin:20px;"class="table table-hover mb-none">
+												
+													<tbody>
+													
+														<tr style="font-size:20px;">
+															
+															<td>
+																Bank Name
+															</td>
+															<td style="font-weight:bold;">
+																{{ x.acbank|safe }}
+															</td>
+
+														</tr>
+														<tr style="font-size:20px;">
+															
+															<td>
+																Account Number
+															</td>
+															<td style="font-weight:bold;">
+																{{ x.acnumber|safe }}
+															</td>
+															
+														</tr>
+														<tr style="font-size:20px;">
+															
+															<td>
+																Account Holder's Name
+															</td>
+															<td style="font-weight:bold;">
+																{{ x.acname|safe }}
+															</td>
+															
+														</tr>
+														<tr style="font-size:20px;">
+															
+															<td>
+																IFSC Code
+															</td>
+															<td style="font-weight:bold;">
+																{{ x.acifsc|safe }}
+															</td>
+															
+														</tr>
+
+													</tbody>
+														
+
+													</table>
+												</section>
+												{% endif %}
 											<div class="row mt-lg pt-lg">
 												<div style="width:50%;"class="col-md-3">
-													<button style="width:100%;"type="button" class="mb-xs mt-xs mr-xs btn btn-danger"><i class="fa fa-ban"></i> Reject</button>
+													<a href="/adminrejectcampaign/?camid={{ x.camid|safe }}" style="width:100%;"type="button" class="mb-xs mt-xs mr-xs btn btn-danger"><i class="fa fa-ban"></i> Reject</a>
 												</div>
 												<div style="width:50%;"class="col-md-3">
-													<button style="width:100%;"type="button" class="mb-xs mt-xs mr-xs btn btn-primary"><i class="fa fa-thumbs-up"></i> Approve</button>
+													<a href="/adminapprovecampaign/?camid={{ x.camid|safe }}" style="width:100%;"type="button" class="mb-xs mt-xs mr-xs btn btn-primary"><i class="fa fa-thumbs-up"></i> Approve</a>
 												</div>
 											</div>
 										</div>
+										{% endfor %}
 										
 									</div>
 								</div>

@@ -85,7 +85,7 @@
 		              	<div class="meta mb-3">
 		                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Date|safe }}</a></div>
 		                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">Admin</a></div>
-		                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+		                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="meta-chat"><span class="icon-chat"></span> {{ x.commentcount|safe }}</a></div>
 		                </div>
 		                <h3 class="heading"><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Title|safe }}</a></h3>
 		                <p>{{ x.News_Body|safe }}</p>
@@ -103,7 +103,7 @@
                     <div class="meta mb-3">
                       <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Date|safe }}</a></div>
                       <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">Admin</a></div>
-                      <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                      <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="meta-chat"><span class="icon-chat"></span> {{ x.commentcount|safe }}</a></div>
                     </div>
                     <h3 class="heading"><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Title|safe }}</a></h3>
                     <p>{{ x.News_Body|safe }}</p>
@@ -118,15 +118,33 @@
 						<div class="row mt-5">
 		          <div class="col">
 		            <div class="block-27">
-		              <ul>
-		                <li><a href="#">&lt;</a></li>
-		                <li class="active"><span>1</span></li>
-		                <li><a href="#">2</a></li>
-		                <li><a href="#">3</a></li>
-		                <li><a href="#">4</a></li>
-		                <li><a href="#">5</a></li>
-		                <li><a href="#">&gt;</a></li>
-		              </ul>
+		              
+                    {% if data.has_other_pages %}
+                      <ul>
+
+                      {% if data.has_previous %}
+                      <li><a href="/news/?page={{ data.previous_page_number }}">&lt;</a></li>
+                      {% else %}
+                      <li><span>&lt;</span></li>
+                      {% endif %}
+                      
+                      {% for i in data.paginator.page_range %}
+                      {% if data.number == i %}
+                      <li><a class="active" style="background-color:blue;color:white;">{{ i }}</a></li>
+                      {% else %}
+                      <li><a href="/news/?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                      {% endfor %}
+                      
+                      {% if data.has_next %}
+                      <li><a href="/news/?page={{ data.next_page_number }}">&gt;</a></li>
+                      {% else %}
+                      <li><span>&gt;</span></li>
+                      {% endif %}
+                      
+                      </ul>
+                    {% endif %}
+                    
 		            </div>
 		          </div>
 		        </div>
