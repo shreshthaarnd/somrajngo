@@ -587,3 +587,5 @@ def donation(request):
 	return render(request,'donation.html',{})
 def admindonations(request):
 	return render(request,'adminpages/donation.html',{})
+def campaignssingle(request):
+	return render(request,'campaignssingle.html',{})

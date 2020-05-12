@@ -34,6 +34,7 @@ urlpatterns = [
     path('saveuserbooks/',saveuserbooks),
     path('removeuserbook/',removeuserbook),
     path('donation/',donation),
+    path('campaignssingle/',campaignssingle),
 
     path('adminpages404withoutmenus/',adminpages404withoutmenus),
     path('adminpages500/',adminpages500),
