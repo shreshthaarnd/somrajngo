@@ -37,6 +37,7 @@ urlpatterns = [
     path('saveusercampaign/',saveusercampaign),
     path('openusercampaign/',openusercampaign),
     path('donation/',donation),
+    path('campaignssingle/',campaignssingle),
 
     path('error404/',adminpages404withoutmenus),
     path('adminhome/',adminhome),
