@@ -345,7 +345,7 @@ def usercampaigns(request):
 	d={}
 	lt=[]
 	images=[]
-	obj=CampaignData.objects.filter(User_ID=request.session['user_id'])
+	obj=CampaignData.objects.filter(User_ID=request.session['user_id'],Campaign_Status='Active')
 	for x in obj:
 		d={
 			'camid':x.Campaign_ID,

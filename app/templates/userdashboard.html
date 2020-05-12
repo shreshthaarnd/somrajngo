@@ -115,6 +115,7 @@
           <div class="col-lg-4 sidebar ftco-animate">
             <div class="sidebar-box">
               <h1 style="font-size:25px;padding:20px;border-radius:5px;" class="w3-green text-center">Post Campaign</h1>
+              <p style="font-size:20px;">{{ msg|safe }}</p>
               <form class="w3-container" action="/saveusercampaign/" method="POST" enctype="multipart/form-data">
                 
                 <input style="margin-bottom:10px;margin-top:10px;" class="w3-input w3-border" type="text" name="title" placeholder="Campaign Title">
