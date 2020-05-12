@@ -134,6 +134,8 @@ def contact(request):
 	return render(request,'contact.html',dic)
 def index(request):
 	dic={'session':checksession(request),'value':True}
+	dic.update(GetHomeBlogs())
+	dic.update(GetHomeCampaigns())
 	return render(request,'index.html',dic)
 def services(request):
 	dic={'session':checksession(request),'value':True}
@@ -345,9 +347,10 @@ def usercampaigns(request):
 	d={}
 	lt=[]
 	images=[]
-	obj=CampaignData.objects.filter(User_ID=request.session['user_id'],Campaign_Status='Active')
+	obj=CampaignData.objects.filter(User_ID=request.session['user_id'])
 	for x in obj:
 		d={
+			'status':x.Campaign_Status,
 			'camid':x.Campaign_ID,
 			'date':x.Campaign_Date,
 			'title':x.Campaign_Title,
@@ -364,7 +367,16 @@ def usercampaigns(request):
 			images.append(y.Campaign_Images)
 		d.update({'images':images})
 		lt.append(d)
-	dic.update({'camdata':lt,})
+	data=[]
+	page = request.GET.get('page')
+	paginator = Paginator(list(reversed(lt)), 5)
+	try:
+		data = paginator.page(page)
+	except PageNotAnInteger:
+		data = paginator.page(1)
+	except EmptyPage:
+		data = paginator.page(paginator.num_pages)
+	dic.update({'data':data})
 	return render(request,'userdashboard.html',dic)
 
 def openusercampaign(request):

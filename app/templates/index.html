@@ -98,9 +98,9 @@
 
     <section class="services-section py-5 py-md-0">
       <div class="container">
-        <div class="row no-gutters d-flex">
+        <div class="row no-gutters d-flex" style="width:100%;">
           <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-            <div class="media block-6 text-center services d-block">
+            <div class="media block-6 text-center services d-block"  style="width:100%;">
               <div class="icon"><span class="flaticon-charity"></span></div>
               <div class="media-body">
                 <h3 class="heading mb-3">Help &amp; Support</h3>
@@ -109,7 +109,7 @@
             </div>      
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-            <div class="media block-6 text-center services active d-block">
+            <div class="media block-6 text-center services active d-block" style="width:100%;">
               <div class="icon"><span class="flaticon-adoption"></span></div>
               <div class="media-body">
                 <h3 class="heading mb-3">Adoption</h3>
@@ -118,7 +118,7 @@
             </div>    
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-            <div class="media block-6 text-center services d-block">
+            <div class="media block-6 text-center services d-block" style="width:100%;">
               <div class="icon"><span class="flaticon-volunteer"></span></div>
               <div class="media-body">
                 <h3 class="heading mb-3">Volunteering</h3>
@@ -127,7 +127,7 @@
             </div>      
           </div>
           <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-            <div class="media block-6 text-center services d-block">
+            <div class="media block-6 text-center services d-block" style="width:100%;">
               <div class="icon"><span class="flaticon-open-book"></span></div>
               <div class="media-body">
                 <h3 class="heading mb-3">Education</h3>
@@ -139,40 +139,65 @@
       </div>
     </section>
 
-		<section class="ftco-section bg-light">
-			<div class="container">
-				<div class="row justify-content-center pb-3">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-          	<span class="subheading">Foundation Grants Projects</span>
-            <h2 class="mb-4">Gifts into Service Project that Change</h2>
+		<section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center pb-5">
+          <div class="col-md-10 heading-section text-center ftco-animate">
+            <h2 class="mb-4">Recent Campaigns</h2>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
           </div>
         </div>
-        <div class="row justify-content-center ftco-animate">
-        	<div class="col-md-8">
-        		<div class="featured-causes">
-        			<div class="progress" style="height:50px">
-							  <div class="progress-bar progress-bar-striped" style="width:65%; height:50px"></div>
-							</div>
-							<div class="text mt-4 d-md-flex">
-								<div class="one d-flex">
-									<div class="mr-4">
-										<h2>65%</h2>
-									</div>
-									<div class="goal">
-										<p class="d-flex"><span>Collected:</span><span><i class="fa fa-inr"></i> 380,000</span></p>
-										<p class="d-flex"><span>Goal:</span><span><i class="fa fa-inr"></i> 600,000</span></p>
-									</div>
-								</div>
-								<div class="one text-md-right">
-									<p><a href="#" class="btn btn-primary">Donate now</a></p>
-								</div>
-							</div>
-        		</div>
-        	</div>
+        <div class="row">
+          {% for x in cam1 %}
+          <div class="col-md-6">
+            <div class="blog-entry align-self-stretch ftco-animate">
+              <a href="blog-single.html" class="block-20 img" style="background-image: url({{ x.image.url|safe }});">
+              </a>
+              <div class="text text-2 bg-light">
+                <h3 class="heading mb-2"><a href="#">{{ x.title|safe }}</a></h3>
+                <div class="meta mb-2">
+                  <div><a href="#">{{ x.date|safe }}</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+          {% for x in cam2 %}
+          <div class="col-md-6">
+            <div class="blog-entry align-self-stretch d-md-flex bg-light p-3 align-items-center d-flex ftco-animate">
+              <a href="blog-single.html" class="block-20 thumb" style="background-image: url({{ x.image.url|safe }});">
+              </a>
+              <div class="text text-thumb d-block pl-2 pl-md-4">
+                <h3 class="heading mb-2"><a href="#">{{ x.title|safe }}</a></h3>
+                <div class="meta">
+                  <div><a href="#">{{ x.date|safe }}</a></div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+            {% for x in cam3 %}
+            <div class="blog-entry align-self-stretch d-md-flex bg-light p-3 align-items-center d-flex ftco-animate">
+              <a href="blog-single.html" class="block-20 thumb" style="background-image: url({{ x.image.url|safe }});">
+              </a>
+              <div class="text text-thumb d-block pl-2 pl-md-4">
+                <h3 class="heading mb-2"><a href="#">{{ x.title|safe }}</a></h3>
+                <div class="meta">
+                  <div><a href="#">{{ x.date|safe }}</a></div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
         </div>
-			</div>
-		</section>
+        <div class="row justify-content-center intro pt-4 pt-md-5">
+          <div class="col-md-8 text-center">
+            <a href="/campaigns/" class="btn btn-primary py-3 px-5">View More</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="ftco-counter ftco-section img" id="section-counter" style="background-image: url({% static 'images/bg_2.jpg' %});">
     	<div class="overlay"></div>
@@ -227,63 +252,77 @@
           </div>
         </div>
         <div class="row">
-        	<div class="col-md-6">
-        		<div class="blog-entry align-self-stretch ftco-animate">
-              <a href="blog-single.html" class="block-20 img" style="background-image: url({% static 'images/image_1.jpg' %});">
+        	{% for x in blog1 %}
+          <div class="col-md-6">
+            <div class="blog-entry align-self-stretch ftco-animate">
+              {% if x.News_Media_Type == 'Image' %}
+              <a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="block-20 img" style="background-image: url({{ x.News_Media.url|safe }});">
               </a>
+              {% else %}
+              <video width="320" height="240" class="block-20 img" controls>
+                <source src="{{ x.News_Media.url|safe }}" type="video/mp4">
+              </video>
+              {% endif %}
               <div class="text text-2 bg-light">
-                <h3 class="heading mb-2"><a href="#">Title Here</a></h3>
+                <h3 class="heading mb-2"><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Title|safe }}</a></h3>
                 <div class="meta mb-2">
-                  <div><a href="#">Date Here</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Date|safe }}</a></div>
+                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">Admin</a></div>
+                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="meta-chat"><span class="icon-chat"></span> {{ x.commentcount|safe }}</a></div>
                 </div>
               </div>
             </div>
-        	</div>
+          </div>
+          {% endfor %}
+
+          {% for x in blog2 %}
         	<div class="col-md-6">
         		<div class="blog-entry align-self-stretch d-md-flex bg-light p-3 align-items-center d-flex ftco-animate">
-              <a href="blog-single.html" class="block-20 thumb" style="background-image: url({% static 'images/image_2.jpg' %});">
+              {% if x.News_Media_Type == 'Image' %}
+              <a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="block-20 thumb" style="background-image: url({{ x.News_Media.url|safe }});">
               </a>
+              {% else %}
+              <video class="block-20 thumb" controls>
+                <source src="{{ x.News_Media.url|safe }}" type="video/mp4">
+              </video>
+              {% endif %}
               <div class="text text-thumb d-block pl-2 pl-md-4">
-                <h3 class="heading mb-2"><a href="#">Title Here</a></h3>
+                <h3 class="heading mb-2"><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Title|safe }}</a></h3>
                 <div class="meta">
-                  <div><a href="#">Date</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Date|safe }}</a></div>
+                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">Admin</a></div>
+                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="meta-chat"><span class="icon-chat"></span> {{ x.commentcount|safe }}</a></div>
                 </div>
               </div>
             </div>
+            {% endfor %}
 
+            {% for x in blog3 %}
             <div class="blog-entry align-self-stretch d-md-flex bg-light p-3 align-items-center d-flex ftco-animate">
-              <a href="blog-single.html" class="block-20 thumb" style="background-image: url({% static 'images/image_3.jpg' %});">
+              {% if x.News_Media_Type == 'Image' %}
+              <a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="block-20 thumb" style="background-image: url({{ x.News_Media.url|safe }});">
               </a>
+              {% else %}
+              <video class="block-20 thumb" controls>
+                <source src="{{ x.News_Media.url|safe }}" type="video/mp4">
+              </video>
+              {% endif %}
               <div class="text text-thumb d-block pl-2 pl-md-4">
-                <h3 class="heading mb-2"><a href="#">Title</a></h3>
+                <h3 class="heading mb-2"><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Title|safe }}</a></h3>
                 <div class="meta">
-                  <div><a href="#">Date</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">{{ x.News_Data|safe }}</a></div>
+                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}">Admin</a></div>
+                  <div><a href="/blogsingle/?nid={{ x.News_ID|safe }}" class="meta-chat"><span class="icon-chat"></span> {{ x.commentcount|safe }}</a></div>
                 </div>
               </div>
             </div>
+            {% endfor %}
 
-            <div class="blog-entry align-self-stretch d-md-flex bg-light p-3 align-items-center d-flex ftco-animate">
-              <a href="blog-single.html" class="block-20 thumb" style="background-image: url({% static 'images/image_4.jpg' %});">
-              </a>
-              <div class="text text-thumb d-block pl-2 pl-md-4">
-                <h3 class="heading mb-2"><a href="#">Title Here</a></h3>
-                <div class="meta">
-                  <div><a href="#">Date</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-              </div>
-            </div>
         	</div>
         </div>
         <div class="row justify-content-center intro pt-4 pt-md-5">
         	<div class="col-md-8 text-center">
+            <a href="/news/" class="btn btn-primary py-3 px-5">View More</a>
         		<h1 class="heading">Your <span>Quote</span> Here</h1>
         	</div>
         </div>

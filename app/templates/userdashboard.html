@@ -76,7 +76,7 @@
         <div class="row">
           <div class="col-lg-8 ftco-animate">
 						<div class="row">
-							{% for x in camdata %}
+							{% for x in data %}
               <div class="col-md-12 d-flex ftco-animate">
 		            <div class="blog-entry align-self-stretch d-md-flex">
 		              <a href="/openusercampaign/?cid={{ x.camid|safe }}" class="block-20" style="background-image: url({{ x.cover.url|safe }});">
@@ -87,7 +87,13 @@
 		                  <div><a href="/openusercampaign/?cid={{ x.camid|safe }}">{{ Fname|safe }} {{ Lname|safe }}</a></div>
 		                </div>
 		                <h3 class="heading"><a href="/openusercampaign/?cid={{ x.camid|safe }}">{{ x.title|safe }}</p>
-                    <p style="font-size:20px;">Need Donation : {{ x.donation|safe }}</p>
+                    <p style="font-size:20px;">Need Donation : {{ x.donation|safe }} 
+                      {% if x.status == 'Active' %}
+                      <apan style="font-size:12px;background-color:green;color:white;padding:5px;border-radius:5px;">Approved</apan> 
+                      {% else %}
+                      <apan style="font-size:12px;background-color:red;color:white;padding:5px;border-radius:5px;">Unapproved</apan>
+                      {% endif %}
+                    </p>
                     <p style="font-size:15px;">{{ x.about|safe }}</p>
 		                <p><a href="/openusercampaign/?cid={{ x.camid|safe }}" class="btn btn-primary py-2 px-3">Read more</a></p>
 		              </div>
@@ -99,15 +105,31 @@
 						<div class="row mt-5">
 		          <div class="col">
 		            <div class="block-27">
-		              <ul>
-		                <li><a href="#">&lt;</a></li>
-		                <li class="active"><span>1</span></li>
-		                <li><a href="#">2</a></li>
-		                <li><a href="#">3</a></li>
-		                <li><a href="#">4</a></li>
-		                <li><a href="#">5</a></li>
-		                <li><a href="#">&gt;</a></li>
-		              </ul>
+		              {% if data.has_other_pages %}
+                      <ul>
+
+                      {% if data.has_previous %}
+                      <li><a href="/usercampaigns/?page={{ data.previous_page_number }}">&lt;</a></li>
+                      {% else %}
+                      <li><span>&lt;</span></li>
+                      {% endif %}
+                      
+                      {% for i in data.paginator.page_range %}
+                      {% if data.number == i %}
+                      <li><a class="active" style="background-color:blue;color:white;">{{ i }}</a></li>
+                      {% else %}
+                      <li><a href="/usercampaigns/?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                      {% endfor %}
+                      
+                      {% if data.has_next %}
+                      <li><a href="/usercampaigns/?page={{ data.next_page_number }}">&gt;</a></li>
+                      {% else %}
+                      <li><span>&gt;</span></li>
+                      {% endif %}
+                      
+                      </ul>
+                    {% endif %}
 		            </div>
 		          </div>
 		        </div>
