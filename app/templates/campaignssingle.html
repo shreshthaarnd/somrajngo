@@ -2,7 +2,7 @@
 {% load static %}
 <html lang="en">
   <head>
-    <title>Aspiration - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Aaeena</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -104,7 +104,7 @@
       transition: background-color 0.6s ease;
     }
 
-    .active, .dot:hover {
+    .active2, .dot:hover {
       background-color: #717171;
     }
 
@@ -160,8 +160,8 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
-            <h2 class="mb-3 bread">Campaigns Name</h2>
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Blog Single <i class="ion-ios-arrow-forward"></i></span></p>
+            <h2 class="mb-3 bread">{{ title|safe }}</h2>
+            <p class="breadcrumbs"><span class="mr-2"><a href="/index/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>{{ title|safe }}<i class="ion-ios-arrow-forward"></i></span></p>
           </div>
         </div>
       </div>
@@ -171,83 +171,69 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 ftco-animate">
-            <h2 class="mb-3">Campaigns Title</h2>
+            <h2 class="mb-3">{{ title|safe }}</h2>
             <p>
               <!-- Slideshow container -->
                   <div style="width:100%;" class="slideshow-container">
 
                     <!-- Full-width images with number and caption text -->
-                    
+                    {% for x in images %}
                     <div class="mySlides w3-animate-right">
-                      <img src="{% static 'images/73d4b0dc54bbf461e671dd7f8ee19f28.jpg' %}" style="height:400px;width:100%">
+                      <img src="{{ x|safe }}" style="height:400px;width:100%">
                     </div>
-                    <div class="mySlides w3-animate-right">
-                      <img src="{% static 'images/73d4b0dc54bbf461e671dd7f8ee19f28.jpg' %}" style="height:400px;width:100%">
-                    </div>
-                    <div class="mySlides w3-animate-right">
-                      <img src="{% static 'images/73d4b0dc54bbf461e671dd7f8ee19f28.jpg' %}" style="height:400px;width:100%">
-                    </div>
-                    <div class="mySlides w3-animate-right">
-                      <img src="{% static 'images/73d4b0dc54bbf461e671dd7f8ee19f28.jpg' %}" style="height:400px;width:100%">
-                    </div>
-                    <div class="mySlides w3-animate-right">
-                      <img src="{% static 'images/73d4b0dc54bbf461e671dd7f8ee19f28.jpg' %}" style="height:400px;width:100%">
-                    </div>
-                    <div class="mySlides w3-animate-right">
-                      <img src="{% static 'images/73d4b0dc54bbf461e671dd7f8ee19f28.jpg' %}" style="height:400px;width:100%">
-                    </div>
-                    
+                    {% endfor %}
                     <!-- Next and previous buttons -->
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
                   </div>
             </p>
-            <h2 style="width:100%;font-size:20px;"class="mb-3 mt-5"><i class="fa fa-calendar"></i> 01/07/2020</h2>
+            <h2 style="width:100%;font-size:20px;"class="mb-3 mt-5"><i class="fa fa-calendar"></i> {{ date|safe }}</h2>
             <h2 class="mb-3 mt-5">About Campaigns</h2>
-            <p>Molestiae cupiditate inventore animi, maxime sapiente optio, illo est nemo veritatis repellat sunt doloribus nesciunt! Minima laborum magni reiciendis qui voluptate quisquam voluptatem soluta illo eum ullam incidunt rem assumenda eveniet eaque sequi deleniti tenetur dolore amet fugit perspiciatis ipsa, odit. Nesciunt dolor minima esse vero ut ea, repudiandae suscipit!</p>
-            <h2 style="width:100%;font-size:25px;" class="mb-3 mt-5">Need Donation? : Yes</h2>
+            <p>{{ about|safe }}</p>
+            <h2 style="width:100%;font-size:25px;" class="mb-3 mt-5">Need Donation? : {{ donation|safe }}</h2>
+            {% if donation == 'YES' %}
             <h2 style="width:100%;font-size:25px;" class="mb-3 mt-5">Bank Details</h2>
             <table style="width:100%;font-size:18px;" class="w3-table-all">
               <tr>
                 <td>Bank Name</td>
-                <td style="font-weight:bold;">IOB</td>
+                <td style="font-weight:bold;">{{ acbank|safe }}</td>
               </tr>
               <tr>
                 <td>Account Number</td>
-                <td style="font-weight:bold;">1234000005678</td>
+                <td style="font-weight:bold;">{{ acnumber|safe }}</td>
               </tr>
               <tr>
                 <td>Account Holder's Name</td>
-                <td style="font-weight:bold;">Rajesh Khanna</td>
+                <td style="font-weight:bold;">{{ acname|safe }}</td>
               </tr>
               <tr>
                 <td>IFSC Code</td>
-                <td style="font-weight:bold;">IOB567</td>
+                <td style="font-weight:bold;">{{ acifsc|safe }}</td>
               </tr>
             </table>
+            {% endif %}
+            {% for x in user %}
             <h2 style="width:100%;font-size:25px;" class="mb-3 mt-5">Campaign By</h2>
             <div style="width:100%;"class="about-author d-flex p-4 bg-light">
               <div class="bio mr-5">
-                <div style="width:150px;height:150px;background-image: url({% static 'images/person_1.jpg' %});background-size:100% auto;border-radius:10px;"></div>
+                <div style="width:150px;height:150px;background-image: url({{ userimage|safe }});background-size:100% auto;border-radius:10px;"></div>
               </div>
               <div style="width:100%;"class="desc">
-                <h3>George Washington</h3>
+                <h3>{{ x.User_Fname|safe }} {{ x.User_Lname|safe }}</h3>
                 <ul class="w3-ul">
-                  <li class="w3-hover-blue"><i class="fa fa-at">
-                  </i>
-                  Ra34@gmail.com
+                  <li class="w3-hover-blue">
+                    <i class="fa fa-at"></i> {{ x.User_Email|safe }}
                   </li>
-                  <li class="w3-hover-blue"><i class="fa fa-mobile">
-                  </i>
-                  7869045968
+                  <li class="w3-hover-blue">
+                    <i class="fa fa-mobile"></i> {{ x.User_Phone|safe }}
                   </li>
-                  <li class="w3-hover-blue"><i class="fa fa-map-marker">
-                  </i>
-                  12,tajganj Agra
+                  <li class="w3-hover-blue">
+                    <i class="fa fa-map-marker"></i> {{ x.User_Address|safe }} {{ x.User_City|safe }} ({{ x.User_State|safe }})
                   </li>
                 </ul>
               </div>
             </div>
+            {% endfor %}
           </div> <!-- .col-md-8 -->
           <div class="col-lg-4 sidebar ftco-animate">
             

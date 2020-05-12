@@ -78,16 +78,16 @@
               {% for x in data %}
               <div class="col-md-12 d-flex ftco-animate">
 		            <div class="blog-entry align-self-stretch d-md-flex">
-		              <a href="blog-single.html" class="block-20" style="background-image: url({{ x.image.url|safe }});">
+		              <a href="/campaignssingle/?cid={{ x.camid }}" class="block-20" style="background-image: url({{ x.image.url|safe }});">
 		              </a>
 		              <div class="text d-block pl-md-4">
 		              	<div class="meta mb-3">
-		                  <div><a href="#">{{ x.date|safe }}</a></div>
+		                  <div><a href="/campaignssingle/?cid={{ x.camid }}">{{ x.date|safe }}</a></div>
 		                </div>
-		                <h3 class="heading"><a href="#">{{ x.title|safe }}</a></h3>
+		                <h3 class="heading"><a href="/campaignssingle/?cid={{ x.camid }}">{{ x.title|safe }}</a></h3>
 		                <p>{{ x.about|safe }}</p>
                     <p style="font-size:18px;">Need Donation? : <span style="font-weight:bold;">{{ x.donation|safe }}</span></p>
-		                <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
+		                <p><a href="/campaignssingle/?cid={{ x.camid }}" class="btn btn-primary py-2 px-3">Read more</a></p>
 		              </div>
 		            </div>
 		          </div>

@@ -1066,6 +1066,30 @@ def admindonations(request):
 	return render(request,'adminpages/donation.html',{})
 
 def campaignssingle(request):
-	return render(request,'campaignssingle.html',{})
+	cid=request.GET.get('cid')
+	lt=[]
+	dic={}
+	obj=CampaignData.objects.filter(Campaign_ID=cid)
+	for x in obj:
+		dic.update({'title':x.Campaign_Title,
+					'about':x.Campaign_About,
+					'date':x.Campaign_Date,
+					'donation':x.Campaign_Donation.upper(),
+					'acnumber':x.Campaign_Account_Number,
+					'acname':x.Campaign_Account_Name,
+					'acifsc':x.Campaign_Account_IFSC,
+					'acbank':x.Campaign_Account_Bank})
+		obj1=CampaignData.objects.filter(Campaign_ID=cid)
+		for y in obj1:
+			lt.append(y.Campaign_Images.url)
+		dic.update({'images':lt})
+		obj1=UserData.objects.filter(User_ID=x.User_ID)
+		dic.update({'user':obj1})
+		obj2=UserProfilePicture.objects.filter(User_ID=x.User_ID)
+		for y in obj2:
+			dic.update({'userimage':y.User_Image.url})
+		break
+	dic.update({'session':checksession(request),'value':True})
+	return render(request,'campaignssingle.html',dic)
 
 
