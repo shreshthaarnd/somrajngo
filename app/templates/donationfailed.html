@@ -5,7 +5,7 @@
     <title>Aaeena</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700&display=swap" rel="stylesheet">
 
@@ -57,91 +57,16 @@
     </nav>
     <!-- END nav -->
     
-    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url({% static 'images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
-      <div class="overlay"></div>
+    <section class="hero-wrap hero-wrap-2" style="background-color:red;">
       <div class="container">
-        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
-            <h2 class="mb-3 bread">Donate Now</h2>
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Donate Now <i class="ion-ios-arrow-forward"></i></span></p>
+            <h2 class="mb-3 bread" style="margin-top:100px;"><i class="fa fa-check"></i> Payment Failed</h2>
           </div>
         </div>
       </div>
     </section>
       
-    <section class="ftco-section bg-light">
-      <div class="container">
-        <div class="row justify-content-center pb-3">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-            <span class="subheading">Foundation Grants Projects</span>
-            <h2 class="mb-4">Gifts into Service Project that Change</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-          </div>
-        </div>
-        <div class="row justify-content-center ftco-animate">
-          <div class="col-md-8">
-            <div class="featured-causes">
-              <div class="progress" style="height:50px">
-                <div class="progress-bar progress-bar-striped" style="width:{{ percent|safe }}%; height:50px"></div>
-              </div>
-              <div class="text mt-4 d-md-flex">
-                <div class="one d-flex">
-                  <div class="mr-4">
-                    <h2>{{ percent|safe }}%</h2>
-                  </div>
-                  <div class="goal">
-                    <p class="d-flex"><span>Collected:</span><span><i class="fa fa-inr"></i> {{ tamount|safe }}</span></p>
-                    <p class="d-flex"><span>Goal:</span><span><i class="fa fa-inr"></i> 1000000</span></p>
-                  </div>
-                </div>
-                <div class="one text-md-right">
-                  <p><a href="#donation" class="btn btn-primary">Donate now</a></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="ftco-section bg-light">
-      <div class="container">
-          <div class="row justify-content-center pb-3">
-            <div class="row justify-content-center pb-3">
-              <div class="col-md-10 heading-section text-center ftco-animate">
-                <span class="subheading">Submit Your Donation</span>
-                <h2 style="width:100%;" class="mb-4">Donate Here</h2>
-                <p>Your Quote Here</p>
-              </div>
-            </div>
-              <div class="col-md-10 justify-content-center">
-                <form id="donation" class="bg-light p-5 contact-form" method="POST" action="/proceedfordonation/">
-                  <div class="form-group">
-                    <input class="form-control" name="name" placeholder="Name" type="text" >
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="email" placeholder="Email" type="email" >
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="phone" placeholder="Phone" type="number" >
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="city" placeholder="City" type="text" >
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="state" placeholder="State" type="text" >
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="amount" placeholder="Amount in Rupees" type="number" >
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control btn btn-primary py-3 px-5" value="Proceed" type="submit" >
-                  </div>
-                </form>
-
-              </div>
-          </div>
-      </div>
-    </section>
     <footer class="ftco-footer ftco-section img" style="padding-bottom:20px;background-image: url({% static 'images/footer.jpg' %});">
       <div class="overlay"></div>
       <div class="container">

@@ -13,6 +13,7 @@ class NewsData(models.Model):
 	class Meta:
 		db_table="NewsData"
 
+
 class UserData(models.Model):
 	User_Date=models.DateField(("Date"), default=datetime.date.today)
 	User_ID=models.CharField(max_length=100)
@@ -85,3 +86,17 @@ class CampaignData(models.Model):
 	Campaign_Images=models.FileField(upload_to="campaignimages/")
 	class Meta:
 		db_table="CampaignData"
+
+class DonationData(models.Model):
+	Donation_Date=models.DateField(("Date"), default=datetime.date.today)
+	Donation_ID=models.CharField(max_length=50)
+	Donation_Name=models.CharField(max_length=100)
+	Donation_Email=models.CharField(max_length=100)
+	Donation_Phone=models.CharField(max_length=15)
+	Donation_City=models.CharField(max_length=100)
+	Donation_State=models.CharField(max_length=100)
+	Donation_Amount=models.CharField(max_length=500)
+	Payment_Status=models.CharField(max_length=100, default='Unpaid')
+	Payment_ID=models.CharField(max_length=100, blank=True)
+	class Meta:
+		db_table="DonationData"

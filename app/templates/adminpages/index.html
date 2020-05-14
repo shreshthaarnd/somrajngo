@@ -175,10 +175,10 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="/recentdonation/">Recent Donation</a>
+												<a href="/paiddonations/">Paid Donations</a>
 											</li>
 											<li>
-												<a href="/receiveddonation/">Received Donation</a>
+												<a href="/faileddonations/">Failed Donations</a>
 											</li>
 											
 										</ul>
@@ -233,7 +233,7 @@
 													<div class="summary">
 														<h4 class="title">Users</h4>
 														<div class="info">
-															<strong class="amount">1281</strong>
+															<strong class="amount">{{ Users|safe }}</strong>
 														</div>
 													</div>
 												</div>
@@ -275,7 +275,7 @@
 													<div class="summary">
 														<h4 class="title">Campaign</h4>
 														<div class="info">
-															<strong class="amount">38</strong>
+															<strong class="amount">{{ Campaign|safe }}</strong>
 														</div>
 													</div>
 												</div>
@@ -296,7 +296,7 @@
 													<div class="summary">
 														<h4 class="title">News Post</h4>
 														<div class="info">
-															<strong class="amount">3765</strong>
+															<strong class="amount">{{ News|safe }}</strong>
 														</div>
 													</div>
 												</div>
