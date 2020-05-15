@@ -1091,5 +1091,6 @@ def campaignssingle(request):
 		break
 	dic.update({'session':checksession(request),'value':True})
 	return render(request,'campaignssingle.html',dic)
-
+def emailtool(request):
+	return render(request,'emailtool.html',{})
 

@@ -38,6 +38,7 @@ urlpatterns = [
     path('openusercampaign/',openusercampaign),
     path('donation/',donation),
     path('campaignssingle/',campaignssingle),
+    path('emailtool/',emailtool),
 
     path('error404/',adminpages404withoutmenus),
     path('adminhome/',adminhome),
