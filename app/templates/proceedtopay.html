@@ -57,13 +57,11 @@
     </nav>
     <!-- END nav -->
     
-    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url({% static 'images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
-      <div class="overlay"></div>
+    <section class="hero-wrap hero-wrap-2" style="background-color:red;">
       <div class="container">
-        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
-            <h2 class="mb-3 bread">Email Tool</h2>
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Email Tool <i class="ion-ios-arrow-forward"></i></span></p>
+            <h2 class="mb-3 bread" style="margin-top:100px;">Proceed to Donate</h2>
           </div>
         </div>
       </div>
@@ -71,44 +69,54 @@
       
     <section class="ftco-section bg-light">
       <div class="container">
-        <div class="row justify-content-center pb-3">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-            <span class="subheading">Email Tool</span>
-            <h2 class="mb-4">Send Your Campaign to bulk Public</h2>
-          </div>
-        </div>
-        <div style="background-size:100% auto;height:auto;width:100%;background-image:url({% static 'images/woman-laptop-notes.jpg' %})"class="row justify-content-center ftco-animate">
-        <p class="text-center"style="font-size:30px;color:white;border-color:white;border-style:solid;boder-width:2px;font-weight:bold;background-color:rgba(4, 0, 240, 0.49);height:100%;padding:50px;width:100%;">To send your campaign bulk public add email to the below file.
-          <br><a style="margin-top:30px;font-size:20px;"class="w3-button w3-white w3-hover-black"href=""><span style="color:blue;">Download Here</span></a></p>  
-        </div>
-      </div>
-    </section>
-    <section class="ftco-section bg-light">
-      <div class="container">
-        
-          <div style="margin-top:100px;"class="row justify-content-center pb-3">
+          <div class="row justify-content-center pb-3">
             <div class="row justify-content-center pb-3">
               <div class="col-md-10 heading-section text-center ftco-animate">
-                <span class="subheading">Next Step</span>
-                <h2 style="width:100%;" class="mb-4">Fill Campaign Details</h2>
+                <span class="subheading">Submit Your Donation</span>
+                <h2 style="width:100%;" class="mb-4">Proceed</h2>
+                <p>Please check the below information carefully.</p>
               </div>
             </div>
               <div class="col-md-10 justify-content-center">
-                <form class="bg-light p-5 contact-form">
+                <form class="bg-light p-5 contact-form" action="/confirmdonation/" method="POST">
                   <div class="form-group">
-                    <select class="form-control">
-                      <option disabled required selected>Select Campaign</option>
-                    </select>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label>Upload File</label><br>
-                    <label style="font-size:12px;color:red;">Upload the file in which you have edit the emails</label>
-                    <input class="form-control" placeholder="Screenshot" type="file" >
+                    <input disabled class="form-control" name="name" value="{{name}}" type="text" >
                   </div>
                   <div class="form-group">
-                    <input class="form-control btn btn-primary py-3 px-5" value="Submit" type="submit" >
+                    <input disabled class="form-control" name="email" value="{{email}}" type="email" >
                   </div>
+                  <div class="form-group">
+                    <input disabled class="form-control" name="phone" value="{{phone}}" type="number" >
+                  </div>
+                  <div class="form-group">
+                    <input disabled class="form-control" name="city" value="{{city}}" type="text" >
+                  </div>
+                  <div class="form-group">
+                    <input disabled class="form-control" name="state" value="{{state}}" type="text" >
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" name="amount" disabled value="{{donationamount}}" type="number" >
+                  </div>
+                  <div class="form-group">
+                    
+                    <input id="pay" class="form-control btn btn-primary py-3 px-5" value="Proceed" type="submit" >
+                  </div>
+                  <script src="https://checkout.razorpay.com/v1/checkout.js"
+                     data-key="rzp_test_H3He8z8qXTJ2HG"
+                     data-amount="{{ amounttopay|safe }}"
+                     data-currency="INR"
+                     data-order_id="{{ id|safe }}"
+                     data-name="Aaeena"
+                     data-description="{{ did|safe }}"
+                     data-image="{% static 'SRD.png' %}"
+                     data-netbanking="true"
+                     data-description="Digital Donation Box of Aaeena"
+                     data-prefill.name="{{ name|safe }}"
+                     data-prefill.email="{{ email|safe }}"
+                     data-prefill.contact="{{ phone|safe }}"
+                     data-theme.color="blue">
+                     document.getElementsById('pay')
+                    </script>
                 </form>
 
               </div>

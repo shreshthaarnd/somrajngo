@@ -82,20 +82,20 @@
           <div class="col-md-8">
             <div class="featured-causes">
               <div class="progress" style="height:50px">
-                <div class="progress-bar progress-bar-striped" style="width:65%; height:50px"></div>
+                <div class="progress-bar progress-bar-striped" style="width:{{ percent|safe }}%; height:50px"></div>
               </div>
               <div class="text mt-4 d-md-flex">
                 <div class="one d-flex">
                   <div class="mr-4">
-                    <h2>65%</h2>
+                    <h2>{{ percent|safe }}%</h2>
                   </div>
                   <div class="goal">
-                    <p class="d-flex"><span>Collected:</span><span><i class="fa fa-inr"></i> 380,000</span></p>
-                    <p class="d-flex"><span>Goal:</span><span><i class="fa fa-inr"></i> 600,000</span></p>
+                    <p class="d-flex"><span>Collected:</span><span><i class="fa fa-inr"></i> {{ tamount|safe }}</span></p>
+                    <p class="d-flex"><span>Goal:</span><span><i class="fa fa-inr"></i> 1000000</span></p>
                   </div>
                 </div>
                 <div class="one text-md-right">
-                  <p><a href="#" class="btn btn-primary">Donate now</a></p>
+                  <p><a href="#donation" class="btn btn-primary">Donate now</a></p>
                 </div>
               </div>
             </div>
@@ -105,51 +105,36 @@
     </section>
     <section class="ftco-section bg-light">
       <div class="container">
-        <div class="row justify-content-center pb-3">
-          <div style="width:50%;padding:50px;"class="col-md-4 w3-card-4">
-            <img style="width:70px;margin-left:110px;"src="{% static 'images/992823.jpg' %}">
-              <p style="margin-left:80px;font-weight:bold;margin-bottom:20px;font-size:25px;">Giyan@upi</p>
-            <img style="width:100%;"src="{% static 'images/mnty45.png' %}">
-          </div>
-            <div style="margin-left:50px;"class="col-md-4">
-              <p style="font-size:20px;">Account Holder's Name</p>
-              <p style="font-size:25px;font-weight:bold;">Sonali Kulshreshtha</p>
-              <p style="font-size:20px;">Account Number</p>
-              <p style="font-size:25px;font-weight:bold;">123000006789</p>
-              <p style="font-size:20px;">IFSC Code</p>
-              <p style="font-size:25px;font-weight:bold;">GHT2300</p>
-              <p style="font-size:20px;">Branch Name</p>
-              <p style="font-size:25px;font-weight:bold;">PNB Agra</p>
-            </div>
-        </div>
-          <div style="margin-top:100px;"class="row justify-content-center pb-3">
+          <div class="row justify-content-center pb-3">
             <div class="row justify-content-center pb-3">
               <div class="col-md-10 heading-section text-center ftco-animate">
                 <span class="subheading">Submit Your Donation</span>
-                <h2 style="width:100%;" class="mb-4">Confirm Your Donation</h2>
+                <h2 style="width:100%;" class="mb-4">Donate Here</h2>
                 <p>Your Quote Here</p>
               </div>
             </div>
               <div class="col-md-10 justify-content-center">
-                <form class="bg-light p-5 contact-form">
+                <form id="donation" class="bg-light p-5 contact-form" method="POST" action="/proceedfordonation/">
                   <div class="form-group">
-                    <input class="form-control" placeholder="Name" type="text" >
+                    <input class="form-control" name="name" placeholder="Name" type="text" >
                   </div>
                   <div class="form-group">
-                    <input class="form-control" placeholder="Email" type="email" >
+                    <input class="form-control" name="email" placeholder="Email" type="email" >
                   </div>
                   <div class="form-group">
-                    <input class="form-control" placeholder="Phone" type="number" >
+                    <input class="form-control" name="phone" placeholder="Phone" type="number" >
                   </div>
                   <div class="form-group">
-                    <input class="form-control" placeholder="Message" type="text" >
+                    <input class="form-control" name="city" placeholder="City" type="text" >
                   </div>
                   <div class="form-group">
-                    <label>Upload Screenshot</label>
-                    <input class="form-control" placeholder="Screenshot" type="file" >
+                    <input class="form-control" name="state" placeholder="State" type="text" >
                   </div>
                   <div class="form-group">
-                    <input class="form-control btn btn-primary py-3 px-5" value="Submit" type="submit" >
+                    <input class="form-control" name="amount" placeholder="Amount in Rupees" type="number" >
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control btn btn-primary py-3 px-5" value="Proceed" type="submit" >
                   </div>
                 </form>
 

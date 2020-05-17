@@ -38,7 +38,12 @@ urlpatterns = [
     path('openusercampaign/',openusercampaign),
     path('donation/',donation),
     path('campaignssingle/',campaignssingle),
+
     path('emailtool/',emailtool),
+
+    path('proceedfordonation/',proceedfordonation),
+    path('confirmdonation/',confirmdonation),
+
 
     path('error404/',adminpages404withoutmenus),
     path('adminhome/',adminhome),
@@ -58,7 +63,6 @@ urlpatterns = [
     path('addbookcategroy/',adminaddbookcategory),
     path('savebookcategroy/',savebookcategory),
     path('booklist/',adminbooklist),
-    path('admindonations/',admindonations),
     path('admincampaigns/',admincampaigns),
     path('recentcampaigns/',adminrecentcampaigns),
     path('activecampaigns/',adminactivecampaigns),
@@ -70,6 +74,8 @@ urlpatterns = [
     path('deactivatecampaign/',deactivatecampaign),
     path('activatecampaign/',activatecampaign),
     path('deletecampaignpermanently/',deletecampaignpermanently),
+    path('paiddonations/',adminpaiddonations),
+    path('faileddonations/',adminfaileddonations),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

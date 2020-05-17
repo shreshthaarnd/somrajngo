@@ -146,6 +146,32 @@ def userlogin(request):
 def registration(request):
 	dic={'session':checksession(request),'value':True}
 	return render(request,'registration.html',dic)
+def campaignssingle(request):
+	cid=request.GET.get('cid')
+	lt=[]
+	dic={}
+	obj=CampaignData.objects.filter(Campaign_ID=cid)
+	for x in obj:
+		dic.update({'title':x.Campaign_Title,
+					'about':x.Campaign_About,
+					'date':x.Campaign_Date,
+					'donation':x.Campaign_Donation.upper(),
+					'acnumber':x.Campaign_Account_Number,
+					'acname':x.Campaign_Account_Name,
+					'acifsc':x.Campaign_Account_IFSC,
+					'acbank':x.Campaign_Account_Bank})
+		obj1=CampaignData.objects.filter(Campaign_ID=cid)
+		for y in obj1:
+			lt.append(y.Campaign_Images.url)
+		dic.update({'images':lt})
+		obj1=UserData.objects.filter(User_ID=x.User_ID)
+		dic.update({'user':obj1})
+		obj2=UserProfilePicture.objects.filter(User_ID=x.User_ID)
+		for y in obj2:
+			dic.update({'userimage':y.User_Image.url})
+		break
+	dic.update({'session':checksession(request),'value':True})
+	return render(request,'campaignssingle.html',dic)
 def campaigns(request):
 	dic={'session':checksession(request),'value':True}
 	d={}
@@ -536,7 +562,17 @@ def adminpanel(request):
 		p=request.POST.get('pass')
 		if e=='admin@ngo.com' and p=='1234':
 			request.session['admin_id'] = e
-			return render(request,'adminpages/index.html',{})
+			obj=CampaignData.objects.filter(Campaign_Status='Active')
+			camcount=0
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					camcount=camcount+1
+			dic={
+				'Users':len(UserData.objects.filter(User_Status='Active')),
+				'Campaign':camcount,
+				'News':len(NewsData.objects.all()),
+			}
+			return render(request,'adminpages/index.html',dic)
 		else:
 			return render(request,'adminpages/adminlogin.html',{'msg':'Incorrect ID or Password'})
 	else:
@@ -545,7 +581,17 @@ def adminpanel(request):
 def adminhome(request):
 	try:
 		if request.session['admin_id'] == 'admin@ngo.com':
-			return render(request,'adminpages/index.html',{})
+			obj=CampaignData.objects.filter(Campaign_Status='Active')
+			camcount=0
+			for x in obj:
+				if x.Campaign_Title != 'NA':
+					camcount=camcount+1
+			dic={
+				'Users':len(UserData.objects.filter(User_Status='Active')),
+				'Campaign':camcount,
+				'News':len(NewsData.objects.all()),
+			}
+			return render(request,'adminpages/index.html',dic)
 		else:
 			return redirect('/error404/')
 	except:
@@ -706,7 +752,6 @@ def savebook(request):
 				category=request.POST.get('bcategory')
 				image=request.FILES['bimage']
 				pdf=request.FILES['bpdf']
-				print(category)
 				n="B00"
 				x=1
 				nid=n+str(x)
@@ -1060,37 +1105,150 @@ def deletecampaignpermanently(request):
 	except:
 		return redirect('/error404/')
 
-def donation(request):
-	return render(request,'donation.html',{})
-def admindonations(request):
-	return render(request,'adminpages/donation.html',{})
+#Payment Gateway Functions
+import razorpay
+#Working on Test Keys
+razorpay_client = razorpay.Client(auth=("rzp_test_H3He8z8qXTJ2HG", "hNFBrjB0O42sr7t5M8QoE4rP"))
+razorpay_client.set_app_details({"title" : "Aaeena", "version" : "1.0"})
 
-def campaignssingle(request):
-	cid=request.GET.get('cid')
-	lt=[]
-	dic={}
-	obj=CampaignData.objects.filter(Campaign_ID=cid)
+def donation(request):
+	obj=DonationData.objects.filter(Payment_Status='Paid')
+	totalamount=0
 	for x in obj:
-		dic.update({'title':x.Campaign_Title,
-					'about':x.Campaign_About,
-					'date':x.Campaign_Date,
-					'donation':x.Campaign_Donation.upper(),
-					'acnumber':x.Campaign_Account_Number,
-					'acname':x.Campaign_Account_Name,
-					'acifsc':x.Campaign_Account_IFSC,
-					'acbank':x.Campaign_Account_Bank})
-		obj1=CampaignData.objects.filter(Campaign_ID=cid)
-		for y in obj1:
-			lt.append(y.Campaign_Images.url)
-		dic.update({'images':lt})
-		obj1=UserData.objects.filter(User_ID=x.User_ID)
-		dic.update({'user':obj1})
-		obj2=UserProfilePicture.objects.filter(User_ID=x.User_ID)
-		for y in obj2:
-			dic.update({'userimage':y.User_Image.url})
-		break
+		totalamount=totalamount=int(x.Donation_Amount)
+	pert=(totalamount/1000000)*100
+	dic={
+	'tamount':totalamount,
+	'percent':pert
+	}
 	dic.update({'session':checksession(request),'value':True})
+
 	return render(request,'campaignssingle.html',dic)
 def emailtool(request):
 	return render(request,'emailtool.html',{})
 
+	return render(request,'donation.html',dic)
+
+@csrf_protect
+@csrf_exempt
+def proceedfordonation(request):
+	if request.method=='POST':
+		name=request.POST.get('name')
+		email=request.POST.get('email')
+		phone=request.POST.get('phone')
+		city=request.POST.get('city')
+		state=request.POST.get('state')
+		amount=request.POST.get('amount')
+		d="D00"
+		x=1
+		did=d+str(x)
+		while DonationData.objects.filter(Donation_ID=did).exists():
+			x=x+1
+			did=d+str(x)
+		x=int(x)
+		dic={
+			'did':did,
+			'name':name,
+			'email':email,
+			'phone':phone,
+			'city':city,
+			'state':state,
+			'donationamount':amount,
+			'amounttopay':int(amount)*100
+		}
+		obj=DonationData(
+			Donation_ID=did,
+			Donation_Name=name,
+			Donation_Email=email,
+			Donation_Phone=phone,
+			Donation_City=city,
+			Donation_State=state,
+			Donation_Amount=amount,
+			)
+		obj.save()
+		request.session['donation_id'] = did
+		order_amount = int(dic['amounttopay'])
+		order_currency = 'INR'
+		order_receipt = dic['did']
+		options={
+			'amount':order_amount,
+			'currency':order_currency,
+			'receipt':order_receipt,
+			'payment_capture':'0'
+		}
+		dic.update(razorpay_client.order.create(options))
+		print(razorpay_client.order.create(options))
+		return render(request,'proceedtopay.html',dic)
+	else:
+		return redirect('/error404/')
+
+
+#Step 4
+@csrf_protect
+@csrf_exempt
+def confirmdonation(request):
+	dic={}
+	razorpay_order_id = request.POST.get('razorpay_order_id')
+	razorpay_payment_id = request.POST.get('razorpay_payment_id')
+	razorpay_signature = request.POST.get('razorpay_signature')
+	params_dict = {
+    'razorpay_order_id': razorpay_order_id,
+    'razorpay_payment_id': razorpay_payment_id,
+    'razorpay_signature': razorpay_signature}
+	print(razorpay_client.utility.verify_payment_signature(params_dict))
+	if razorpay_client.utility.verify_payment_signature(params_dict) == None:
+		obj=DonationData.objects.filter(Donation_ID=request.session['donation_id'])
+		obj.update(
+			Payment_Status='Paid',
+			Payment_ID=razorpay_payment_id
+			)
+		for x in obj:
+			dic={'name':x.Donation_Name,
+				'email':x.Donation_Email}
+		msg='''Hi '''+dic['name']+'''!
+Thank You for you contribution in Aaeena.
+
+Thanks & Regards,
+Team Aaeena'''
+		sub='Aaeena - Contribution Recieved Successfully'
+		email=EmailMessage(sub,msg,to=[dic['email']])
+		email.send()
+		return render(request,'donationsuccess.html',{})
+	else:
+		obj=DonationData.objects.filter(Donation_ID=request.session['donation_id'])
+		obj.update(
+			Payment_Status='Failed',
+			Payment_ID=razorpay_payment_id
+			)
+		for x in obj:
+			dic={'name':x.Donation_Name,
+				'email':x.Donation_Email}
+		msg='''Hi '''+dic['name']+'''!
+There was some error while completing your donation payment. Please contact site administrator for further assist.
+
+Thanks & Regards,
+Team Aaeena'''
+		sub='Aaeena - Contribution Payment Failed'
+		email=EmailMessage(sub,msg,to=[dic['email']])
+		email.send()
+		return render(request,'donationfailed.html',{})
+
+def adminpaiddonations(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			obj=DonationData.objects.filter(Payment_Status='Paid')
+			return render(request,'adminpages/donation.html',{'data':reversed(obj)})
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
+
+def adminfaileddonations(request):
+	try:
+		if request.session['admin_id'] == 'admin@ngo.com':
+			obj=DonationData.objects.filter(Payment_Status='Failed')
+			return render(request,'adminpages/faileddonations.html',{'data':reversed(obj)})
+		else:
+			return redirect('/error404/')
+	except:
+		return redirect('/error404/')
