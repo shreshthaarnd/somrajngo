@@ -3,8 +3,12 @@ chardet==3.0.4
 Django==2.1.9
 django-cleanup==4.0.0
 idna==2.9
+numpy==1.18.4
+pandas==1.0.3
 Pillow==7.1.2
+python-dateutil==2.8.1
 pytz==2020.1
 razorpay==1.2.0
 requests==2.23.0
+six==1.14.0
 urllib3==1.25.9

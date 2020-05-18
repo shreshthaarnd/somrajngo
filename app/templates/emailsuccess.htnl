@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <title>Aaeena</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'w3.css' %}">
+  </head>
+  <body>
+    <!-- The Modal -->
+    <div id="id01" class="w3-modal" style="display:block;width:100%;width:100%;background-color:white;z-index:15">
+      <div class="w3-modal-content">
+        <div class="w3-container text-center">
+          <img src="{% static 'loading.gif' %}">
+          <h1 style="color:black;font-weight:bold;">Please Wait</h1>
+          <h2>while we are sending your campaign</h2>
+          <p style="font-size:25px;color:red">Do not press 'BACK' or 'REFRESH' button.</p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
