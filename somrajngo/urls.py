@@ -40,6 +40,8 @@ urlpatterns = [
     path('campaignssingle/',campaignssingle),
 
     path('emailtool/',emailtool),
+    path('downloademailfile/',downloademailfile),
+    path('sendmails/',sendmails),
 
     path('proceedfordonation/',proceedfordonation),
     path('confirmdonation/',confirmdonation),

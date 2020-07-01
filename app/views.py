@@ -246,6 +246,42 @@ def bookcategorypage(request):
 	return render(request,'books.html',dic)
 
 #Users Section
+def emailtool(request):
+	try:
+		dic=GetUserDashboard(request.session['user_id'])
+		dic.update({'session':checksession(request),'value':True})
+		obj=CampaignData.objects.filter(User_ID=request.session['user_id'],Campaign_Status='Active')
+		dic.update({
+			'cams':obj
+			})
+		return render(request,'emailtool.html',dic)
+	except:
+		return redirect('/error404/')
+
+import csv
+def downloademailfile(request):
+	try:
+		user_id=request.session['user_id']
+		response = HttpResponse()
+		response['Content-Disposition'] = 'attachment;filename=EmailsList.csv'
+		writer = csv.writer(response)
+		writer.writerow(["Email ID"])
+		return response
+	except:
+		return redirect('/error404/')
+
+import pandas as pd
+@csrf_exempt
+def sendmails(request):
+	if request.method=='POST':
+		camid=request.POST.get('camid')
+		df=pd.read_csv(request.FILES['files'])
+		emails=[]
+		for x in df['Email ID']:
+			emails.append(x)
+		retult=sendcampaigns(emails, camid)
+		return render(request,'emailsuccess.html',{})
+
 @csrf_exempt
 def saveusercampaign(request):
 	if request.method=='POST':
@@ -1124,10 +1160,6 @@ def donation(request):
 	dic.update({'session':checksession(request),'value':True})
 
 	return render(request,'campaignssingle.html',dic)
-def emailtool(request):
-	return render(request,'emailtool.html',{})
-
-	return render(request,'donation.html',dic)
 
 @csrf_protect
 @csrf_exempt
